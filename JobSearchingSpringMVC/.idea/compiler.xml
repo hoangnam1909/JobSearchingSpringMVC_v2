@@ -12,7 +12,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="JobSearchingSpringMVC" options="-endorseddirs &quot;F:\Learning\Java Programming\Project\JobSearchingSpringMVC\JobSearchingSpringMVC\target/endorsed&quot;" />
+      <module name="JobSearchingSpringMVC" options="-endorseddirs &quot;F:\Learning\Java Programming\Project\JobSearchingSpringMVC_v2\JobSearchingSpringMVC\target/endorsed&quot;" />
     </option>
   </component>
 </project>

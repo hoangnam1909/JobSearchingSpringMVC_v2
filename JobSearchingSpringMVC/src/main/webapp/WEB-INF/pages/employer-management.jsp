@@ -55,39 +55,13 @@
 
 <div class="container">
 
-    <button type="button" class="btn btn-primary"
-            data-toggle="modal" data-target="#exampleModal"
-            onclick="viewInfo(36)">
-        Launch demo modal
-    </button>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" id="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <c:if test="${jobPosts.size() == 0}">
         <div class="alert alert-danger mt-4 d-flex justify-content-center align-items-center" style="height: 80px"
              role="alert">
             <h5>Không có dữ liệu về bài viết!</h5>
         </div>
     </c:if>
+
     <c:if test="${jobPosts.size() != 0}">
         <table class="table table-striped mt-5">
             <thead>
@@ -105,10 +79,30 @@
             <c:forEach items="${jobPosts}" var="jp" varStatus="loop">
                 <tr>
                     <td style="text-align: center">
-                        <a style="margin-right: 10px" href="<c:url value="/employer/post/view" />?id=${jp.id}"
-                           title="Xem chi tiết" onclick="">
+                        <a style="margin-right: 10px"
+                           title="Xem chi tiết" onclick="viewInfo(${jp.id})"
+                           data-toggle="modal" data-target="#exampleModal">
                             <i class="fa-solid fa-eye"></i>
                         </a>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body text-justify" id="modal-body"></div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <a style="margin-right: 10px"
                            href="<c:url value="/employer/post/add-or-update" />?id=${jp.id}"
                            title="Sửa">
