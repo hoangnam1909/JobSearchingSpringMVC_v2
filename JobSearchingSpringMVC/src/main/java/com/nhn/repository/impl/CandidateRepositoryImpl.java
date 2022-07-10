@@ -1,5 +1,6 @@
 package com.nhn.repository.impl;
 
+import com.nhn.pojo.ApplyJob;
 import com.nhn.pojo.Candidate;
 import com.nhn.repository.CandidateRepository;
 import org.hibernate.HibernateException;
@@ -19,6 +20,12 @@ public class CandidateRepositoryImpl implements CandidateRepository {
 
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
+
+    @Override
+    public Candidate getById(int id) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        return session.get(Candidate.class, id);
+    }
 
     @Override
     public Candidate getByUserId(int userId) {

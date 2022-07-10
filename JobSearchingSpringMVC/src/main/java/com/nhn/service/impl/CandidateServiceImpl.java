@@ -2,6 +2,7 @@ package com.nhn.service.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.nhn.pojo.ApplyJob;
 import com.nhn.pojo.Candidate;
 import com.nhn.repository.CandidateRepository;
 import com.nhn.service.CandidateService;
@@ -20,6 +21,11 @@ public class CandidateServiceImpl implements CandidateService {
 
     @Autowired
     private Cloudinary cloudinary;
+
+    @Override
+    public Candidate getById(int id) {
+        return this.candidateRepository.getById(id);
+    }
 
     @Override
     public Candidate getByUserId(int userId) {

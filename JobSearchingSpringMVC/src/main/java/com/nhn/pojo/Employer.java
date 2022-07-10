@@ -14,7 +14,7 @@ public class Employer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private int id;
     @Basic
     @Column(name = "name", nullable = false, length = 100)
     private String name;
@@ -125,7 +125,7 @@ public class Employer {
         this.name = name;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -133,36 +133,17 @@ public class Employer {
         this.id = id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Employer employer = (Employer) o;
-
-        if (id != null ? !id.equals(employer.id) : employer.id != null) return false;
-        if (name != null ? !name.equals(employer.name) : employer.name != null) return false;
-        if (description != null ? !description.equals(employer.description) : employer.description != null) return false;
-        if (location != null ? !location.equals(employer.location) : employer.location != null) return false;
-        if (contact != null ? !contact.equals(employer.contact) : employer.contact != null) return false;
-        if (website != null ? !website.equals(employer.website) : employer.website != null) return false;
-
-        return true;
+    public Employer() {
+        super();
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (location != null ? location.hashCode() : 0);
-        result = 31 * result + (contact != null ? contact.hashCode() : 0);
-        result = 31 * result + (website != null ? website.hashCode() : 0);
-        return result;
+        return super.hashCode();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
 }

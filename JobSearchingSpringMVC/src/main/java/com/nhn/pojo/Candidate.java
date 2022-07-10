@@ -1,23 +1,28 @@
 package com.nhn.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Collection;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "candidate")
 public class Candidate {
 
+    @Column(name = "years_experience")
+    private int yearsExperience;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate")
+    private Collection<ApplyJob> applyJobCollection;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
-
-    @Column(name = "years_experience")
-    private Integer yearsExperience;
+    private int id;
 
     @Lob
     @Column(name = "strengths")
@@ -89,19 +94,19 @@ public class Candidate {
         this.userId = userId;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Integer getYearsExperience() {
+    public int getYearsExperience() {
         return yearsExperience;
     }
 
-    public void setYearsExperience(Integer yearsExperience) {
+    public void setYearsExperience(int yearsExperience) {
         this.yearsExperience = yearsExperience;
     }
 
@@ -151,6 +156,22 @@ public class Candidate {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Candidate() {
+    }
+
+    public void setYearsExperience(Integer yearsExperience) {
+        this.yearsExperience = yearsExperience;
+    }
+
+    @XmlTransient
+    public Collection<ApplyJob> getApplyJobCollection() {
+        return applyJobCollection;
+    }
+
+    public void setApplyJobCollection(Collection<ApplyJob> applyJobCollection) {
+        this.applyJobCollection = applyJobCollection;
     }
 
 }

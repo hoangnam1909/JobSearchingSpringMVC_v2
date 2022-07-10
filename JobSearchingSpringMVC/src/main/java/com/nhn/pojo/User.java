@@ -8,10 +8,24 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "user")
 public class User {
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "password")
+    private String password;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "active")
+    private int active;
+    @Column(name = "gender")
+    private Short gender;
     public static final String ADMIN = "ROLE_ADMIN";
     public static final String NTD = "ROLE_NTD";
     public static final String USER = "ROLE_UV";
@@ -24,9 +38,6 @@ public class User {
     @Column(name = "username", nullable = false, length = 45)
     private String username;
 
-    @NotEmpty(message = "Không đc để trống")
-    @Column(name = "password", nullable = false, length = 100)
-    private String password;
 
     @Column(name = "avatar", length = 300)
     private String avatar;
@@ -34,8 +45,6 @@ public class User {
     @Column(name = "user_type", nullable = false, length = 45)
     private String userType;
 
-    @Column(name = "active", nullable = false)
-    private int active;
 
     @Column(name = "full_name", length = 100)
     private String fullName;
@@ -59,8 +68,6 @@ public class User {
     @JsonIgnore
     private int year;
 
-    @Column(name = "gender")
-    private int gender;
 
     @Column(name = "address", length = 100)
     private String address;
@@ -189,13 +196,6 @@ public class User {
         this.address = address;
     }
 
-    public int getGender() {
-        return gender;
-    }
-
-    public void setGender(int gender) {
-        this.gender = gender;
-    }
 
     public String getPhone() {
         return phone;
@@ -221,13 +221,6 @@ public class User {
         this.fullName = fullName;
     }
 
-    public int getActive() {
-        return active;
-    }
-
-    public void setActive(int active) {
-        this.active = active;
-    }
 
     public String getUserType() {
         return userType;
@@ -245,13 +238,6 @@ public class User {
         this.avatar = avatar;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getUsername() {
         return username;
@@ -267,6 +253,33 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public User() {
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+
+    public Short getGender() {
+        return gender;
+    }
+
+    public void setGender(Short gender) {
+        this.gender = gender;
     }
 
 }

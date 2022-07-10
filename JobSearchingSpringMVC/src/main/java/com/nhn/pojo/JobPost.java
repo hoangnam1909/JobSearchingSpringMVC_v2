@@ -5,11 +5,25 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "job_post")
 public class JobPost {
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "beginningSalary")
+    private BigDecimal  beginningSalary;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "endingSalary")
+    private BigDecimal  endingSalary;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "job")
+    private Collection<ApplyJob> applyJobCollection;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -22,11 +36,6 @@ public class JobPost {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "beginningSalary", nullable = false, precision = 10)
-    private BigDecimal beginningSalary;
-
-    @Column(name = "endingSalary", nullable = false, precision = 10)
-    private BigDecimal endingSalary;
 
     @Column(name = "location", nullable = false, length = 45)
     private String location;
@@ -140,21 +149,6 @@ public class JobPost {
         this.location = location;
     }
 
-    public BigDecimal getEndingSalary() {
-        return endingSalary;
-    }
-
-    public void setEndingSalary(BigDecimal endingSalary) {
-        this.endingSalary = endingSalary;
-    }
-
-    public BigDecimal getBeginningSalary() {
-        return beginningSalary;
-    }
-
-    public void setBeginningSalary(BigDecimal beginningSalary) {
-        this.beginningSalary = beginningSalary;
-    }
 
     public String getDescription() {
         return description;
@@ -178,5 +172,33 @@ public class JobPost {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public JobPost() {
+    }
+
+    public BigDecimal getBeginningSalary() {
+        return beginningSalary;
+    }
+
+    public void setBeginningSalary(BigDecimal beginningSalary) {
+        this.beginningSalary = beginningSalary;
+    }
+
+    public BigDecimal getEndingSalary() {
+        return endingSalary;
+    }
+
+    public void setEndingSalary(BigDecimal endingSalary) {
+        this.endingSalary = endingSalary;
+    }
+
+    @XmlTransient
+    public Collection<ApplyJob> getApplyJobCollection() {
+        return applyJobCollection;
+    }
+
+    public void setApplyJobCollection(Collection<ApplyJob> applyJobCollection) {
+        this.applyJobCollection = applyJobCollection;
     }
 }

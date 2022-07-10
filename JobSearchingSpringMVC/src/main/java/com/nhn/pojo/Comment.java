@@ -12,11 +12,11 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private int id;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "employer_id", nullable = false)
+    @JsonIgnore
     private Employer employer;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -31,11 +31,11 @@ public class Comment {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
