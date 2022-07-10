@@ -63,7 +63,7 @@
     </ul>
 </div>
 
-<c:forEach items="${jobPosts}" var="jp">
+<c:forEach items="${jobPosts}" var="jp" varStatus="loop">
     <div class="container pt-2">
         <div class="col">
             <div class="row">
@@ -71,14 +71,16 @@
                     <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15"
                          src="${userService.getById(jp.postedByUser.id).avatar}" alt="Image Description">
                     <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
+
                         <div class="g-mb-15">
                             <a class="text-decoration-none"
                                href="<c:url value="/candidate/view-post"/>?id=${jp.id}">
-                                <h3 class="g-color-gray-dark-v1 mb-3">
+                                <h3 class="mb-3" style="color: #1ea2b6">
                                         ${jp.title}
                                 </h3>
                             </a>
                         </div>
+
                         <c:if test="${jp.createdDate != null}">
                             <h5 class="g-color-gray-dark-v1 mb-3">
                                 Ngày đăng: <span style="font-weight: 400">
@@ -105,7 +107,6 @@
                                     <fmt:formatNumber type="number" maxFractionDigits="3"
                                                       value="${jp.beginningSalary}"/> VNĐ
                             </span>
-
                             </h5>
                         </c:if>
 
@@ -117,7 +118,35 @@
                             </span>
                             </h5>
                         </c:if>
+
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-info" data-toggle="modal"
+                                data-target="#exampleModalCenter${jp.id}" onclick="viewFullInfoJob(${jp.id})">
+                            Đăng ký ứng tuyển
+                        </button>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter${jp.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header px-4">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Xác nhận nộp đơn ứng tuyển</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body px-4" id="modal-body-${jp.id}"></div>
+                <div class="modal-footer px-4">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-info" id="button-submit-${jp.id}"
+                            onclick="applyJob(${candidateService.getByUserId(currentUser.id).id}, ${jp.id})">
+                        Nộp đơn ứng tuyển
+                    </button>
                 </div>
             </div>
         </div>

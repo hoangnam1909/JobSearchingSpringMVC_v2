@@ -180,6 +180,7 @@ public class CandidateController {
         model.addAttribute("jobPostService", jobPostService);
         model.addAttribute("userService", userService);
         model.addAttribute("employerService", employerService);
+        model.addAttribute("candidateService", candidateService);
         return "candidate-find-job";
     }
 

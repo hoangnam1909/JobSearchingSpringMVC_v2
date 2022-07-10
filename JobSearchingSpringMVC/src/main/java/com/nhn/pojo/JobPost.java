@@ -23,6 +23,7 @@ public class JobPost {
     @Column(name = "endingSalary")
     private BigDecimal  endingSalary;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "job")
+    @JsonIgnore
     private Collection<ApplyJob> applyJobCollection;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -148,7 +149,6 @@ public class JobPost {
     public void setLocation(String location) {
         this.location = location;
     }
-
 
     public String getDescription() {
         return description;
