@@ -24,7 +24,7 @@ public class UserValidator implements Validator {
         User user = (User) target;
         int usernameMinLength = 6;
         int usernameMaxLength = 20;
-        int passwordMinLength = 8;
+        int passwordMinLength = 6;
 
         // validate username
         if (userService.getUsers(user.getUsername(), 0).size() > 0)

@@ -3,155 +3,171 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="container">
-    <h1 class="text-center dark-color">TÌM KIẾM VIỆC LÀM</h1>
+    <h1 class="text-center dark-color mb-5">TÌM KIẾM VIỆC LÀM</h1>
 
-    <section class="d-flex justify-content-center">
-        <form class="mt-3 w-50">
-            <div class="form-group">
-                <label for="title">Tiêu đề</label>
-                <input class="form-control" name="title" id="title" value="${title}">
-            </div>
+    <div class="row">
+        <div class="col-3" style="border-right: 1px solid lightgray">
+            <div class="position-fixed">
+                <h3 class="text-center dark-color m-0 py-2">BỘ LỌC</h3>
+                <section class="d-flex px-3">
 
-            <div class="form-group">
-                <label for="beginningSalary">Lương khởi điểm từ</label>
-                <input class="form-control" name="beginningSalary" id="beginningSalary" value="${beginningSalary}">
-            </div>
-
-            <div class="form-group">
-                <label for="endingSalary">Lương tối đa đến</label>
-                <input class="form-control" name="endingSalary" id="endingSalary" value="${endingSalary}">
-            </div>
-
-            <div class="form-group">
-                <label for="location">Địa điểm làm việc</label>
-                <input class="form-control" name="location" id="location" value="${location}">
-            </div>
-
-            <div class="form-group">
-                <label for="sort">Sắp xếp</label>
-                <select class="form-control" name="sort" id="sort">
-                    <option value="" selected>Không chọn</option>
-                    <c:if test="${sort.equals('asc')}">
-                        <option value="asc" selected>Ngày đăng cũ nhất</option>
-                    </c:if>
-                    <c:if test="${!sort.equals('asc')}">
-                        <option value="asc">Ngày đăng cũ nhất</option>
-                    </c:if>
-
-                    <c:if test="${sort.equals('desc')}">
-                        <option value="desc" selected>Ngày đăng mới nhất</option>
-                    </c:if>
-                    <c:if test="${!sort.equals('desc')}">
-                        <option value="desc">Ngày đăng mới nhất</option>
-                    </c:if>
-                </select>
-            </div>
-
-            <button type="submit" class="btn btn-info">Tra cứu</button>
-            <input type="button" class="btn btn-dark" onclick="removeFilter()" value="Loại bỏ bộ lọc"/>
-        </form>
-    </section>
-</div>
-
-<div class="container">
-    <ul class="pagination d-flex justify-content-center m-0">
-        <c:forEach begin="1" end="${Math.ceil(counter/maxItems)}" var="page">
-            <li class="page-item">
-                <a class="page-link" onclick="updateQueryStringParameter('page', ${page})">${page}</a>
-            </li>
-        </c:forEach>
-    </ul>
-</div>
-
-<c:forEach items="${jobPosts}" var="jp" varStatus="loop">
-    <div class="container pt-2">
-        <div class="col">
-            <div class="row">
-                <div class="media g-mb-30 media-comment w-100">
-                    <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15"
-                         src="${userService.getById(jp.postedByUser.id).avatar}" alt="Image Description">
-                    <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
-
-                        <div class="g-mb-15">
-                            <a class="text-decoration-none"
-                               href="<c:url value="/candidate/view-post"/>?id=${jp.id}">
-                                <h3 class="mb-3" style="color: #1ea2b6">
-                                        ${jp.title}
-                                </h3>
-                            </a>
+                    <form class="mt-3 w-100">
+                        <div class="form-group">
+                            <label for="title">Tiêu đề</label>
+                            <input class="form-control" name="title" id="title" value="${title}">
                         </div>
 
-                        <c:if test="${jp.createdDate != null}">
-                            <h5 class="g-color-gray-dark-v1 mb-3">
-                                Ngày đăng: <span style="font-weight: 400">
+                        <div class="form-group">
+                            <label for="beginningSalary">Lương khởi điểm từ</label>
+                            <input class="form-control" name="beginningSalary" id="beginningSalary"
+                                   value="${beginningSalary}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="endingSalary">Lương tối đa đến</label>
+                            <input class="form-control" name="endingSalary" id="endingSalary" value="${endingSalary}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="location">Địa điểm làm việc</label>
+                            <input class="form-control" name="location" id="location" value="${location}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sort">Sắp xếp</label>
+                            <select class="form-control" name="sort" id="sort">
+                                <option value="" selected>Không chọn</option>
+                                <c:if test="${sort.equals('asc')}">
+                                    <option value="asc" selected>Ngày đăng cũ nhất</option>
+                                </c:if>
+                                <c:if test="${!sort.equals('asc')}">
+                                    <option value="asc">Ngày đăng cũ nhất</option>
+                                </c:if>
+
+                                <c:if test="${sort.equals('desc')}">
+                                    <option value="desc" selected>Ngày đăng mới nhất</option>
+                                </c:if>
+                                <c:if test="${!sort.equals('desc')}">
+                                    <option value="desc">Ngày đăng mới nhất</option>
+                                </c:if>
+                            </select>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-info">Tra cứu</button>
+                            <input type="button" class="btn btn-dark" onclick="removeFilter()" value="Loại bỏ bộ lọc"/>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+        <div class="col px-4">
+            <ul class="pagination d-flex justify-content-end m-0">
+                <c:forEach begin="1" end="${Math.ceil(counter/maxItems)}" var="page">
+                    <li class="page-item">
+                        <a class="page-link" onclick="updateQueryStringParameter('page', ${page})">${page}</a>
+                    </li>
+                </c:forEach>
+            </ul>
+
+            <c:forEach items="${jobPosts}" var="jp" varStatus="loop">
+                <div class="container m-0 p-0 pt-2">
+                    <div class="col">
+                        <div class="row">
+                            <div class="media g-mb-30 media-comment w-100">
+                                <a class="text-decoration-none"
+                                   href="<c:url value="/candidate/view-post"/>?id=${jp.id}">
+                                    <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15"
+                                         src="${userService.getById(jp.postedByUser.id).avatar}"
+                                         alt="Image Description">
+                                </a>
+
+                                <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
+                                    <div class="g-mb-15">
+                                        <a class="text-decoration-none"
+                                           href="<c:url value="/candidate/view-post"/>?id=${jp.id}">
+                                            <h3 class="mb-3" style="color: #1ea2b6">
+                                                    ${jp.title}
+                                            </h3>
+                                        </a>
+                                    </div>
+
+                                    <c:if test="${jp.createdDate != null}">
+                                        <h5 class="g-color-gray-dark-v1 mb-3">
+                                            Ngày đăng: <span style="font-weight: 400">
                                     <fmt:formatDate pattern="HH:mm:ss - dd/MM/yyyy" value="${jp.createdDate}"/>
                                 </span>
-                            </h5>
-                        </c:if>
+                                        </h5>
+                                    </c:if>
 
-                        <c:if test="${jp.description.length() > 0}">
-                            <h5 class="g-color-gray-dark-v1 mb-3">
-                                Mô tả: <span style="font-weight: 400"> ${jp.description} </span>
-                            </h5>
-                        </c:if>
+                                    <c:if test="${jp.description.length() > 0}">
+                                        <h5 class="g-color-gray-dark-v1 mb-3">
+                                            Mô tả: <span style="font-weight: 400"> ${jp.description} </span>
+                                        </h5>
+                                    </c:if>
 
-                        <c:if test="${jp.location.length() > 0}">
-                            <h5 class="g-color-gray-dark-v1 mb-3">
-                                Địa điểm: <span style="font-weight: 400"> ${jp.location} </span>
-                            </h5>
-                        </c:if>
+                                    <c:if test="${jp.location.length() > 0}">
+                                        <h5 class="g-color-gray-dark-v1 mb-3">
+                                            Địa điểm: <span style="font-weight: 400"> ${jp.location} </span>
+                                        </h5>
+                                    </c:if>
 
-                        <c:if test="${jp.beginningSalary != null}">
-                            <h5 class="g-color-gray-dark-v1 mb-3">
-                                Lương khởi điểm: <span style="font-weight: 400">
+                                    <c:if test="${jp.beginningSalary != null}">
+                                        <h5 class="g-color-gray-dark-v1 mb-3">
+                                            Lương khởi điểm: <span style="font-weight: 400">
                                     <fmt:formatNumber type="number" maxFractionDigits="3"
                                                       value="${jp.beginningSalary}"/> VNĐ
                             </span>
-                            </h5>
-                        </c:if>
+                                        </h5>
+                                    </c:if>
 
-                        <c:if test="${jp.endingSalary != null}">
-                            <h5 class="g-color-gray-dark-v1 mb-3">
-                                Lương tối đa: <span style="font-weight: 400">
+                                    <c:if test="${jp.endingSalary != null}">
+                                        <h5 class="g-color-gray-dark-v1 mb-3">
+                                            Lương tối đa: <span style="font-weight: 400">
                                 <fmt:formatNumber type="number" maxFractionDigits="3"
                                                   value="${jp.endingSalary}"/> VNĐ
                             </span>
-                            </h5>
-                        </c:if>
+                                        </h5>
+                                    </c:if>
 
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-info" data-toggle="modal"
-                                data-target="#exampleModalCenter${jp.id}" onclick="viewFullInfoJob(${jp.id})">
-                            Đăng ký ứng tuyển
-                        </button>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-info" data-toggle="modal"
+                                            data-target="#exampleModalCenter${jp.id}"
+                                            onclick="viewFullInfoJob(${jp.id})">
+                                        Đăng ký ứng tuyển
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter${jp.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header px-4">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Xác nhận nộp đơn ứng tuyển</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalCenter${jp.id}" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header px-4">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Xác nhận nộp đơn ứng tuyển</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body px-4" id="modal-body-${jp.id}"></div>
+                            <div class="modal-footer px-4">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                <button type="button" class="btn btn-info" id="button-submit-${jp.id}"
+                                        onclick="applyJob(${candidateService.getByUserId(currentUser.id).id}, ${jp.id})">
+                                    Nộp đơn ứng tuyển
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-body px-4" id="modal-body-${jp.id}"></div>
-                <div class="modal-footer px-4">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-info" id="button-submit-${jp.id}"
-                            onclick="applyJob(${candidateService.getByUserId(currentUser.id).id}, ${jp.id})">
-                        Nộp đơn ứng tuyển
-                    </button>
-                </div>
-            </div>
+            </c:forEach>
         </div>
     </div>
-</c:forEach>
+</div>
 
 <script>
     $(document).ready(function () {

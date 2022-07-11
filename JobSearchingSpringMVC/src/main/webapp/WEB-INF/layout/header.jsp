@@ -3,15 +3,15 @@
 <nav class="navbar sticky-top navbar-expand-md bg-dark navbar-dark">
     <!-- Brand -->
     <c:choose>
-        <c:when test = "${currentUser.userType == 'ROLE_ADMIN'}">
+        <c:when test="${currentUser.userType == 'ROLE_ADMIN'}">
             <a class="navbar-brand" href="<c:url value="/admin" />">Job Searching</a>
         </c:when>
 
-        <c:when test = "${currentUser.userType == 'ROLE_NTD'}">
+        <c:when test="${currentUser.userType == 'ROLE_NTD'}">
             <a class="navbar-brand" href="<c:url value="/employer" />">Job Searching</a>
         </c:when>
 
-        <c:when test = "${currentUser.userType == 'ROLE_UV'}">
+        <c:when test="${currentUser.userType == 'ROLE_UV'}">
             <a class="navbar-brand" href="<c:url value="/candidate" />">Job Searching</a>
         </c:when>
 
@@ -41,13 +41,16 @@
                     <a class="nav-link" href="<c:url value="/admin/job-type"/> ">Loại việc làm</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="true" aria-expanded="false">
                         Thống kê
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="<c:url value="/admin/stats/user"/>">Thống kê loại tài khoản</a>
-                        <a class="dropdown-item" href="<c:url value="/admin/stats/jobPostDate"/>">Thống kê bài viết theo tháng</a>
-                        <a class="dropdown-item" href="<c:url value="/admin/stats/jobPostByJobType"/>">Thống kê bài viết theo loại việc làm</a>
+                        <a class="dropdown-item" href="<c:url value="/admin/stats/jobPostDate"/>">Thống kê bài viết theo
+                            tháng</a>
+                        <a class="dropdown-item" href="<c:url value="/admin/stats/jobPostByJobType"/>">Thống kê bài viết
+                            theo loại việc làm</a>
                     </div>
                 </li>
             </c:if>
@@ -69,9 +72,6 @@
             </c:if>
             <c:if test="${currentUser.userType == 'ROLE_UV'}">
                 <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/candidate/candidate-info/add-or-update"/>">Cập nhật thông tin</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/candidate/find-employer"/>">Tìm kiếm nhà tuyển dụng</a>
                 </li>
                 <li class="nav-item">
@@ -85,11 +85,13 @@
     </div>
     <c:if test="${currentUser != null}">
         <ul class="nav navbar-nav navbar-right">
-            <li class="nav-item">
-                <a class="nav-link" href="<c:url value="/me/view" />">
-                            <span>
-                                <i class="fa-solid fa-user"></i>
-                            </span>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="<c:url value="/me/view" />"
+                   role="button" aria-haspopup="true" aria-expanded="false">
+                    <span>
+                        <i class="fa-solid fa-user"></i>
+                    </span>
 
                     <c:if test="${!(currentUser.userType == 'ROLE_NTD')}">
                         ${currentUser.fullName}
@@ -101,7 +103,21 @@
 
                     <span class="badge badge-secondary">${currentUser.userType}</span>
                 </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="<c:url value="/me/view"/>">Thông tin tài khoản</a>
+                    <c:if test="${currentUser.userType == 'ROLE_UV'}">
+                        <a class="dropdown-item" href="<c:url value="/candidate/candidate-info/add-or-update"/>">
+                            Chỉnh sửa thông tin ứng viên
+                        </a>
+                    </c:if>
+                    <c:if test="${currentUser.userType == 'ROLE_NTD'}">
+                        <a class="dropdown-item" href="<c:url value="/employer/employer-info/add-or-update"/>">
+                            Chỉnh sửa thông tin nhà tuyển dụng
+                        </a>
+                    </c:if>
+                </div>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="<c:url value="/logout" />">
                     Đăng xuất

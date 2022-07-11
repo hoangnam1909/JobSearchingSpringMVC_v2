@@ -84,10 +84,10 @@
         <table class="table table-striped mt-5">
             <thead>
             <tr>
-                <th class="text-center" style="width: 15%"></th>
+                <th class="text-center" style="width: 13%"></th>
                 <th class="text-center" style="width: 5%">STT</th>
                 <th>Tiêu đề</th>
-                <th>Ngày đăng</th>
+                <th style="width: 11%">Ngày đăng</th>
                 <th>Loại việc làm</th>
                 <th>Lương khởi điểm (VNĐ)</th>
                 <th>Lương tối đa (VNĐ)</th>
@@ -97,25 +97,32 @@
             <c:forEach items="${jobPosts}" var="jp" varStatus="loop">
                 <tr>
                     <td style="text-align: center">
-                        <a style="margin-right: 10px"
+                        <a style="margin-right: 10px" class="info-color"
                            title="Xem chi tiết" onclick="viewInfo(${jp.id})"
                            data-toggle="modal" data-target="#exampleModal">
                             <i class="fa-solid fa-eye"></i>
                         </a>
 
-                        <a style="margin-right: 10px"
+                        <a style="margin-right: 10px" class="info-color"
                            href="<c:url value="/employer/post/add-or-update" />?id=${jp.id}"
                            title="Sửa">
                             <i class="fa-solid fa-pen"></i>
                         </a>
                         <a style="margin-right: 10px" href="<c:url value="/employer/post/delete" />?id=${jp.id}"
-                           class="confirmation" title="Xoá">
+                           class="confirmation info-color" title="Xoá">
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>
                     <td class="text-center">${(currentPage - 1) * maxItems + loop.index + 1}</td>
-                    <td> ${jp.title} </td>
+
                     <td>
+                        <a class="info-color"
+                           href="<c:url value="/employer/post/view" />?id=${jp.id}">
+                                ${jp.title}
+                        </a>
+                    </td>
+                    <td>
+
                         <c:if test="${jp.createdDate != null}">
                             <fmt:formatDate pattern="dd/MM/yyyy" value="${jp.createdDate}"/>
                         </c:if>

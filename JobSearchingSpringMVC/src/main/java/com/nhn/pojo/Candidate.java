@@ -43,7 +43,7 @@ public class Candidate {
     @Column(name = "informatics_certificate")
     private String informaticsCertificate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 

@@ -4,27 +4,24 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="container">
-    <h1 class="text-center dark-color" style="padding: 0 30px">THÔNG TIN VIỆC LÀM</h1>
+    <h1 class="text-center dark-color" style="padding: 0 30px">${jobPost.title}</h1>
 
     <section class="section about-section gray-bg" id="about">
         <div class="container m-0">
             <div class="row flex-row-reverse">
                 <div class="col-lg-6">
                     <div class="about-text go-to">
-                        <h4 class="dark-color mb-4">
-                            ${jobPost.title}
-                        </h4>
-                        <div class="row mb-2">
+                        <div class="row py-2" style="border-bottom: 1px solid lightgray">
                             <div class="col-md-5">
                                 <h5>Mô tả</h5>
                             </div>
                             <div class="col-md-7">
-                                <p>
+                                <p style="text-align: justify">
                                     ${jobPost.description}
                                 </p>
                             </div>
                         </div>
-                        <div class="row mb-2">
+                        <div class="row py-2" style="border-bottom: 1px solid lightgray">
                             <div class="col-md-5">
                                 <h5>Loại công việc</h5>
                             </div>
@@ -32,7 +29,7 @@
                                 <p>${jobType.name}</p>
                             </div>
                         </div>
-                        <div class="row mb-2">
+                        <div class="row py-2" style="border-bottom: 1px solid lightgray">
                             <div class="col-md-5">
                                 <h5>Lương khởi điểm</h5>
                             </div>
@@ -43,7 +40,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="row mb-2">
+                        <div class="row py-2" style="border-bottom: 1px solid lightgray">
                             <div class="col-md-5">
                                 <h5>Lương tối đa</h5>
                             </div>
@@ -54,7 +51,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="row mb-2">
+                        <div class="row py-2" style="border-bottom: 1px solid lightgray">
                             <div class="col-md-5">
                                 <h5>Nơi làm việc</h5>
                             </div>
@@ -62,7 +59,7 @@
                                 <p>${jobPost.location}</p>
                             </div>
                         </div>
-                        <div class="row mb-2">
+                        <div class="row py-2" style="border-bottom: 1px solid lightgray">
                             <div class="col-md-5">
                                 <h5>Ngày đăng</h5>
                             </div>
@@ -72,7 +69,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="row mb-2">
+                        <div class="row py-2" style="border-bottom: 1px solid lightgray">
                             <div class="col-md-5">
                                 <h5>Ngày hết hạn</h5>
                             </div>
@@ -99,6 +96,109 @@
             </div>
         </div>
     </section>
+</div>
+
+<div class="container">
+    <c:if test="${applyJobs.size() != 0}">
+        <table class="table table-striped mt-5">
+            <thead>
+            <tr>
+                <th class="text-center" style="width: 12%"></th>
+                <th class="text-center" style="width: 5%">STT</th>
+                <th>Họ và tên</th>
+                <th>Chuyên ngành</th>
+                <th class="text-center">Số năm kinh nghiệm</th>
+                <th>CV</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${applyJobs}" var="aj" varStatus="loop">
+                <tr id="apply-job-row-${aj.id}">
+                    <td style="text-align: center">
+                        <a style="margin-right: 10px; cursor: pointer"
+                           href="<c:url value="/employer/find/view" />?id=${aj.candidate.user.id}"
+                           class="info-color" title="Xem chi tiết">
+                            <i class="fa-solid fa-eye fa-lg"></i>
+                        </a>
+                        <a style="margin-right: 10px; cursor: pointer" class="info-color" title="Xoá"
+                           onclick="deleteApplyJob(${aj.id})">
+                            <i class="fa-solid fa-circle-minus fa-lg"></i>
+                        </a>
+                    </td>
+
+                    <td class="text-center">${(currentPage - 1) * maxItems + loop.index + 1}</td>
+
+                    <td>
+                        <a class="info-color text-left"
+                           href="<c:url value="/employer/find/view" />?id=${aj.candidate.user.id}">
+                                ${aj.candidate.user.fullName}
+                        </a>
+                    </td>
+
+                    <td class="text-left">
+                            ${aj.candidate.majoring}
+                    </td>
+
+                    <td class="text-center">
+                            ${aj.candidate.yearsExperience}
+                    </td>
+
+                    <td>
+                        <a class="info-color" href="${aj.candidate.cv}"
+                           target="_blank">
+                            Xem CV
+                        </a>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+
+        <c:if test="${sucMsg != null}">
+            <div class="alert alert-success" role="alert">
+                    ${sucMsg}
+            </div>
+        </c:if>
+
+        <c:if test="${errMsg != null}">
+            <div class="alert alert-danger" role="alert">
+                    ${errMsg}
+            </div>
+        </c:if>
+
+        <ul class="pagination d-flex justify-content-center mt-2 mx-auto">
+            <c:forEach begin="1" end="${Math.ceil(counter/maxItems)}" var="page">
+                <li class="page-item">
+                    <a class="page-link" href="${url}?page=${page}">${page}</a>
+                </li>
+            </c:forEach>
+        </ul>
+    </c:if>
+</div>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary d-none" id="lauch-modal"
+        data-toggle="modal" data-target="#exampleModal">
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <style>

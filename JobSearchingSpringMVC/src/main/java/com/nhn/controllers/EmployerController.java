@@ -1,9 +1,6 @@
 package com.nhn.controllers;
 
-import com.nhn.pojo.Employer;
-import com.nhn.pojo.JobPost;
-import com.nhn.pojo.JobType;
-import com.nhn.pojo.User;
+import com.nhn.pojo.*;
 import com.nhn.service.*;
 import com.nhn.utils.utils;
 import com.nhn.validator.JobPostValidator;
@@ -42,6 +39,9 @@ public class EmployerController {
 
     @Autowired
     private JobPostValidator jobPostValidator;
+
+    @Autowired
+    private ApplyJobService applyJobService;
 
     private void loadAllList(Model model) {
         List<JobType> jobTypes = jobTypeService.getJobTypes("", 0);
@@ -131,6 +131,9 @@ public class EmployerController {
 
                 JobType jobType = this.jobTypeService.getById(jobPost.getJobType().getId());
                 model.addAttribute("jobType", jobType);
+
+                List<ApplyJob> applyJobs = applyJobService.getApplyJob(id);
+                model.addAttribute("applyJobs", applyJobs);
             } else {
                 return "redirect:/access-denied";
             }

@@ -3,6 +3,7 @@ package com.nhn.service.impl;
 import com.nhn.pojo.ApplyJob;
 import com.nhn.pojo.Candidate;
 import com.nhn.pojo.JobPost;
+import com.nhn.pojo.User;
 import com.nhn.repository.ApplyJobRepository;
 import com.nhn.service.ApplyJobService;
 import com.nhn.service.CandidateService;
@@ -10,6 +11,8 @@ import com.nhn.service.JobPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -45,4 +48,20 @@ public class ApplyJobServiceImpl implements ApplyJobService {
     public boolean delete(ApplyJob applyJob) {
         return this.applyJobRepository.delete(applyJob);
     }
+
+    @Override
+    public boolean delete(int applyJobId) {
+        ApplyJob applyJob =  applyJobRepository.getById(applyJobId);
+
+        if (applyJob == null)
+            return false;
+
+        return applyJobRepository.delete(applyJob);
+    }
+
+    @Override
+    public List<ApplyJob> getApplyJob(int jobId) {
+        return this.applyJobRepository.getApplyJob(jobId);
+    }
+
 }

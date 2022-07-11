@@ -1,23 +1,21 @@
 package com.nhn.controllers;
 
+import com.nhn.pojo.ApplyJob;
 import com.nhn.pojo.Comment;
 import com.nhn.pojo.JobPost;
-import com.nhn.pojo.User;
 import com.nhn.service.ApplyJobService;
 import com.nhn.service.CommentService;
 import com.nhn.service.JobPostService;
-import com.nhn.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 @RestController
-public class ApiCommentController {
+public class ApiController {
 
     @Autowired
     private CommentService commentService;
@@ -81,6 +79,21 @@ public class ApiCommentController {
         }
 
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "/api/apply-job/delete/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deleteUser(@PathVariable("id") int id) {
+        try {
+            ApplyJob applyJob = applyJobService.getById(id);
+            if (applyJob == null) {
+                return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        applyJobService.delete(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
 }

@@ -24,8 +24,12 @@ h1 {
     margin: 0 0 6px !important;
 }
 
-a:hover{
+a:hover {
     text-decoration: none !important;
+}
+
+.info-color{
+    color: #17a2b8 !important;
 }
 
 .back-to-top {

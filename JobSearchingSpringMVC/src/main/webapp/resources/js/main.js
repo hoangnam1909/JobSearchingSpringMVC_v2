@@ -206,3 +206,26 @@ function applyJob(candidateId, jobId) {
         document.getElementById("button-submit-".concat(jobId)).style.display = 'none'
     })
 }
+
+function deleteApplyJob(applyJobId) {
+    let url = '/JobSearchingSpringMVC/api/apply-job/delete/'.concat(applyJobId)
+    fetch(url, {
+        method: 'DELETE'
+    })
+        .then(function (res) {
+            if (res.status === 202) {
+                let lauchModalButton = document.getElementById('lauch-modal')
+                let modalBodyElement = document.getElementById('modal-body')
+                let rowElement = document.getElementById('apply-job-row-'.concat(applyJobId))
+
+                rowElement.innerHTML = ''
+
+                modalBodyElement.innerHTML = ''
+                modalBodyElement.innerHTML = `
+                Xoá thành công đơn ứng tuyển
+                `
+
+                lauchModalButton.click()
+            }
+        })
+}
