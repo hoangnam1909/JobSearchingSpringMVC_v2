@@ -225,8 +225,8 @@ function deleteApplyJob(applyJobId) {
 
                 modalBodyElement.innerHTML = ''
                 modalBodyElement.innerHTML = `
-                Xoá thành công đơn ứng tuyển
-                `
+            Xoá thành công đơn ứng tuyển
+            `
 
                 launchModalButton.click()
             }

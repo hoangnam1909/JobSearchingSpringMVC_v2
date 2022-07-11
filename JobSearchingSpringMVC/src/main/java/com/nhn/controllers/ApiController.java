@@ -12,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -94,6 +96,20 @@ public class ApiController {
 
         applyJobService.delete(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @RequestMapping(value = "/api/get-all-jobs", method = RequestMethod.GET, produces = {
+            MediaType.APPLICATION_JSON_VALUE
+    })
+    public ResponseEntity<List<JobPost>> listAllUsers(@RequestBody (required = false) Map<String, String> params) {
+        List<JobPost> jobPosts = jobPostService.getPosts(params, Integer.parseInt(params.getOrDefault("page", "1")),
+                Integer.parseInt(params.getOrDefault("maxItems", "0")));
+
+        if (jobPosts.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+        }
+
+        return new ResponseEntity<>(jobPosts, HttpStatus.OK);
     }
 
 }
