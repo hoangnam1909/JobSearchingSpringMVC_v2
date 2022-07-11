@@ -177,7 +177,7 @@
 </div>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary d-none" id="lauch-modal"
+<button type="button" class="btn btn-primary d-none" id="launch-modal"
         data-toggle="modal" data-target="#exampleModal">
 </button>
 

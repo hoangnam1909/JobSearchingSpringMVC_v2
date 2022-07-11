@@ -7,10 +7,9 @@
 
     <div class="row">
         <div class="col-3" style="border-right: 1px solid lightgray">
-            <div class="position-fixed">
+            <div style="position: sticky; top: 80px">
                 <h3 class="text-center dark-color m-0 py-2">BỘ LỌC</h3>
                 <section class="d-flex px-3">
-
                     <form class="mt-3 w-100">
                         <div class="form-group">
                             <label for="title">Tiêu đề</label>
@@ -86,7 +85,7 @@
                                     <div class="g-mb-15">
                                         <a class="text-decoration-none"
                                            href="<c:url value="/candidate/view-post"/>?id=${jp.id}">
-                                            <h3 class="mb-3" style="color: #1ea2b6">
+                                            <h3 class="text-info mb-3">
                                                     ${jp.title}
                                             </h3>
                                         </a>

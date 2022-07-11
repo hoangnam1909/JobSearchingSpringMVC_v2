@@ -140,13 +140,16 @@ function viewFullInfoJob(jobId) {
             console.info(data);
 
             let area = document.getElementById("modal-body-".concat(jobId));
+            let jobPostUrl = window.location.origin.concat('/JobSearchingSpringMVC/candidate/view-post?id='.concat(jobId))
+            console.log(jobPostUrl)
+
             moment.locale('vi');
 
             area.innerHTML = ''
 
             area.innerHTML = `                         
                 <div class="g-mb-15">
-                    <a class="text-decoration-none">
+                    <a class="text-decoration-none" href="${jobPostUrl}" target="_blank" >
                         <h3 class="mb-3" style="color: #1ea2b6">
                                 ${data.title}
                         </h3>
@@ -214,7 +217,7 @@ function deleteApplyJob(applyJobId) {
     })
         .then(function (res) {
             if (res.status === 202) {
-                let lauchModalButton = document.getElementById('lauch-modal')
+                let launchModalButton = document.getElementById('launch-modal')
                 let modalBodyElement = document.getElementById('modal-body')
                 let rowElement = document.getElementById('apply-job-row-'.concat(applyJobId))
 
@@ -225,7 +228,7 @@ function deleteApplyJob(applyJobId) {
                 Xoá thành công đơn ứng tuyển
                 `
 
-                lauchModalButton.click()
+                launchModalButton.click()
             }
         })
 }

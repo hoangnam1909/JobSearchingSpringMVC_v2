@@ -46,7 +46,7 @@
                         <div class="g-mb-15">
                             <a class="text-decoration-none"
                                href="<c:url value="/candidate/view-employer"/>?employerId=${emp.id}">
-                                <h3 class="g-color-gray-dark-v1 mb-3">
+                                <h3 class="text-info mb-3">
                                         ${emp.name}
                                 </h3>
                             </a>
@@ -73,7 +73,7 @@
                             <h5 class="g-color-gray-dark-v1 mb-3">
                                 Trang web:
                                 <span style="font-weight: 400">
-                                    <a target="_blank" href="${emp.website}"> ${emp.website} </a>
+                                    <a target="_blank" class="text-info" href="${emp.website}"> ${emp.website} </a>
                                 </span>
                             </h5>
                         </c:if>
