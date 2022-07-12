@@ -28,6 +28,14 @@ a:hover {
     text-decoration: none !important;
 }
 
+.active a{
+    background-color: #17a2b8 !important;
+}
+
+.page-link{
+    border-color: #c1c1c1 !important;
+}
+
 .info-color{
     color: #17a2b8 !important;
 }

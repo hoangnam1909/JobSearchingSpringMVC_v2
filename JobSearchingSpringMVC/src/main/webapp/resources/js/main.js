@@ -1,3 +1,5 @@
+moment.locale('vi');
+
 $(document).ready(function () {
     $("#password").val("");
     $("#confirmPassword").val("");
@@ -75,7 +77,7 @@ function viewInfo(postID) {
             console.info(data);
 
             let area = document.getElementById("modal-body");
-            moment.locale('vi');
+            // moment.locale('vi');
 
             area.innerHTML = ''
 
@@ -105,7 +107,7 @@ function addComment(employerId, userId) {
             console.info(data);
 
             let area = document.getElementById("commentArea");
-            moment.locale('vi');
+            // moment.locale('vi');
 
             area.innerHTML = `                         
               <div class="row">
@@ -143,7 +145,7 @@ function viewFullInfoJob(jobId) {
             let jobPostUrl = window.location.origin.concat('/JobSearchingSpringMVC/candidate/view-post?id='.concat(jobId))
             console.log(jobPostUrl)
 
-            moment.locale('vi');
+            // moment.locale('vi');
 
             area.innerHTML = ''
 
@@ -167,16 +169,20 @@ function viewFullInfoJob(jobId) {
                 <h5 class="g-color-gray-dark-v1 mb-3">
                     Lương khởi điểm:
                     <span style="font-weight: 400">
-                        <fmt:formatNumber type="number" maxFractionDigits="3"
-                                          value="${data.beginningSalary}"/> VNĐ
+                        ${new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(data.beginningSalary)}
                     </span>
                 </h5>
 
                 <h5 class="g-color-gray-dark-v1 mb-3">
                     Lương tối đa:
                     <span style="font-weight: 400">
-                        <fmt:formatNumber type="number" maxFractionDigits="3"
-                                          value="${data.endingSalary}"/> VNĐ
+                        ${new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(data.endingSalary)}
                     </span>
                 </h5>
         ` + area.innerHTML
@@ -233,11 +239,38 @@ function deleteApplyJob(applyJobId) {
         })
 }
 
-function loadJobs() {
+function removeActivePagination() {
+    let pageButton = document.getElementsByClassName('page-item')
+    for (let i = 0; i < pageButton[0].childNodes.length; i++) {
+        console.log(pageButton[i].childNodes[1].textContent)
+        if (pageButton[i].classList.contains('active'))
+            pageButton[i].classList.remove('active')
+    }
+}
+
+function loadJobs(pageInput) {
+    const queryString = window.location.search;
+    console.log(queryString);
+    const urlParams = new URLSearchParams(queryString);
+
+    removeActivePagination()
+    let page = pageInput;
+    if (page === undefined) {
+        page = urlParams.get('page') || '1'
+    }
+
+    let pageButton = document.getElementsByClassName('page-item')
+    for (let i = 0; i < pageButton[0].childNodes.length; i++) {
+        console.log(pageButton[i].childNodes[1].textContent)
+        if (pageButton[i].childNodes[1].textContent == page)
+            pageButton[i].classList.add('active')
+    }
+
     fetch("/JobSearchingSpringMVC/api/load-jobs", {
         method: 'post',
         body: JSON.stringify({
-            "maxItems": 3
+            "page": page,
+            "maxItems": 5
         }),
         headers: {
             "Content-Type": "application/json"
@@ -280,8 +313,9 @@ function loadJobs() {
                                     <c:if test="${data[i].createdDate != null}">
                                         <h5 class="g-color-gray-dark-v1 mb-3">
                                             Ngày đăng: <span style="font-weight: 400">
-                                    <fmt:formatDate pattern="HH:mm:ss - dd/MM/yyyy" value="${data[i].createdDate}"/>
-                                </span>
+                                                ${moment(data[i].createdDate).format('LLLL').charAt(0).toUpperCase()
+                                                    + moment(data[i].createdDate).format('LLLL').slice(1)}
+                                            </span>
                                         </h5>
                                     </c:if>
 
@@ -300,18 +334,20 @@ function loadJobs() {
                                     <c:if test="${data[i].beginningSalary != null}">
                                         <h5 class="g-color-gray-dark-v1 mb-3">
                                             Lương khởi điểm: <span style="font-weight: 400">
-                                    <fmt:formatNumber type="number" maxFractionDigits="3"
-                                                      value="${data[i].beginningSalary}"/> VNĐ
-                            </span>
+                                            ${new Intl.NumberFormat('vi-VN',
+                {style: 'currency', currency: 'VND'})
+                .format(data[i].beginningSalary)}
+                                        </span>
                                         </h5>
                                     </c:if>
 
                                     <c:if test="${data[i].endingSalary != null}">
                                         <h5 class="g-color-gray-dark-v1 mb-3">
                                             Lương tối đa: <span style="font-weight: 400">
-                                <fmt:formatNumber type="number" maxFractionDigits="3"
-                                                  value="${data[i].endingSalary}"/> VNĐ
-                            </span>
+                                                ${new Intl.NumberFormat('vi-VN',
+                {style: 'currency', currency: 'VND'})
+                .format(data[i].endingSalary)}
+                                            </span>
                                         </h5>
                                     </c:if>
 

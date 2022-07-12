@@ -4,7 +4,6 @@
 
 <div class="container">
     <h1 class="text-center dark-color mb-5">TÌM KIẾM VIỆC LÀM</h1>
-    <button onclick="loadJobs()">click me</button>
     <div class="row">
         <div class="col-3" style="border-right: 1px solid lightgray">
             <div style="position: sticky; top: 80px">
@@ -60,11 +59,12 @@
                 </section>
             </div>
         </div>
+
         <div class="col px-4">
             <ul class="pagination d-flex justify-content-end m-0">
                 <c:forEach begin="1" end="${Math.ceil(counter/maxItems)}" var="page">
                     <li class="page-item">
-                        <a class="page-link" onclick="updateQueryStringParameter('page', ${page})">${page}</a>
+                        <a class="page-link" onclick="loadJobs(${page})">${page}</a>
                     </li>
                 </c:forEach>
             </ul>
@@ -173,6 +173,10 @@
 </div>
 
 <script>
+    window.onload = (event) => {
+        loadJobs()
+    };
+
     $(document).ready(function () {
         $("form").submit(function () {
             $("input, select").each(function (index, obj) {

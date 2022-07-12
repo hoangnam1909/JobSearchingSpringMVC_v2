@@ -168,10 +168,9 @@ public class CandidateController {
             model.addAttribute("sort", sort);
         }
 
-        int maxItems = 20;
-        model.addAttribute("maxItems", maxItems);
+        model.addAttribute("maxItems", jobPostService.getMaxItemsInPage());
 
-        List<JobPost> jobPosts = jobPostService.getPosts(pre, page, maxItems);
+        List<JobPost> jobPosts = jobPostService.getPosts(pre, page, 0);
         List<JobPost> jobPostsSize = jobPostService.getPosts(pre, 0, 0);
         model.addAttribute("jobPosts", jobPosts);
 
