@@ -49,9 +49,9 @@ public class JobPost {
     @Column(name = "expired_date")
     private Date expiredDate;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "posted_by_user", nullable = false)
-    @JsonIgnore
+//    @JsonIgnore
     private User postedByUser;
 
     @ManyToOne(fetch = FetchType.LAZY)

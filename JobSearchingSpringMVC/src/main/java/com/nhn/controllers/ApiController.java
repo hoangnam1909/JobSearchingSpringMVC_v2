@@ -98,7 +98,7 @@ public class ApiController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/api/get-all-jobs", method = RequestMethod.GET, produces = {
+    @RequestMapping(value = "/api/load-jobs", method = RequestMethod.POST, produces = {
             MediaType.APPLICATION_JSON_VALUE
     })
     public ResponseEntity<List<JobPost>> listAllUsers(@RequestBody (required = false) Map<String, String> params) {
