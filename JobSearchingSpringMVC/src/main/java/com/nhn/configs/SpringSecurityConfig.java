@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,6 +18,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import java.util.Properties;
 
 @Configuration
 @EnableWebSecurity
@@ -52,6 +56,29 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         ));
 
         return c;
+    }
+
+    @Bean
+    public JavaMailSender configureJavaMailSender(){
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setUsername("dev.nhn1909@gmail.com");
+//        mailSender.setPassword("NguyenHoangNamDev1909");
+        mailSender.setPassword("vrbbqbxxvhakjzve");
+
+        mailSender.setPort(587);
+
+        Properties mailProperties = new Properties();
+        mailProperties.put("mail.smtp.starttls.enable", "true");
+        mailProperties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        mailProperties.put("mail.smtp.auth", "true");
+        mailProperties.put("mail.debug", "true");
+        mailProperties.put("mail.transport,protocol", "smtp");
+
+        mailSender.setJavaMailProperties(mailProperties);
+
+        return mailSender;
     }
 
     @Override

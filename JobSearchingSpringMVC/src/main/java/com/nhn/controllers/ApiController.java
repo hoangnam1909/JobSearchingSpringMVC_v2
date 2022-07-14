@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -27,6 +29,9 @@ public class ApiController {
 
     @Autowired
     private JobPostService jobPostService;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     @PostMapping(value = "/api/add-comment", produces = {
             MediaType.APPLICATION_JSON_VALUE
@@ -110,6 +115,30 @@ public class ApiController {
         }
 
         return new ResponseEntity<>(jobPosts, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/api/send-email", produces = {
+            MediaType.APPLICATION_JSON_VALUE
+    })
+    public ResponseEntity<Void> sendEmail(@RequestBody Map<String, String> params) {
+        try {
+            String to = params.get("to");
+            String subject = params.get("subject");
+            String content = params.get("content");
+
+            SimpleMailMessage newEmail = new SimpleMailMessage();
+            newEmail.setTo(to);
+            newEmail.setSubject(subject);
+            newEmail.setText(content);
+
+            mailSender.send(newEmail);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
 }
