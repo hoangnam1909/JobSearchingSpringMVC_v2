@@ -1,9 +1,11 @@
 package com.nhn.controllers;
 
 import com.nhn.pojo.ApplyJob;
+import com.nhn.pojo.Candidate;
 import com.nhn.pojo.Comment;
 import com.nhn.pojo.JobPost;
 import com.nhn.service.ApplyJobService;
+import com.nhn.service.CandidateService;
 import com.nhn.service.CommentService;
 import com.nhn.service.JobPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class ApiController {
 
     @Autowired
     private JavaMailSender mailSender;
+
+    @Autowired
+    private CandidateService candidateService;
 
     @PostMapping(value = "/api/add-comment", produces = {
             MediaType.APPLICATION_JSON_VALUE
@@ -88,6 +93,21 @@ public class ApiController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    @GetMapping(value = "/api/candidate-info/{candidateId}", produces = {
+            MediaType.APPLICATION_JSON_VALUE
+    })
+    public ResponseEntity<Candidate> candidateInfo(@PathVariable("candidateId") int candidateId) {
+        try {
+            Candidate candidate = this.candidateService.getById(candidateId);
+
+            return new ResponseEntity<>(candidate, HttpStatus.OK);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
     @RequestMapping(value = "/api/apply-job/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteUser(@PathVariable("id") int id) {
         try {
@@ -122,12 +142,12 @@ public class ApiController {
     })
     public ResponseEntity<Void> sendEmail(@RequestBody Map<String, String> params) {
         try {
-            String to = params.get("to");
+            String sendTo = params.get("sendTo");
             String subject = params.get("subject");
             String content = params.get("content");
 
             SimpleMailMessage newEmail = new SimpleMailMessage();
-            newEmail.setTo(to);
+            newEmail.setTo(sendTo);
             newEmail.setSubject(subject);
             newEmail.setText(content);
 

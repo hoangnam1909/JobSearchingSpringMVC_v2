@@ -2,7 +2,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<script src="<c:url value="/resources/js/find-job.js"/>"></script>
+
 <div class="container">
+    <button onclick="testLaunch(1)">click me!!!</button>
+
     <h1 class="text-center dark-color mb-5">TÌM KIẾM VIỆC LÀM</h1>
     <div class="row">
         <div class="col-3" style="border-right: 1px solid lightgray">
@@ -64,7 +68,8 @@
             <ul class="pagination d-flex justify-content-end m-0">
                 <c:forEach begin="1" end="${Math.ceil(counter/maxItems)}" var="page">
                     <li class="page-item">
-                        <a class="page-link" onclick="loadJobs(${page})">${page}</a>
+                        <a class="page-link"
+                           onclick="loadJobs(${page})">${page}</a>
                     </li>
                 </c:forEach>
             </ul>
@@ -73,106 +78,108 @@
 
             </div>
 
-<%--            <c:forEach items="${jobPosts}" var="jp" varStatus="loop">--%>
-<%--                <div class="container m-0 p-0 pt-2">--%>
-<%--                    <div class="col">--%>
-<%--                        <div class="row">--%>
-<%--                            <div class="media g-mb-30 media-comment w-100">--%>
-<%--                                <a class="text-decoration-none"--%>
-<%--                                   href="<c:url value="/candidate/view-post"/>?id=${jp.id}">--%>
-<%--                                    <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15"--%>
-<%--                                         src="${userService.getById(jp.postedByUser.id).avatar}"--%>
-<%--                                         alt="Image Description">--%>
-<%--                                </a>--%>
+            <%--            <c:forEach items="${jobPosts}" var="jp" varStatus="loop">--%>
+            <%--                <div class="container m-0 p-0 pt-2">--%>
+            <%--                    <div class="col">--%>
+            <%--                        <div class="row">--%>
+            <%--                            <div class="media g-mb-30 media-comment w-100">--%>
+            <%--                                <a class="text-decoration-none"--%>
+            <%--                                   href="<c:url value="/candidate/view-post"/>?id=${jp.id}">--%>
+            <%--                                    <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15"--%>
+            <%--                                         src="${userService.getById(jp.postedByUser.id).avatar}"--%>
+            <%--                                         alt="Image Description">--%>
+            <%--                                </a>--%>
 
-<%--                                <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">--%>
-<%--                                    <div class="g-mb-15">--%>
-<%--                                        <a class="text-decoration-none"--%>
-<%--                                           href="<c:url value="/candidate/view-post"/>?id=${jp.id}">--%>
-<%--                                            <h3 class="text-info mb-3">--%>
-<%--                                                    ${jp.title}--%>
-<%--                                            </h3>--%>
-<%--                                        </a>--%>
-<%--                                    </div>--%>
+            <%--                                <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">--%>
+            <%--                                    <div class="g-mb-15">--%>
+            <%--                                        <a class="text-decoration-none"--%>
+            <%--                                           href="<c:url value="/candidate/view-post"/>?id=${jp.id}">--%>
+            <%--                                            <h3 class="text-info mb-3">--%>
+            <%--                                                    ${jp.title}--%>
+            <%--                                            </h3>--%>
+            <%--                                        </a>--%>
+            <%--                                    </div>--%>
 
-<%--                                    <c:if test="${jp.createdDate != null}">--%>
-<%--                                        <h5 class="g-color-gray-dark-v1 mb-3">--%>
-<%--                                            Ngày đăng: <span style="font-weight: 400">--%>
-<%--                                    <fmt:formatDate pattern="HH:mm:ss - dd/MM/yyyy" value="${jp.createdDate}"/>--%>
-<%--                                </span>--%>
-<%--                                        </h5>--%>
-<%--                                    </c:if>--%>
+            <%--                                    <c:if test="${jp.createdDate != null}">--%>
+            <%--                                        <h5 class="g-color-gray-dark-v1 mb-3">--%>
+            <%--                                            Ngày đăng: <span style="font-weight: 400">--%>
+            <%--                                    <fmt:formatDate pattern="HH:mm:ss - dd/MM/yyyy" value="${jp.createdDate}"/>--%>
+            <%--                                </span>--%>
+            <%--                                        </h5>--%>
+            <%--                                    </c:if>--%>
 
-<%--                                    <c:if test="${jp.description.length() > 0}">--%>
-<%--                                        <h5 class="g-color-gray-dark-v1 mb-3">--%>
-<%--                                            Mô tả: <span style="font-weight: 400"> ${jp.description} </span>--%>
-<%--                                        </h5>--%>
-<%--                                    </c:if>--%>
+            <%--                                    <c:if test="${jp.description.length() > 0}">--%>
+            <%--                                        <h5 class="g-color-gray-dark-v1 mb-3">--%>
+            <%--                                            Mô tả: <span style="font-weight: 400"> ${jp.description} </span>--%>
+            <%--                                        </h5>--%>
+            <%--                                    </c:if>--%>
 
-<%--                                    <c:if test="${jp.location.length() > 0}">--%>
-<%--                                        <h5 class="g-color-gray-dark-v1 mb-3">--%>
-<%--                                            Địa điểm: <span style="font-weight: 400"> ${jp.location} </span>--%>
-<%--                                        </h5>--%>
-<%--                                    </c:if>--%>
+            <%--                                    <c:if test="${jp.location.length() > 0}">--%>
+            <%--                                        <h5 class="g-color-gray-dark-v1 mb-3">--%>
+            <%--                                            Địa điểm: <span style="font-weight: 400"> ${jp.location} </span>--%>
+            <%--                                        </h5>--%>
+            <%--                                    </c:if>--%>
 
-<%--                                    <c:if test="${jp.beginningSalary != null}">--%>
-<%--                                        <h5 class="g-color-gray-dark-v1 mb-3">--%>
-<%--                                            Lương khởi điểm: <span style="font-weight: 400">--%>
-<%--                                    <fmt:formatNumber type="number" maxFractionDigits="3"--%>
-<%--                                                      value="${jp.beginningSalary}"/> VNĐ--%>
-<%--                            </span>--%>
-<%--                                        </h5>--%>
-<%--                                    </c:if>--%>
+            <%--                                    <c:if test="${jp.beginningSalary != null}">--%>
+            <%--                                        <h5 class="g-color-gray-dark-v1 mb-3">--%>
+            <%--                                            Lương khởi điểm: <span style="font-weight: 400">--%>
+            <%--                                    <fmt:formatNumber type="number" maxFractionDigits="3"--%>
+            <%--                                                      value="${jp.beginningSalary}"/> VNĐ--%>
+            <%--                            </span>--%>
+            <%--                                        </h5>--%>
+            <%--                                    </c:if>--%>
 
-<%--                                    <c:if test="${jp.endingSalary != null}">--%>
-<%--                                        <h5 class="g-color-gray-dark-v1 mb-3">--%>
-<%--                                            Lương tối đa: <span style="font-weight: 400">--%>
-<%--                                <fmt:formatNumber type="number" maxFractionDigits="3"--%>
-<%--                                                  value="${jp.endingSalary}"/> VNĐ--%>
-<%--                            </span>--%>
-<%--                                        </h5>--%>
-<%--                                    </c:if>--%>
+            <%--                                    <c:if test="${jp.endingSalary != null}">--%>
+            <%--                                        <h5 class="g-color-gray-dark-v1 mb-3">--%>
+            <%--                                            Lương tối đa: <span style="font-weight: 400">--%>
+            <%--                                <fmt:formatNumber type="number" maxFractionDigits="3"--%>
+            <%--                                                  value="${jp.endingSalary}"/> VNĐ--%>
+            <%--                            </span>--%>
+            <%--                                        </h5>--%>
+            <%--                                    </c:if>--%>
 
-<%--                                    <!-- Button trigger modal -->--%>
-<%--                                    <button type="button" class="btn btn-info" data-toggle="modal"--%>
-<%--                                            data-target="#exampleModalCenter${jp.id}"--%>
-<%--                                            onclick="viewFullInfoJob(${jp.id})">--%>
-<%--                                        Đăng ký ứng tuyển--%>
-<%--                                    </button>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
+            <%--                                    <!-- Button trigger modal -->--%>
+            <%--                                    <button type="button" class="btn btn-info" data-toggle="modal"--%>
+            <%--                                            data-target="#exampleModalCenter${jp.id}"--%>
+            <%--                                            onclick="viewFullInfoJob(${jp.id})">--%>
+            <%--                                        Đăng ký ứng tuyển--%>
+            <%--                                    </button>--%>
+            <%--                                </div>--%>
+            <%--                            </div>--%>
+            <%--                        </div>--%>
+            <%--                    </div>--%>
+            <%--                </div>--%>
 
-<%--                <!-- Modal -->--%>
-<%--                <div class="modal fade" id="exampleModalCenter${jp.id}" tabindex="-1" role="dialog"--%>
-<%--                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">--%>
-<%--                    <div class="modal-dialog modal-dialog-centered" role="document">--%>
-<%--                        <div class="modal-content">--%>
-<%--                            <div class="modal-header px-4">--%>
-<%--                                <h5 class="modal-title" id="exampleModalLongTitle">Xác nhận nộp đơn ứng tuyển</h5>--%>
-<%--                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">--%>
-<%--                                    <span aria-hidden="true">&times;</span>--%>
-<%--                                </button>--%>
-<%--                            </div>--%>
-<%--                            <div class="modal-body px-4" id="modal-body-${jp.id}"></div>--%>
-<%--                            <div class="modal-footer px-4">--%>
-<%--                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>--%>
-<%--                                <button type="button" class="btn btn-info" id="button-submit-${jp.id}"--%>
-<%--                                        onclick="applyJob(${candidateService.getByUserId(currentUser.id).id}, ${jp.id})">--%>
-<%--                                    Nộp đơn ứng tuyển--%>
-<%--                                </button>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </c:forEach>--%>
+            <%--                <!-- Modal -->--%>
+            <%--                <div class="modal fade" id="exampleModalCenter${jp.id}" tabindex="-1" role="dialog"--%>
+            <%--                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">--%>
+            <%--                    <div class="modal-dialog modal-dialog-centered" role="document">--%>
+            <%--                        <div class="modal-content">--%>
+            <%--                            <div class="modal-header px-4">--%>
+            <%--                                <h5 class="modal-title" id="exampleModalLongTitle">Xác nhận nộp đơn ứng tuyển</h5>--%>
+            <%--                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">--%>
+            <%--                                    <span aria-hidden="true">&times;</span>--%>
+            <%--                                </button>--%>
+            <%--                            </div>--%>
+            <%--                            <div class="modal-body px-4" id="modal-body-${jp.id}"></div>--%>
+            <%--                            <div class="modal-footer px-4">--%>
+            <%--                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>--%>
+            <%--                                <button type="button" class="btn btn-info" id="button-submit-${jp.id}"--%>
+            <%--                                        onclick="applyJob(${candidateService.getByUserId(currentUser.id).id}, ${jp.id})">--%>
+            <%--                                    Nộp đơn ứng tuyển--%>
+            <%--                                </button>--%>
+            <%--                            </div>--%>
+            <%--                        </div>--%>
+            <%--                    </div>--%>
+            <%--                </div>--%>
+            <%--            </c:forEach>--%>
         </div>
     </div>
 </div>
 
 <script>
+    let currentCandidateId = ${candidateService.getByUserId(currentUser.id).id}
+
     window.onload = (event) => {
         loadJobs()
     };

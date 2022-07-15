@@ -17,6 +17,7 @@ public class Candidate {
     private int yearsExperience;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate")
+    @JsonIgnore
     private Collection<ApplyJob> applyJobCollection;
 
     @Id
