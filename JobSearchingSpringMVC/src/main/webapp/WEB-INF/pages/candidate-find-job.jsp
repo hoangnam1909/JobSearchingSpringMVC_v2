@@ -5,7 +5,7 @@
 <script src="<c:url value="/resources/js/find-job.js"/>"></script>
 
 <div class="container">
-    <button onclick="testLaunch(1)">click me!!!</button>
+    <button onclick="search()">click me!!!</button>
 
     <h1 class="text-center dark-color mb-5">TÌM KIẾM VIỆC LÀM</h1>
     <div class="row">
@@ -13,10 +13,10 @@
             <div style="position: sticky; top: 80px">
                 <h3 class="text-center dark-color m-0 py-2">BỘ LỌC</h3>
                 <section class="d-flex px-3">
-                    <form class="mt-3 w-100">
+                    <form class="mt-3 w-100" action="javascript:void(0)">
                         <div class="form-group">
-                            <label for="title">Tiêu đề</label>
-                            <input class="form-control" name="title" id="title" value="${title}">
+                            <label for="job-title">Tiêu đề</label>
+                            <input class="form-control" name="title" id="job-title" value="${title}">
                         </div>
 
                         <div class="form-group">
@@ -56,7 +56,7 @@
                         </div>
 
                         <div class="d-flex justify-content-between">
-                            <button type="submit" class="btn btn-info">Tra cứu</button>
+                            <button type="submit" class="btn btn-info" onclick="loadJobs()">Tra cứu</button>
                             <input type="button" class="btn btn-dark" onclick="removeFilter()" value="Loại bỏ bộ lọc"/>
                         </div>
                     </form>
@@ -66,113 +66,121 @@
 
         <div class="col px-4">
             <ul class="pagination d-flex justify-content-end m-0">
-                <c:forEach begin="1" end="${Math.ceil(counter/maxItems)}" var="page">
+                <c:forEach begin="1" end="${Math.ceil(counter/jobPostService.maxItemsInPage)}" var="page">
                     <li class="page-item">
                         <a class="page-link"
-                           onclick="loadJobs(${page})">${page}</a>
+                           onclick="loadJobs(${page}, ${jobPostService.maxItemsInPage})">${page}</a>
                     </li>
                 </c:forEach>
             </ul>
 
             <div id="display-jobs">
+                <c:forEach items="${jobPosts}" var="jp" varStatus="loop">
+                    <div class="container m-0 p-0 pt-2">
+                        <div class="col">
+                            <div class="row">
+                                <div class="media g-mb-30 media-comment w-100">
+                                    <a class="text-decoration-none"
+                                       href="<c:url value="/candidate/view-post"/>?id=${jp.id}">
+                                        <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15"
+                                             src="${userService.getById(jp.postedByUser.id).avatar}"
+                                             alt="Image Description">
+                                    </a>
 
+                                    <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
+                                        <div class="g-mb-15">
+                                            <a class="text-decoration-none"
+                                               href="<c:url value="/candidate/view-post"/>?id=${jp.id}">
+                                                <h3 class="text-info mb-3">
+                                                        ${jp.title}
+                                                </h3>
+                                            </a>
+                                        </div>
+
+                                        <c:if test="${jp.createdDate != null}">
+                                            <h5 class="g-color-gray-dark-v1 mb-3">
+                                                Ngày đăng: <span style="font-weight: 400">
+                                                    <fmt:formatDate pattern="HH:mm:ss - dd/MM/yyyy"
+                                                                    value="${jp.createdDate}"/>
+                                                </span>
+                                            </h5>
+                                        </c:if>
+
+                                        <c:if test="${jp.description.length() > 0}">
+                                            <h5 class="g-color-gray-dark-v1 mb-3">
+                                                Mô tả: <span style="font-weight: 400"> ${jp.description} </span>
+                                            </h5>
+                                        </c:if>
+
+                                        <c:if test="${jp.location.length() > 0}">
+                                            <h5 class="g-color-gray-dark-v1 mb-3">
+                                                Địa điểm: <span style="font-weight: 400"> ${jp.location} </span>
+                                            </h5>
+                                        </c:if>
+
+                                        <c:if test="${jp.beginningSalary != null}">
+                                            <h5 class="g-color-gray-dark-v1 mb-3">
+                                                Lương khởi điểm: <span style="font-weight: 400">
+                                                    <fmt:formatNumber type="number" maxFractionDigits="3"
+                                                                      value="${jp.beginningSalary}"/> VNĐ
+                                            </span>
+                                            </h5>
+                                        </c:if>
+
+                                        <c:if test="${jp.endingSalary != null}">
+                                            <h5 class="g-color-gray-dark-v1 mb-3">
+                                                Lương tối đa: <span style="font-weight: 400">
+                                                <fmt:formatNumber type="number" maxFractionDigits="3"
+                                                                  value="${jp.endingSalary}"/> VNĐ
+                                            </span>
+                                            </h5>
+                                        </c:if>
+
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-info" data-toggle="modal"
+                                                data-target="#exampleModalCenter${jp.id}"
+                                                onclick="viewFullInfoJob(${jp.id})">
+                                            Đăng ký ứng tuyển
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCenter${jp.id}" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header px-4">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Xác nhận nộp đơn ứng tuyển</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body px-4" id="modal-body-${jp.id}"></div>
+                                <div class="modal-footer px-4">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                    <button type="button" class="btn btn-info" id="button-submit-${jp.id}"
+                                            onclick="applyJob(${candidateService.getByUserId(currentUser.id).id}, ${jp.id})">
+                                        Nộp đơn ứng tuyển
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
             </div>
 
-            <%--            <c:forEach items="${jobPosts}" var="jp" varStatus="loop">--%>
-            <%--                <div class="container m-0 p-0 pt-2">--%>
-            <%--                    <div class="col">--%>
-            <%--                        <div class="row">--%>
-            <%--                            <div class="media g-mb-30 media-comment w-100">--%>
-            <%--                                <a class="text-decoration-none"--%>
-            <%--                                   href="<c:url value="/candidate/view-post"/>?id=${jp.id}">--%>
-            <%--                                    <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15"--%>
-            <%--                                         src="${userService.getById(jp.postedByUser.id).avatar}"--%>
-            <%--                                         alt="Image Description">--%>
-            <%--                                </a>--%>
-
-            <%--                                <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">--%>
-            <%--                                    <div class="g-mb-15">--%>
-            <%--                                        <a class="text-decoration-none"--%>
-            <%--                                           href="<c:url value="/candidate/view-post"/>?id=${jp.id}">--%>
-            <%--                                            <h3 class="text-info mb-3">--%>
-            <%--                                                    ${jp.title}--%>
-            <%--                                            </h3>--%>
-            <%--                                        </a>--%>
-            <%--                                    </div>--%>
-
-            <%--                                    <c:if test="${jp.createdDate != null}">--%>
-            <%--                                        <h5 class="g-color-gray-dark-v1 mb-3">--%>
-            <%--                                            Ngày đăng: <span style="font-weight: 400">--%>
-            <%--                                    <fmt:formatDate pattern="HH:mm:ss - dd/MM/yyyy" value="${jp.createdDate}"/>--%>
-            <%--                                </span>--%>
-            <%--                                        </h5>--%>
-            <%--                                    </c:if>--%>
-
-            <%--                                    <c:if test="${jp.description.length() > 0}">--%>
-            <%--                                        <h5 class="g-color-gray-dark-v1 mb-3">--%>
-            <%--                                            Mô tả: <span style="font-weight: 400"> ${jp.description} </span>--%>
-            <%--                                        </h5>--%>
-            <%--                                    </c:if>--%>
-
-            <%--                                    <c:if test="${jp.location.length() > 0}">--%>
-            <%--                                        <h5 class="g-color-gray-dark-v1 mb-3">--%>
-            <%--                                            Địa điểm: <span style="font-weight: 400"> ${jp.location} </span>--%>
-            <%--                                        </h5>--%>
-            <%--                                    </c:if>--%>
-
-            <%--                                    <c:if test="${jp.beginningSalary != null}">--%>
-            <%--                                        <h5 class="g-color-gray-dark-v1 mb-3">--%>
-            <%--                                            Lương khởi điểm: <span style="font-weight: 400">--%>
-            <%--                                    <fmt:formatNumber type="number" maxFractionDigits="3"--%>
-            <%--                                                      value="${jp.beginningSalary}"/> VNĐ--%>
-            <%--                            </span>--%>
-            <%--                                        </h5>--%>
-            <%--                                    </c:if>--%>
-
-            <%--                                    <c:if test="${jp.endingSalary != null}">--%>
-            <%--                                        <h5 class="g-color-gray-dark-v1 mb-3">--%>
-            <%--                                            Lương tối đa: <span style="font-weight: 400">--%>
-            <%--                                <fmt:formatNumber type="number" maxFractionDigits="3"--%>
-            <%--                                                  value="${jp.endingSalary}"/> VNĐ--%>
-            <%--                            </span>--%>
-            <%--                                        </h5>--%>
-            <%--                                    </c:if>--%>
-
-            <%--                                    <!-- Button trigger modal -->--%>
-            <%--                                    <button type="button" class="btn btn-info" data-toggle="modal"--%>
-            <%--                                            data-target="#exampleModalCenter${jp.id}"--%>
-            <%--                                            onclick="viewFullInfoJob(${jp.id})">--%>
-            <%--                                        Đăng ký ứng tuyển--%>
-            <%--                                    </button>--%>
-            <%--                                </div>--%>
-            <%--                            </div>--%>
-            <%--                        </div>--%>
-            <%--                    </div>--%>
-            <%--                </div>--%>
-
-            <%--                <!-- Modal -->--%>
-            <%--                <div class="modal fade" id="exampleModalCenter${jp.id}" tabindex="-1" role="dialog"--%>
-            <%--                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">--%>
-            <%--                    <div class="modal-dialog modal-dialog-centered" role="document">--%>
-            <%--                        <div class="modal-content">--%>
-            <%--                            <div class="modal-header px-4">--%>
-            <%--                                <h5 class="modal-title" id="exampleModalLongTitle">Xác nhận nộp đơn ứng tuyển</h5>--%>
-            <%--                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">--%>
-            <%--                                    <span aria-hidden="true">&times;</span>--%>
-            <%--                                </button>--%>
-            <%--                            </div>--%>
-            <%--                            <div class="modal-body px-4" id="modal-body-${jp.id}"></div>--%>
-            <%--                            <div class="modal-footer px-4">--%>
-            <%--                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>--%>
-            <%--                                <button type="button" class="btn btn-info" id="button-submit-${jp.id}"--%>
-            <%--                                        onclick="applyJob(${candidateService.getByUserId(currentUser.id).id}, ${jp.id})">--%>
-            <%--                                    Nộp đơn ứng tuyển--%>
-            <%--                                </button>--%>
-            <%--                            </div>--%>
-            <%--                        </div>--%>
-            <%--                    </div>--%>
-            <%--                </div>--%>
-            <%--            </c:forEach>--%>
+            <ul class="pagination d-flex justify-content-end m-0 mt-4">
+                <c:forEach begin="1" end="${Math.ceil(counter/jobPostService.maxItemsInPage)}" var="page">
+                    <li class="page-item">
+                        <a class="page-link"
+                           onclick="loadJobs(${page}, ${jobPostService.maxItemsInPage})">${page}</a>
+                    </li>
+                </c:forEach>
+            </ul>
         </div>
     </div>
 </div>
@@ -180,9 +188,9 @@
 <script>
     let currentCandidateId = ${candidateService.getByUserId(currentUser.id).id}
 
-    window.onload = (event) => {
-        loadJobs()
-    };
+        window.onload = (event) => {
+            loadJobs()
+        };
 
     $(document).ready(function () {
         $("form").submit(function () {

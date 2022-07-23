@@ -28,7 +28,7 @@ public class JobPostRepositoryImpl implements JobPostRepository {
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
 
-    private final int maxItemsInPage = 5;
+    private final int maxItemsInPage = 10;
 
     public int getMaxItemsInPage() {
         return maxItemsInPage;

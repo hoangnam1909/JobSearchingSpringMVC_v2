@@ -98,11 +98,11 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="about-avatar d-flex justify-content-center">
-                        <c:if test="${currentUser.avatar.startsWith('https')}">
-                            <img src="<c:url value="${currentUser.avatar}"/>"
+                        <c:if test="${jobPost.postedByUser.avatar.startsWith('https')}">
+                            <img src="<c:url value="${jobPost.postedByUser.avatar}"/>"
                                  class="rounded">
                         </c:if>
-                        <c:if test="${!currentUser.avatar.startsWith('https')}">
+                        <c:if test="${!jobPost.postedByUser.avatar.startsWith('https')}">
                             <img src="<c:url value="/resources/images/none.png"/>"
                                  class="rounded">
                         </c:if>

@@ -140,38 +140,38 @@ public class CandidateController {
     public String findJob(Model model,
                           @RequestParam(required = false) Map<String, String> params) {
         int page = Integer.parseInt(params.getOrDefault("page", "1"));
-        String title = params.getOrDefault("title", null);
-        String beginningSalary = params.getOrDefault("beginningSalary", null);
-        String endingSalary = params.getOrDefault("endingSalary", null);
-        String location = params.getOrDefault("location", null);
-        String sort = params.getOrDefault("sort", null);
+//        String title = params.getOrDefault("title", null);
+//        String beginningSalary = params.getOrDefault("beginningSalary", null);
+//        String endingSalary = params.getOrDefault("endingSalary", null);
+//        String location = params.getOrDefault("location", null);
+//        String sort = params.getOrDefault("sort", null);
+//
+//        Map<String, String> pre = new HashMap<>();
+//        if (title != null) {
+//            pre.put("title", title);
+//            model.addAttribute("title", title);
+//        }
+//        if (beginningSalary != null) {
+//            pre.put("beginningSalary", beginningSalary);
+//            model.addAttribute("beginningSalary", beginningSalary);
+//        }
+//        if (endingSalary != null) {
+//            pre.put("endingSalary", endingSalary);
+//            model.addAttribute("endingSalary", endingSalary);
+//        }
+//        if (location != null) {
+//            pre.put("location", location);
+//            model.addAttribute("location", location);
+//        }
+//        if (sort != null) {
+//            pre.put("sort", sort);
+//            model.addAttribute("sort", sort);
+//        }
 
-        Map<String, String> pre = new HashMap<>();
-        if (title != null) {
-            pre.put("title", title);
-            model.addAttribute("title", title);
-        }
-        if (beginningSalary != null) {
-            pre.put("beginningSalary", beginningSalary);
-            model.addAttribute("beginningSalary", beginningSalary);
-        }
-        if (endingSalary != null) {
-            pre.put("endingSalary", endingSalary);
-            model.addAttribute("endingSalary", endingSalary);
-        }
-        if (location != null) {
-            pre.put("location", location);
-            model.addAttribute("location", location);
-        }
-        if (sort != null) {
-            pre.put("sort", sort);
-            model.addAttribute("sort", sort);
-        }
+//        model.addAttribute("maxItems", jobPostService.getMaxItemsInPage());
 
-        model.addAttribute("maxItems", jobPostService.getMaxItemsInPage());
-
-        List<JobPost> jobPosts = jobPostService.getPosts(pre, page, 0);
-        List<JobPost> jobPostsSize = jobPostService.getPosts(pre, 0, 0);
+        List<JobPost> jobPosts = jobPostService.getPosts(null, page, 0);
+        List<JobPost> jobPostsSize = jobPostService.getPosts(null, 0, 0);
         model.addAttribute("jobPosts", jobPosts);
 
         model.addAttribute("currentPage", page);
