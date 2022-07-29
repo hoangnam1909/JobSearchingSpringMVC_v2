@@ -30,14 +30,14 @@ public class CommentServiceImpl implements CommentService {
     private UserService userService;
 
     @Override
-    public Comment addComment(String content, int employerId, int userId) {
-        Employer employer = this.employerService.getById(employerId);
-        User user = this.userService.getById(userId);
+    public Comment addComment(String content, int employerUserId, int candidateUserId) {
+        User employerUser = this.userService.getById(employerUserId);
+        User candidateUser = this.userService.getById(candidateUserId);
 
         Comment comment = new Comment();
         comment.setContent(content);
-        comment.setEmployer(employer);
-        comment.setUser(user);
+        comment.setEmployerUser(employerUser);
+        comment.setCandidateUser(candidateUser);
         comment.setCreatedDate(new Date());
 
         return this.commentRepository.addComment(comment);

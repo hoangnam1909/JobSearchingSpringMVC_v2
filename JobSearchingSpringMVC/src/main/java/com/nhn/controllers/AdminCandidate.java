@@ -59,33 +59,33 @@ public class AdminCandidate {
         return "add-candidate";
     }
 
-    @PostMapping("/admin/account/candidate-info/add-or-update")
-    public String addOrUpdateCandidate(Model model,
-                                       @ModelAttribute(value = "candidate") Candidate candidate,
-                                       final RedirectAttributes redirectAttrs) {
-        String errMsg = null;
-        String sucMsg = null;
-
-        User candidateUser = userService.getById(candidate.getUserId());
-        candidate.setUser(candidateUser);
-        int checkMsg = candidate.getId();
-        if (this.candidateService.addOrUpdate(candidate)) {
-            if (checkMsg == 0)
-                sucMsg = String.format("Thêm thông tin ứng viên '%s' thành công", candidateUser.getUsername());
-            else
-                sucMsg = "Sửa thông tin ứng viên thành công";
-        } else {
-            if (checkMsg == 0)
-                errMsg = String.format("Thêm thông tin ứng viên '%s' không thành công", candidateUser.getUsername());
-            else
-                errMsg = "Sửa thông tin ứng viên không thành công";
-
-            redirectAttrs.addFlashAttribute("errMsg", errMsg);
-            return "add-candidate";
-        }
-
-        redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
-        return "redirect:/admin/account";
-    }
+//    @PostMapping("/admin/account/candidate-info/add-or-update")
+//    public String addOrUpdateCandidate(Model model,
+//                                       @ModelAttribute(value = "candidate") Candidate candidate,
+//                                       final RedirectAttributes redirectAttrs) {
+//        String errMsg = null;
+//        String sucMsg = null;
+//
+//        User candidateUser = userService.getById(candidate.getUserId());
+//        candidate.setUser(candidateUser);
+//        int checkMsg = candidate.getId();
+//        if (this.candidateService.addOrUpdate(candidate)) {
+//            if (checkMsg == 0)
+//                sucMsg = String.format("Thêm thông tin ứng viên '%s' thành công", candidateUser.getUsername());
+//            else
+//                sucMsg = "Sửa thông tin ứng viên thành công";
+//        } else {
+//            if (checkMsg == 0)
+//                errMsg = String.format("Thêm thông tin ứng viên '%s' không thành công", candidateUser.getUsername());
+//            else
+//                errMsg = "Sửa thông tin ứng viên không thành công";
+//
+//            redirectAttrs.addFlashAttribute("errMsg", errMsg);
+//            return "add-candidate";
+//        }
+//
+//        redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
+//        return "redirect:/admin/account";
+//    }
 
 }

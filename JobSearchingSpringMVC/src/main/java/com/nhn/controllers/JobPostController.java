@@ -134,44 +134,44 @@ public class JobPostController {
         return "add-job-post";
     }
 
-    @PostMapping(value = "/admin/job-post/add-or-update")
-    public String addOrUpdateJobPost(Model model,
-                                     @ModelAttribute(value = "jobPost") @Valid JobPost jobPost,
-                                     BindingResult result,
-                                     final RedirectAttributes redirectAttrs) throws ParseException {
-        String errMsg = null;
-        String sucMsg = null;
-
-        loadAllList(model);
-
-        jobPostValidator.validate(jobPost, result);
-        if (result.hasErrors())
-            return "add-job-post";
-
-        jobPost.setPostedByUser(userService.getById(jobPost.getPostedByUserId()));
-        jobPost.setJobType(jobTypeService.getById(jobPost.getJobTypeId()));
-        jobPost.setCreatedDate(new Date());
-
-        if (!jobPost.getExpiredDateStr().equals(""))
-            jobPost.setExpiredDate(new SimpleDateFormat("yyyy-MM-dd").parse(jobPost.getExpiredDateStr()));
-
-        boolean jobPostAddedCheck = this.jobPostService.addOrUpdate(jobPost);
-        if (jobPostAddedCheck) {
-            if (jobPost.getId() == 0)
-                sucMsg = String.format("Thêm thành công bài viết '%s'", jobPost.getTitle());
-            else
-                sucMsg = String.format("Sửa thành công bài viết '%s'", jobPost.getTitle());
-        } else {
-            if (jobPost.getId() == 0)
-                errMsg = String.format("Thêm bài viết '%s' thất bại", jobPost.getTitle());
-            else
-                errMsg = String.format("Sửa bài viết '%s' thất bại", jobPost.getTitle());
-        }
-
-        redirectAttrs.addFlashAttribute("errMsg", errMsg);
-        redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
-        return "redirect:/admin/job-post";
-    }
+//    @PostMapping(value = "/admin/job-post/add-or-update")
+//    public String addOrUpdateJobPost(Model model,
+//                                     @ModelAttribute(value = "jobPost") @Valid JobPost jobPost,
+//                                     BindingResult result,
+//                                     final RedirectAttributes redirectAttrs) throws ParseException {
+//        String errMsg = null;
+//        String sucMsg = null;
+//
+//        loadAllList(model);
+//
+//        jobPostValidator.validate(jobPost, result);
+//        if (result.hasErrors())
+//            return "add-job-post";
+//
+//        jobPost.setPostedByCandidateUser(userService.getById(jobPost.getPostedByUserId()));
+//        jobPost.setJobType(jobTypeService.getById(jobPost.getJobTypeId()));
+//        jobPost.setCreatedDate(new Date());
+//
+//        if (!jobPost.getExpiredDateStr().equals(""))
+//            jobPost.setExpiredDate(new SimpleDateFormat("yyyy-MM-dd").parse(jobPost.getExpiredDateStr()));
+//
+//        boolean jobPostAddedCheck = this.jobPostService.addOrUpdate(jobPost);
+//        if (jobPostAddedCheck) {
+//            if (jobPost.getId() == 0)
+//                sucMsg = String.format("Thêm thành công bài viết '%s'", jobPost.getTitle());
+//            else
+//                sucMsg = String.format("Sửa thành công bài viết '%s'", jobPost.getTitle());
+//        } else {
+//            if (jobPost.getId() == 0)
+//                errMsg = String.format("Thêm bài viết '%s' thất bại", jobPost.getTitle());
+//            else
+//                errMsg = String.format("Sửa bài viết '%s' thất bại", jobPost.getTitle());
+//        }
+//
+//        redirectAttrs.addFlashAttribute("errMsg", errMsg);
+//        redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
+//        return "redirect:/admin/job-post";
+//    }
 
     @GetMapping(path = "/admin/job-post/delete")
     public String deleteJobPostById(Model model,

@@ -262,14 +262,12 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public boolean delete(User user) {
-        if (user.getJobPosts().size() == 0) {
-            Session session = this.sessionFactory.getObject().getCurrentSession();
-            try {
-                session.delete(user);
-                return true;
-            } catch (HibernateException ex) {
-                System.err.println(ex.getMessage());
-            }
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        try {
+            session.delete(user);
+            return true;
+        } catch (HibernateException ex) {
+            System.err.println(ex.getMessage());
         }
         return false;
     }

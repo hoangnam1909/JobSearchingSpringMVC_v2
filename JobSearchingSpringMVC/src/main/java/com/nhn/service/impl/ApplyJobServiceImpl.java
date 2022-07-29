@@ -8,6 +8,7 @@ import com.nhn.repository.ApplyJobRepository;
 import com.nhn.service.ApplyJobService;
 import com.nhn.service.CandidateService;
 import com.nhn.service.JobPostService;
+import com.nhn.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,19 +28,22 @@ public class ApplyJobServiceImpl implements ApplyJobService {
     @Autowired
     private CandidateService candidateService;
 
+    @Autowired
+    private UserService userService;
+
     @Override
     public ApplyJob getById(int id) {
         return this.applyJobRepository.getById(id);
     }
 
     @Override
-    public boolean add(int candidate_id, int job_id) {
-        Candidate candidate = this.candidateService.getById(candidate_id);
+    public boolean add(int candidate_user_id, int job_id) {
+        User candidateUser = this.userService.getById(candidate_user_id);
         JobPost jobPost = this.jobPostService.getById(job_id);
 
         ApplyJob applyJob = new ApplyJob();
-        applyJob.setCandidate(candidate);
-        applyJob.setJob(jobPost);
+        applyJob.setCandidateUser(candidateUser);
+        applyJob.setJobPost(jobPost);
 
         return this.applyJobRepository.add(applyJob);
     }

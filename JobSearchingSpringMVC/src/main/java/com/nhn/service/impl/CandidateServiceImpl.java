@@ -37,20 +37,20 @@ public class CandidateServiceImpl implements CandidateService {
     public boolean addOrUpdate(Candidate candidate) {
         String cv = candidate.getCv();
 
-        if (!candidate.getFile().isEmpty()) {
-            Map r = null;
-            try {
-                r = this.cloudinary.uploader().upload(candidate.getFile().getBytes(),
-                        ObjectUtils.asMap("resource_type", "auto"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            if (r != null)
-                candidate.setCv((String) r.get("secure_url"));
-            else
-                candidate.setCv(cv);
-        }
+//        if (!candidate.getFile().isEmpty()) {
+//            Map r = null;
+//            try {
+//                r = this.cloudinary.uploader().upload(candidate.getFile().getBytes(),
+//                        ObjectUtils.asMap("resource_type", "auto"));
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//            if (r != null)
+//                candidate.setCv((String) r.get("secure_url"));
+//            else
+//                candidate.setCv(cv);
+//        }
 
         return this.candidateRepository.addOrUpdate(candidate);
     }

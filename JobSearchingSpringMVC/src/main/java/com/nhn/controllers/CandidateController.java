@@ -60,34 +60,34 @@ public class CandidateController {
         return "add-candidate";
     }
 
-    @PostMapping("/candidate/candidate-info/add-or-update")
-    public String addOrUpdateCandidate(Model model,
-                                       @ModelAttribute(value = "candidate") Candidate candidate,
-                                       final RedirectAttributes redirectAttrs) {
-        String errMsg = null;
-        String sucMsg = null;
-
-        User candidateUser = userService.getById(candidate.getUserId());
-        candidate.setUser(candidateUser);
-        int checkMsg = candidate.getId();
-        if (this.candidateService.addOrUpdate(candidate)) {
-            if (checkMsg == 0)
-                sucMsg = String.format("Thêm thông tin user và ứng viên '%s' thành công", candidateUser.getUsername());
-            else
-                sucMsg = "Cập nhật thông tin user và ứng viên thành công";
-        } else {
-            if (checkMsg == 0)
-                errMsg = String.format("Thêm thông tin user và ứng viên '%s' không thành công", candidateUser.getUsername());
-            else
-                errMsg = "Cập nhật thông tin user và ứng viên không thành công";
-
-            model.addAttribute("errMsg", errMsg);
-        }
-
-        model.addAttribute("actionUrl", "/candidate/candidate-info/update");
-        model.addAttribute("sucMsg", sucMsg);
-        return "add-candidate";
-    }
+//    @PostMapping("/candidate/candidate-info/add-or-update")
+//    public String addOrUpdateCandidate(Model model,
+//                                       @ModelAttribute(value = "candidate") Candidate candidate,
+//                                       final RedirectAttributes redirectAttrs) {
+//        String errMsg = null;
+//        String sucMsg = null;
+//
+//        User candidateUser = userService.getById(candidate.getUserId());
+//        candidate.setUser(candidateUser);
+//        int checkMsg = candidate.getId();
+//        if (this.candidateService.addOrUpdate(candidate)) {
+//            if (checkMsg == 0)
+//                sucMsg = String.format("Thêm thông tin user và ứng viên '%s' thành công", candidateUser.getUsername());
+//            else
+//                sucMsg = "Cập nhật thông tin user và ứng viên thành công";
+//        } else {
+//            if (checkMsg == 0)
+//                errMsg = String.format("Thêm thông tin user và ứng viên '%s' không thành công", candidateUser.getUsername());
+//            else
+//                errMsg = "Cập nhật thông tin user và ứng viên không thành công";
+//
+//            model.addAttribute("errMsg", errMsg);
+//        }
+//
+//        model.addAttribute("actionUrl", "/candidate/candidate-info/update");
+//        model.addAttribute("sucMsg", sucMsg);
+//        return "add-candidate";
+//    }
 
     @RequestMapping("/candidate/find-employer")
     public String findEmployers(Model model,
@@ -180,6 +180,7 @@ public class CandidateController {
         model.addAttribute("userService", userService);
         model.addAttribute("employerService", employerService);
         model.addAttribute("candidateService", candidateService);
+
         return "candidate-find-job";
     }
 
@@ -215,22 +216,22 @@ public class CandidateController {
         return "candidate-suggest-employer";
     }
 
-    @RequestMapping("/candidate/view-post")
-    public String viewPost(Model model,
-                           @RequestParam(name = "id", defaultValue = "0") int id) {
-        try {
-            JobPost jobPost = this.jobPostService.getById(id);
-            model.addAttribute("jobPost", jobPost);
-
-            Employer postedByEmployer = this.employerService.getByUserId(jobPost.getPostedByUser().getId());
-            model.addAttribute("postedByEmployer", postedByEmployer);
-
-            JobType jobType = this.jobTypeService.getById(jobPost.getJobType().getId());
-            model.addAttribute("jobType", jobType);
-        } catch (NoResultException nre) {
-            return "redirect:/candidate/find-job";
-        }
-        return "candidate-view-post";
-    }
+//    @RequestMapping("/candidate/view-post")
+//    public String viewPost(Model model,
+//                           @RequestParam(name = "id", defaultValue = "0") int id) {
+//        try {
+//            JobPost jobPost = this.jobPostService.getById(id);
+//            model.addAttribute("jobPost", jobPost);
+//
+//            Employer postedByEmployer = this.employerService.getByUserId(jobPost.getPostedByUser().getId());
+//            model.addAttribute("postedByEmployer", postedByEmployer);
+//
+//            JobType jobType = this.jobTypeService.getById(jobPost.getJobType().getId());
+//            model.addAttribute("jobType", jobType);
+//        } catch (NoResultException nre) {
+//            return "redirect:/candidate/find-job";
+//        }
+//        return "candidate-view-post";
+//    }
 
 }

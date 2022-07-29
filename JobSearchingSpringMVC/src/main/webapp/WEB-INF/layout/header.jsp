@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <nav class="navbar sticky-top navbar-expand-md bg-dark navbar-dark">
-    <!-- Brand -->
     <c:choose>
         <c:when test="${currentUser.userType == 'ROLE_ADMIN'}">
             <a class="navbar-brand" href="<c:url value="/admin" />">Job Searching</a>

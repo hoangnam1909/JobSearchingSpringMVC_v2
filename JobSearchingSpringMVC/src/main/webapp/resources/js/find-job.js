@@ -217,15 +217,21 @@ function loadJobs(pageInput, maxItems) {
                                             </h3>
                                         </a>
                                     </div>
-
-                                    <c:if test="${data[i].createdDate != null}">
+                                    
+                                    <c:if test="${data[i].postedByUser != null}">
                                         <h5 class="g-color-gray-dark-v1 mb-3">
                                             Ngày đăng: <span style="font-weight: 400">
                                                 ${moment(data[i].createdDate).format('LLLL').charAt(0).toUpperCase()
-            + moment(data[i].createdDate).format('LLLL').slice(1)}
+                                                    + moment(data[i].createdDate).format('LLLL').slice(1)}
                                             </span>
                                         </h5>
                                     </c:if>
+
+                                    <h5 class="g-color-gray-dark-v1 mb-3">
+                                        Ngày đăng: <span style="font-weight: 400">
+                                        ${candidateServiceObj.getByUserId(data[i].postedByUser.id).name}
+                                        </span>
+                                    </h5>
 
                                     <c:if test="${data[i].description != null}">
                                         <h5 class="g-color-gray-dark-v1 mb-3">

@@ -186,7 +186,7 @@
 </div>
 
 <script>
-    let currentCandidateId = ${candidateService.getByUserId(currentUser.id).id}
+    let currentCandidateId = ${candidateService.getByUserId(currentUser.id).id};
 
         window.onload = (event) => {
             loadJobs()

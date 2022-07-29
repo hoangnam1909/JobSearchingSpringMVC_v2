@@ -92,25 +92,6 @@ public class AccountController {
         User user = this.userService.getById(id);
         if (user != null) {
             model.addAttribute("user", user);
-            Candidate candidate = null;
-            try {
-                candidate = candidateService.getByUserId(user.getId());
-            } catch (NoResultException nre) {
-                System.err.println(nre.getMessage());
-            }
-            if (candidate != null) {
-                model.addAttribute("candidate", candidate);
-            }
-
-            Employer employer = null;
-            try {
-                employer = employerService.getByUserId(user.getId());
-            } catch (NoResultException nre) {
-                System.err.println(nre.getMessage());
-            }
-            if (employer != null) {
-                model.addAttribute("employer", employer);
-            }
         } else
             return "redirect:/admin/account";
 
@@ -158,7 +139,6 @@ public class AccountController {
                     Employer employer = new Employer();
                     employer.setId(0);
                     employer.setName("n/a");
-                    employer.setUser(userService.getById(user.getId()));
                     employerService.addOrUpdate(employer);
                     sucMsg = String.format("Thêm thông tin nhà tuyển dụng '%s' thành công", user.getUsername());
                 }

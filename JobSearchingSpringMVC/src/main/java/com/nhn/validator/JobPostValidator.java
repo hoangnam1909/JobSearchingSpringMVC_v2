@@ -24,10 +24,10 @@ public class JobPostValidator implements Validator {
             errors.rejectValue("title", "", "Tiêu đề bài viết không quá 100 ký tự");
 
         // validate salary
-        if (Integer.parseInt(jobPost.getBeginningSalary().toString()) < 0)
+        if (jobPost.getBeginningSalary() < 0)
             errors.rejectValue("beginningSalary", "", "Lương tối thiểu không được âm");
 
-        if (Integer.parseInt(jobPost.getBeginningSalary().toString()) >= Integer.parseInt(jobPost.getEndingSalary().toString()))
+        if (jobPost.getBeginningSalary() >= jobPost.getEndingSalary())
             errors.rejectValue("beginningSalary", "", "Lương tối thiểu không được lớn hơn lương tối đa");
 
         // validate location

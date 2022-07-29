@@ -6,6 +6,10 @@
     <class>com.nhn.pojo.Comment_1</class>
     <class>com.nhn.pojo.Employer_1</class>
     <class>com.nhn.pojo.ApplyJob</class>
+    <class>com.nhn.pojo.Candidate_1</class>
+    <class>com.nhn.pojo.ApplyJob_1</class>
+    <class>com.nhn.pojo.JobPost_1</class>
+    <class>com.nhn.pojo.JobType_1</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/jobsearchingdb?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
