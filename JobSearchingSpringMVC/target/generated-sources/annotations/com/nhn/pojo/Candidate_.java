@@ -1,12 +1,10 @@
 package com.nhn.pojo;
 
-import com.nhn.pojo.User;
 import javax.annotation.Generated;
-import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2022-07-30T16:14:41")
+@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2022-07-30T20:18:46")
 @StaticMetamodel(Candidate.class)
 public class Candidate_ { 
 
@@ -19,6 +17,5 @@ public class Candidate_ {
     public static volatile SingularAttribute<Candidate, Integer> id;
     public static volatile SingularAttribute<Candidate, Integer> yearsExperience;
     public static volatile SingularAttribute<Candidate, String> majoringDetail;
-    public static volatile CollectionAttribute<Candidate, User> users;
 
 }

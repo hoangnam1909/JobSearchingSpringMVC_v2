@@ -108,18 +108,16 @@ and open the template in the editor.
         <put-attribute name="content" value="/WEB-INF/pages/admin-account.jsp" />
     </definition>
 
-<!--    <definition name="admin-account" extends="baseLayout">-->
-<!--        <put-attribute name="title" value="Quản lý tài khoản" />-->
-<!--        <put-attribute name="content" value="/WEB-INF/pages/admin-account.jsp" />-->
-<!--    </definition>-->
-    <definition name="add-account" extends="baseLayout">
+    <definition name="admin-view-account" extends="adminLayout">
+        <put-attribute name="title" value="Thông tin tài khoản" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin-view-account.jsp" />
+    </definition>
+
+    <definition name="admin-add-account" extends="adminLayout">
         <put-attribute name="title" value="Thêm tài khoản" />
-        <put-attribute name="content" value="/WEB-INF/pages/add-account.jsp" />
+        <put-attribute name="content" value="/WEB-INF/pages/admin-add-account.jsp" />
     </definition>
-    <definition name="view-account" extends="baseLayout">
-        <put-attribute name="title" value="Xem thông tin tài khoản" />
-        <put-attribute name="content" value="/WEB-INF/pages/view-account.jsp" />
-    </definition>
+
     <definition name="view-candidate" extends="baseLayout">
         <put-attribute name="title" value="Xem thông tin ứng viên" />
         <put-attribute name="content" value="/WEB-INF/pages/view-candidate.jsp" />

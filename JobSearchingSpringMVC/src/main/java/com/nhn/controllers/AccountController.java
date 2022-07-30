@@ -5,7 +5,6 @@
  */
 package com.nhn.controllers;
 
-import com.nhn.pojo.Candidate;
 import com.nhn.pojo.Employer;
 import com.nhn.pojo.User;
 import com.nhn.service.CandidateService;
@@ -20,7 +19,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.persistence.NoResultException;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -96,7 +94,7 @@ public class AccountController {
             return "redirect:/admin/account";
 
         model.addAttribute("errMsg", model.asMap().get("errMsg"));
-        return "view-account";
+        return "admin-view-account";
     }
 
     // THEM HOAC CAP NHAT TAI KHOAN
@@ -109,7 +107,7 @@ public class AccountController {
             model.addAttribute("user", new User());
 
         model.addAttribute("errMsg", model.asMap().get("errMsg"));
-        return "add-account";
+        return "admin-add-account";
     }
 
     @PostMapping("/admin/account/add-or-update")
@@ -123,7 +121,7 @@ public class AccountController {
         if (user.getId() == 0) {
             userValidator.validate(user, result);
             if (result.hasErrors())
-                return "add-account";
+                return "admin-add-account";
         }
 
         int rawId = user.getId();
@@ -152,7 +150,7 @@ public class AccountController {
             errMsg = "Thêm thông tin tài khoản không thành công";
         }
         model.addAttribute("errMsg", errMsg);
-        return "add-account";
+        return "admin-add-account";
     }
 
     @RequestMapping(path = "/admin/account/delete")

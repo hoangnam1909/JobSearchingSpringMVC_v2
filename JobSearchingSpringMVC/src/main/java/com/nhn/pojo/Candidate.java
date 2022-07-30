@@ -43,8 +43,8 @@ public class Candidate {
     @Column(name = "cv")
     private String cv;
 
-    @OneToMany(mappedBy = "candidate")
-    private Collection<User> users;
+//    @OneToMany(mappedBy = "candidate")
+//    private Collection<User> users;
 
     public int getId() {
         return id;
@@ -123,19 +123,19 @@ public class Candidate {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Candidate candidate = (Candidate) o;
-        return id == candidate.id && yearsExperience == candidate.yearsExperience && Objects.equals(strengths, candidate.strengths) && Objects.equals(weaknesses, candidate.weaknesses) && Objects.equals(majoring, candidate.majoring) && Objects.equals(majoringDetail, candidate.majoringDetail) && Objects.equals(languageCertificate, candidate.languageCertificate) && Objects.equals(informaticsCertificate, candidate.informaticsCertificate) && Objects.equals(cv, candidate.cv) && Objects.equals(users, candidate.users);
+        return id == candidate.id && yearsExperience == candidate.yearsExperience && Objects.equals(strengths, candidate.strengths) && Objects.equals(weaknesses, candidate.weaknesses) && Objects.equals(majoring, candidate.majoring) && Objects.equals(majoringDetail, candidate.majoringDetail) && Objects.equals(languageCertificate, candidate.languageCertificate) && Objects.equals(informaticsCertificate, candidate.informaticsCertificate) && Objects.equals(cv, candidate.cv);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, yearsExperience, strengths, weaknesses, majoring, majoringDetail, languageCertificate, informaticsCertificate, cv, users);
+        return Objects.hash(id, yearsExperience, strengths, weaknesses, majoring, majoringDetail, languageCertificate, informaticsCertificate, cv);
     }
 
-    public Collection<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Collection<User> usersById) {
-        this.users = usersById;
-    }
+    //    public Collection<User> getUsers() {
+//        return users;
+//    }
+//
+//    public void setUsers(Collection<User> usersById) {
+//        this.users = usersById;
+//    }
 }
