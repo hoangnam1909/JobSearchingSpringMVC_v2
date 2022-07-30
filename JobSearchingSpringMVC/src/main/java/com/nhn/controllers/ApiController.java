@@ -1,13 +1,7 @@
 package com.nhn.controllers;
 
-import com.nhn.pojo.ApplyJob;
-import com.nhn.pojo.Candidate;
-import com.nhn.pojo.Comment;
-import com.nhn.pojo.JobPost;
-import com.nhn.service.ApplyJobService;
-import com.nhn.service.CandidateService;
-import com.nhn.service.CommentService;
-import com.nhn.service.JobPostService;
+import com.nhn.pojo.*;
+import com.nhn.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,6 +30,9 @@ public class ApiController {
 
     @Autowired
     private CandidateService candidateService;
+
+    @Autowired
+    private UserService userService;
 
     @PostMapping(value = "/api/add-comment", produces = {
             MediaType.APPLICATION_JSON_VALUE
@@ -134,6 +131,19 @@ public class ApiController {
         }
 
         return new ResponseEntity<>(jobPosts, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/api/load-users", method = RequestMethod.POST, produces = {
+            MediaType.APPLICATION_JSON_VALUE
+    })
+    public ResponseEntity<List<User>> listUsers(@RequestBody (required = false) Map<String, String> params) {
+        List<User> users = userService.getUsersMultiCondition(params, Integer.parseInt(params.getOrDefault("page", "1")));
+
+        if (users.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+        }
+
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @PostMapping(value = "/api/send-email", produces = {

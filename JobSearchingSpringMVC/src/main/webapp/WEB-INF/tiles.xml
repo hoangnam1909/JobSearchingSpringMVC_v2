@@ -90,15 +90,28 @@ and open the template in the editor.
     </definition>
 
 <!--    ADMIN-->
-    <definition name="admin" extends="baseLayout">
+    <definition name="adminLayout" template="/WEB-INF/layout/admin-base.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="sidebar" value="/WEB-INF/layout/admin-sidebar.jsp" />
+        <put-attribute name="topbar" value="/WEB-INF/layout/admin-topbar.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/layout/admin-footer.jsp" />
+        <put-attribute name="content" value="" />
+    </definition>
+
+    <definition name="admin" extends="adminLayout">
         <put-attribute name="title" value="Trang quản trị" />
         <put-attribute name="content" value="/WEB-INF/pages/admin.jsp" />
     </definition>
 
-    <definition name="admin-account" extends="baseLayout">
+    <definition name="admin-account" extends="adminLayout">
         <put-attribute name="title" value="Quản lý tài khoản" />
         <put-attribute name="content" value="/WEB-INF/pages/admin-account.jsp" />
     </definition>
+
+<!--    <definition name="admin-account" extends="baseLayout">-->
+<!--        <put-attribute name="title" value="Quản lý tài khoản" />-->
+<!--        <put-attribute name="content" value="/WEB-INF/pages/admin-account.jsp" />-->
+<!--    </definition>-->
     <definition name="add-account" extends="baseLayout">
         <put-attribute name="title" value="Thêm tài khoản" />
         <put-attribute name="content" value="/WEB-INF/pages/add-account.jsp" />
