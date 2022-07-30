@@ -25,6 +25,14 @@
                     </nav>
                 </div>
                 <div class="card-body">
+                    <div class="mb-3">
+                        <a href="<c:url value="/admin/account/add-or-update" />" style="text-decoration: none">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>
+                                Thêm người dùng
+                            </span>
+                        </a>
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
