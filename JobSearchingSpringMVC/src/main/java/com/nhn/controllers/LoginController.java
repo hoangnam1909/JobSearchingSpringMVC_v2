@@ -18,12 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.persistence.NoResultException;
-import javax.validation.Valid;
 
 /**
  * @author Lightning
@@ -117,7 +112,7 @@ public class LoginController {
         model.addAttribute("candidate", candidate);
         model.addAttribute("userId", model.asMap().get("userId"));
         model.addAttribute("actionUrl", "/register/candidate-info/add-or-update");
-        return "add-candidate";
+        return "admin-add-candidate";
     }
 
 //    @PostMapping("/register/candidate-info/add-or-update")
@@ -156,7 +151,7 @@ public class LoginController {
         model.addAttribute("employer", employer);
         model.addAttribute("userId", model.asMap().get("userId"));
         model.addAttribute("actionUrl", "/register/employer-info/add-or-update");
-        return "add-employer";
+        return "admin-add-employer";
     }
 
 //    @PostMapping("/register/employer-info/add-or-update")

@@ -1,12 +1,42 @@
-
-
 function search() {
     const search = {}
 
     if (document.getElementById('username').value.trim().length !== 0)
         search.username = document.getElementById('username').value;
 
+    if (document.getElementById('phone').value.trim().length !== 0)
+        search.phone = document.getElementById('phone').value;
+
+    if (document.getElementById('email').value.trim().length !== 0)
+        search.email = document.getElementById('email').value;
+
+    if (document.getElementById('userType').value.trim().length !== 0)
+        search.userType = document.getElementById('userType').value;
+
     return search
+}
+
+function deleteAccount(accountId) {
+    let urlFetch = "/JobSearchingSpringMVC/api/account/delete/".concat(accountId)
+    fetch(urlFetch, {
+        method: 'delete'
+    }).then(function (res) {
+        console.info(res)
+
+        document.getElementById("user".concat(accountId)).innerHTML = ""
+
+        if (res.status === 202) {
+            let alertArea = document.getElementById('alert-area')
+            alertArea.innerHTML = ""
+            alertArea.innerHTML = `
+                <div class="alert alert-success text-center" role="alert">
+                    Xoá thành công
+                </div>
+            `
+        }
+
+        return res.json();
+    })
 }
 
 function loadUserAccount(pageInput) {
@@ -58,7 +88,7 @@ function loadUserAccount(pageInput) {
 
             innerHTML = ""
 
-            innerHTML += `<tr>`
+            innerHTML += `<tr id="user${data[i].id}">`
             innerHTML += `
                         <td class="d-flex" style="justify-content: space-evenly"> 
                             <a href="${urlViewUser}"
@@ -69,8 +99,8 @@ function loadUserAccount(pageInput) {
                                data-toggle="tooltip" title="Sửa">
                                 <i class="fa-solid fa-pen"></i>
                             </a>
-                            <a href="${urlDeleteUser}"
-                               title="Xoá">
+                            <a onclick="deleteAccount(${data[i].id})"
+                               title="Xoá" style="cursor: pointer; color: #4e73df">
                                 <i class="fa-solid fa-trash"></i>
                             </a>
                         </td>

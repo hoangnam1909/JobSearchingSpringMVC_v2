@@ -30,38 +30,52 @@
                                     <div class="col-12 col-sm-auto mb-3">
                                         <c:if test="${user.avatar != null}">
                                             <img class="d-flex justify-content-center align-items-center rounded"
-                                                 src="${user.avatar}" alt="avatar" width="140" height="140">
+                                                 src="${user.avatar}"
+                                                 id="img-preview" alt="avatar" width="140" height="140">
                                         </c:if>
 
                                         <c:if test="${user.avatar == null}">
-                                            <div class="mx-auto" style="width: 140px;">
-                                                <div class="d-flex justify-content-center align-items-center rounded"
-                                                     style="height: 140px; background-color: rgb(233, 236, 239);">
-                                                    <span style="color: rgb(166, 168, 170); font: bold 8pt Arial;">140x140</span>
-                                                </div>
-                                            </div>
+                                            <img class="d-flex justify-content-center align-items-center rounded"
+                                                 src="<c:url value="/resources/images/none.png" />"
+                                                 id="img-preview" alt="avatar" width="140" height="140">
                                         </c:if>
                                     </div>
                                     <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                                         <div class="text-center text-sm-left mb-2 mb-sm-0">
-                                            <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">${user.fullName}</h4>
-                                            <p class="mb-0">${user.username}</p>
-                                            <div class="text-muted"><small>#${user.id}</small></div>
-                                            <div class="mt-2">
-                                                <button class="btn btn-primary" type="button">
-                                                    <i class="fa fa-fw fa-camera"></i>
-                                                    <span>Change Photo</span>
-                                                </button>
-                                            </div>
+                                            <h4 id="fullname-preview"
+                                                class="pt-sm-2 pb-1 mb-0 text-nowrap">${user.fullName}</h4>
+                                            <p id="username-preview" class="mb-0">${user.username}</p>
                                         </div>
                                         <div class="text-center text-sm-right">
-                                            <span class="badge badge-secondary">${user.userType}</span>
+                                            <span class="badge badge-secondary">
+                                                <c:if test="${user.userType == 'ROLE_UV'}">
+                                                    Ứng viên
+                                                </c:if>
+                                                <c:if test="${user.userType == 'ROLE_NTD'}">
+                                                    Nhà tuyển dụng
+                                                </c:if>
+                                                <c:if test="${user.userType == 'ROLE_ADMIN'}">
+                                                    Quản trị viên
+                                                </c:if>
+                                            </span>
                                             <div class="text-muted"><small>Joined 09 Dec 2017</small></div>
+                                            <c:if test="${user.userType == 'ROLE_NTD'}">
+                                                <a href="<c:url value="/admin/account/employer/add-or-update" />?userId=${user.id}">
+                                                    <input type="button" class="btn btn-primary mt-3 w-100"
+                                                           value="Thay đổi thông tin nhà tuyển dụng"/>
+                                                </a>
+                                            </c:if>
+                                            <c:if test="${user.userType == 'ROLE_UV'}">
+                                                <a href="<c:url value="/admin/account/candidate/add-or-update" />?userId=${user.id}">
+                                                    <input type="button" class="btn btn-primary mt-3 w-100"
+                                                           value="Thay đổi thông tin ứng viên"/>
+                                                </a>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>
                                 <ul class="nav nav-tabs">
-                                    <li class="nav-item"><a href="" class="active nav-link">Settings</a></li>
+                                    <li class="nav-item"><a href="" class="active nav-link">Thông tin cá nhân</a></li>
                                 </ul>
                                 <div class="tab-content pt-3">
                                     <div class="tab-pane active">
@@ -70,31 +84,16 @@
                                             <form:errors path="*" element="div" cssClass="alert alert-danger mt-3"/>
                                             <form:hidden path="id"/>
                                             <form:hidden path="avatar"/>
+                                            <form:hidden path="candidateId" value="${user.candidate.id}"/>
+                                            <form:hidden path="employerId" value="${user.employer.id}"/>
                                             <div class="row">
                                                 <div class="col">
-                                                        <%--                                                    <div class="row">--%>
-                                                        <%--                                                        <div class="col">--%>
-                                                        <%--                                                            <div class="form-group">--%>
-                                                        <%--                                                                <label>Họ và tên</label>--%>
-                                                        <%--&lt;%&ndash;                                                                <input class="form-control" type="text" name="name"&ndash;%&gt;--%>
-                                                        <%--&lt;%&ndash;                                                                       placeholder="John Smith" value="John Smith">&ndash;%&gt;--%>
-                                                        <%--                                                            </div>--%>
-                                                        <%--                                                        </div>--%>
-                                                        <%--                                                        <div class="col">--%>
-                                                        <%--                                                            <div class="form-group">--%>
-                                                        <%--                                                                <label>Username</label>--%>
-                                                        <%--                                                                <input class="form-control" type="text" name="username"--%>
-                                                        <%--                                                                       placeholder="johnny.s" value="johnny.s">--%>
-                                                        <%--                                                            </div>--%>
-                                                        <%--                                                        </div>--%>
-                                                        <%--                                                    </div>--%>
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="form-group">
-                                                                <label>Tên đăng nhập</label>
-                                                                    <%--                                                                <input class="form-control" type="text"--%>
-                                                                    <%--                                                                       placeholder="user@example.com">--%>
-                                                                <form:input path="username" class="form-control"
+                                                                <label>Họ và tên</label>
+                                                                <form:input path="fullName" class="form-control"
+                                                                            oninput="fullnamePreview(this)"
                                                                             required="required" autofocus="autofocus"/>
                                                             </div>
                                                         </div>
@@ -102,9 +101,17 @@
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="form-group">
+                                                                <label>Tên đăng nhập</label>
+                                                                <form:input path="username" class="form-control"
+                                                                            oninput="usernamePreview(this)"
+                                                                            required="required"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="form-group">
                                                                 <label>Email</label>
-                                                                    <%--                                                                <input class="form-control" type="text"--%>
-                                                                    <%--                                                                       placeholder="user@example.com">--%>
                                                                 <form:input path="email" class="form-control"/>
                                                             </div>
                                                         </div>
@@ -113,8 +120,6 @@
                                                         <div class="col">
                                                             <div class="form-group">
                                                                 <label>Số điện thoại</label>
-                                                                    <%--                                                                <input class="form-control" type="text"--%>
-                                                                    <%--                                                                       placeholder="user@example.com">--%>
                                                                 <form:input path="phone" class="form-control"/>
                                                             </div>
                                                         </div>
@@ -123,10 +128,23 @@
                                                         <div class="col">
                                                             <div class="form-group">
                                                                 <label>Ảnh đại diện</label>
-                                                                    <%--                                                                <input class="form-control" type="text"--%>
-                                                                    <%--                                                                       placeholder="user@example.com">--%>
-                                                                <form:input type="file" id="imgInp" path="file"
-                                                                            accept="image/*" class="form-control"/>
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text"
+                                                                              id="inputGroupFileAddon01">Tải lên</span>
+                                                                    </div>
+                                                                    <div class="custom-file">
+                                                                        <form:input type="file" path="file"
+                                                                                    id="inputGroupFile01"
+                                                                                    onchange="showPreview(event);"
+                                                                                    accept="image/*"
+                                                                                    class="form-control"/>
+                                                                        <label class="custom-file-label"
+                                                                               for="inputGroupFile01">
+                                                                            Tải lên ảnh đại diện của bạn tại đây
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -220,30 +238,35 @@
                                             <div class="row">
                                                 <div class="col">
                                                     <div class="form-group">
-                                                        <label>Mật khẩu mới</label>
+                                                        <label>Mật khẩu</label>
                                                         <form:input path="password" class="form-control"
                                                                     id="password" type="password"
                                                                     required="required"/>
                                                     </div>
                                                 </div>
-                                                <div class="col">
-                                                    <div class="form-group">
-                                                        <label>Nhập lại mật khẩu</label>
-                                                        <form:input path="confirmPassword" class="form-control"
-                                                                    id="confirmPassword" type="password"
-                                                                    required="required"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
                                                 <c:if test="${user.id == 0}">
-                                                    <div class="form-group">
-                                                        <button type="submit" class="btn btn-primary">Thêm</button>
+                                                    <div class="col">
+                                                        <div class="form-group">
+                                                            <label>Nhập lại mật khẩu</label>
+                                                            <form:input path="confirmPassword" class="form-control"
+                                                                        id="confirmPassword" type="password"
+                                                                        required="required"/>
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                            </div>
+
+                                            <div class="row justify-content-center mt-3">
+                                                <c:if test="${user.id == 0}">
+                                                    <div class="form-group w-25">
+                                                        <button type="submit" class="btn btn-primary w-100">Thêm
+                                                        </button>
                                                     </div>
                                                 </c:if>
                                                 <c:if test="${user.id > 0}">
-                                                    <div class="form-group">
-                                                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                                                    <div class="form-group w-25">
+                                                        <button type="submit" class="btn btn-primary w-100">Cập nhật
+                                                        </button>
                                                     </div>
                                                 </c:if>
                                             </div>
@@ -278,121 +301,10 @@
             </div>
         </div>
     </div>
+</div>
 
-    <div class="container">
-        <c:if test="${user.id == 0}">
-            <h1 class="text-center dark-color">THÊM TÀI KHOẢN</h1>
-        </c:if>
-        <c:if test="${user.id > 0}">
-            <h1 class="text-center dark-color">CHỈNH SỬA THÔNG TIN TÀI KHOẢN</h1>
-        </c:if>
-
-        <c:url value="/admin/account/add-or-update" var="action"/>
-
-        <c:if test="${errMsg != null}">
-            <div class="alert alert-danger">
-                    ${errMsg}
-            </div>
-        </c:if>
-
-        <form:form action="${action}" method="post" enctype="multipart/form-data" modelAttribute="user">
-            <%--        <form:errors path="*" element="div" cssClass="alert alert-danger mt-3"/>--%>
-            <%--        <form:hidden path="id"/>--%>
-            <%--        <form:hidden path="avatar"/>--%>
-            <div class="form-group">
-                <label>Tên đăng nhập <span style="color: red">*</span></label>
-                    <%--            <form:input path="username" class="form-control" required="required" autofocus="autofocus"/>--%>
-            </div>
-            <div class="form-group">
-                <label>Mật khẩu <span style="color: red">*</span></label>
-                    <%--            <form:input path="password" class="form-control" id="password" type="password" required="required"/>--%>
-            </div>
-            <div class="form-group">
-                <label>Nhập lại mật khẩu <span style="color: red">*</span></label>
-                    <%--            <form:input path="confirmPassword" class="form-control" id="confirmPassword" type="password"--%>
-                    <%--                        required="required"/>--%>
-            </div>
-            <div class="form-group">
-                <label>Email</label>
-                    <%--            <form:input path="email" class="form-control"/>--%>
-            </div>
-            <div class="form-group">
-                <label>Số điện thoại</label>
-                    <%--            <form:input path="phone" class="form-control"/>--%>
-            </div>
-            <div class="form-group row">
-                <div class="col">
-                    <label for="avatar">Ảnh đại diện</label>
-                        <%--                    <form:input type="file" id="imgInp" path="file"--%>
-                        <%--                                accept="image/*" class="form-control"/>--%>
-                </div>
-                <div class="col text-center">
-                    <img src="<c:url value="${user.avatar}"/>"
-                         style="height: 200px; margin-top: 10px; border: 1px solid black;"
-                         class="img-fluid rounded" id="blah" alt="avatar">
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Họ và tên</label>
-                    <%--            <form:input path="fullName" class="form-control"/>--%>
-            </div>
-            <div class="input-group input-group-static mb-4 d-flex flex-column">
-                    <%--                <label>Ngày sinh (Ngày/Tháng/Năm)</label>--%>
-                    <%--                <div class="d-flex flex-row align-items-center">--%>
-                    <%--                    <fmt:formatDate pattern="dd" value="${user.dob}" var="dobDay"/>--%>
-                    <%--                    <form:input path="day" value="${dobDay}" class="form-control" id="dobDay"--%>
-                    <%--                                placeholder="Ngày" type="number" required="required"/>--%>
-
-                    <%--                    <span class="mx-2">/</span>--%>
-                    <%--                    <fmt:formatDate pattern="MM" value="${user.dob}" var="dobMonth"/>--%>
-                    <%--                    <form:input path="month" value="${dobMonth}" class="form-control" id="dobMonth"--%>
-                    <%--                                placeholder="Tháng" type="number" required="required"/>--%>
-
-                    <%--                    <span class="mx-2">/</span>--%>
-                    <%--                    <fmt:formatDate pattern="yyyy" value="${user.dob}" var="dobYear"/>--%>
-                    <%--                    <form:input path="year" value="${dobYear}" class="form-control" id="dobYear"--%>
-                    <%--                                placeholder="Năm" type="number" required="required"/>--%>
-                    <%--                </div>--%>
-            </div>
-            <div class="form-group">
-                <label>Địa chỉ</label>
-                    <%--                <form:input path="address" class="form-control"/>--%>
-            </div>
-            <div class="form-group">
-                    <%--                <label>Giới tính</label>--%>
-                    <%--                <form:select path="gender" class="custom-select">--%>
-                    <%--                    <form:option value="0" label="Nam" selected="${user.gender == 0 ? true : ''}"/>--%>
-                    <%--                    <form:option value="1" label="Nữ" selected="${user.gender == 1 ? true : ''}"/>--%>
-                    <%--                </form:select>--%>
-            </div>
-            <div class="form-group">
-                    <%--                <label>Loại tài khoản <span style="color: red">*</span></label>--%>
-                    <%--                <form:select path="userType" class="custom-select">--%>
-                    <%--                    <form:option value="ROLE_UV" label="Ứng viên"--%>
-                    <%--                                 selected="${user.userType.equals('ROLE_UV') ? true : ''}"/>--%>
-                    <%--                    <form:option value="ROLE_NTD" label="Nhà tuyển dụng"--%>
-                    <%--                                 selected="${user.userType.equals('ROLE_NTD') ? true : ''}"/>--%>
-                    <%--                    <form:option value="ROLE_ADMIN" label="Admin"--%>
-                    <%--                                 selected="${user.userType.equals('ROLE_ADMIN') ? true : ''}"/>--%>
-                    <%--                </form:select>--%>
-            </div>
-            <div class="form-group">
-                    <%--                <label>Kích hoạt <span style="color: red">*</span></label>--%>
-                    <%--                <form:select path="active" class="custom-select">--%>
-                    <%--                    <form:option value="0" label="Chưa kích hoạt" selected="${user.active == 0 ? true : ''}"/>--%>
-                    <%--                    <form:option value="1" label="Đã kích hoạt" selected="${user.active == 1 ? true : ''}"/>--%>
-                    <%--                </form:select>--%>
-            </div>
-
-            <c:if test="${user.id == 0}">
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Thêm</button>
-                </div>
-            </c:if>
-            <c:if test="${user.id > 0}">
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Cập nhật</button>
-                </div>
-            </c:if>
-        </form:form>
-    </div>
+<script>
+    window.onload = (event) => {
+        document.getElementById('password').value = ""
+    };
+</script>

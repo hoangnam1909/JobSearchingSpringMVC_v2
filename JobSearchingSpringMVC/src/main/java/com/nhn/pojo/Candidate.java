@@ -1,5 +1,8 @@
 package com.nhn.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -43,8 +46,33 @@ public class Candidate {
     @Column(name = "cv")
     private String cv;
 
+    @Transient
+    @JsonIgnore
+    private MultipartFile file;
+
+    @Transient
+    @JsonIgnore
+    private int userId;
+
 //    @OneToMany(mappedBy = "candidate")
 //    private Collection<User> users;
+
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
 
     public int getId() {
         return id;

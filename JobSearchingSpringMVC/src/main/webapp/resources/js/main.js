@@ -1,5 +1,6 @@
 moment.locale('vi');
 
+
 $(document).ready(function () {
     $("#password").val("");
     $("#confirmPassword").val("");
@@ -14,9 +15,11 @@ $(document).ready(function () {
         $("#dobYear").val("");
 });
 
+
 $('.confirmation').on('click', function () {
     return confirm('Bạn có chắc chắn muốn xoá?');
 });
+
 
 $("textarea").each(function () {
     this.setAttribute("style", "height:" + (this.scrollHeight) + "px;overflow-y:hidden;");
@@ -25,16 +28,31 @@ $("textarea").each(function () {
     this.style.height = (this.scrollHeight) + "px";
 });
 
-imgInp.onchange = evt => {
-    const [file] = imgInp.files
-    if (file) {
-        blah.src = URL.createObjectURL(file)
+
+function showPreview(event) {
+    if (event.target.files.length > 0) {
+        let src = URL.createObjectURL(event.target.files[0]);
+        let preview = document.getElementById("img-preview");
+        preview.src = src;
+        preview.style.display = "block";
     }
 }
+
+
+function fullnamePreview(fullname) {
+    document.getElementById('fullname-preview').innerText = fullname.value
+}
+
+
+function usernamePreview(username) {
+    document.getElementById('username-preview').innerText = username.value
+}
+
 
 function removeFilter() {
     window.location.href = window.location.href.split('?')[0]
 }
+
 
 function updateQueryStringParameter(key, value) {
     let uri = window.location.href
@@ -47,6 +65,7 @@ function updateQueryStringParameter(key, value) {
     }
 }
 
+
 function process(e) {
     let code = (e.keyCode ? e.keyCode : e.which);
     let textarea = document.getElementById('commentId');
@@ -58,9 +77,11 @@ function process(e) {
     }
 }
 
+
 function eraseText() {
     document.getElementById("commentId").value = "";
 }
+
 
 function addComment(employerId, userId) {
     let textarea = document.getElementById('commentId');
@@ -106,28 +127,29 @@ function addComment(employerId, userId) {
     }
 }
 
+
 function deleteApplyJob(applyJobId) {
     let url = '/JobSearchingSpringMVC/api/apply-job/delete/'.concat(applyJobId)
     fetch(url, {
         method: 'DELETE'
-    })
-        .then(function (res) {
-            if (res.status === 202) {
-                let launchModalButton = document.getElementById('launch-modal')
-                let modalBodyElement = document.getElementById('modal-body')
-                let rowElement = document.getElementById('apply-job-row-'.concat(applyJobId))
+    }).then(function (res) {
+        if (res.status === 202) {
+            let launchModalButton = document.getElementById('launch-modal')
+            let modalBodyElement = document.getElementById('modal-body')
+            let rowElement = document.getElementById('apply-job-row-'.concat(applyJobId))
 
-                rowElement.innerHTML = ''
+            rowElement.innerHTML = ''
 
-                modalBodyElement.innerHTML = ''
-                modalBodyElement.innerHTML = `
+            modalBodyElement.innerHTML = ''
+            modalBodyElement.innerHTML = `
             Xoá thành công đơn ứng tuyển
             `
 
-                launchModalButton.click()
-            }
-        })
+            launchModalButton.click()
+        }
+    })
 }
+
 
 function removeActivePagination() {
     let pageButton = document.getElementsByClassName('page-item')

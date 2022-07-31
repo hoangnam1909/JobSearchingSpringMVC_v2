@@ -26,6 +26,8 @@ public interface UserService extends UserDetailsService {
 
     boolean delete(User user);
 
+    boolean delete(int id);
+
     long count();
 
     int getMaxItemsInPage();

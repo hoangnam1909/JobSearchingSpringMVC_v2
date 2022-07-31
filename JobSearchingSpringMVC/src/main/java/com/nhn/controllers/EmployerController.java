@@ -2,21 +2,14 @@ package com.nhn.controllers;
 
 import com.nhn.pojo.*;
 import com.nhn.service.*;
-import com.nhn.utils.utils;
 import com.nhn.validator.JobPostValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.persistence.NoResultException;
-import javax.validation.Valid;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -341,7 +334,7 @@ public class EmployerController {
         model.addAttribute("employer", employer);
         model.addAttribute("userId", userId);
         model.addAttribute("actionUrl", "/employer/employer-info/add-or-update");
-        return "add-employer";
+        return "admin-add-employer";
     }
 
 //    @PostMapping("/employer/employer-info/add-or-update")

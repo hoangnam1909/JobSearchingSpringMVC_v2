@@ -8,7 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.persistence.NoResultException;
 import java.util.*;
@@ -57,7 +56,7 @@ public class CandidateController {
         model.addAttribute("candidate", candidate);
         model.addAttribute("userId", userId);
         model.addAttribute("actionUrl", "/candidate/candidate-info/add-or-update");
-        return "add-candidate";
+        return "admin-add-candidate";
     }
 
 //    @PostMapping("/candidate/candidate-info/add-or-update")

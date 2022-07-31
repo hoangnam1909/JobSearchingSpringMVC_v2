@@ -105,7 +105,7 @@ public class ApiController {
     }
 
     @RequestMapping(value = "/api/apply-job/delete/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> deleteUser(@PathVariable("id") int id) {
+    public ResponseEntity<Void> deleteApplyJob(@PathVariable("id") int id) {
         try {
             ApplyJob applyJob = applyJobService.getById(id);
             if (applyJob == null) {
@@ -116,6 +116,21 @@ public class ApiController {
         }
 
         applyJobService.delete(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @RequestMapping(value = "/api/account/delete/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deleteAccount(@PathVariable("id") int id) {
+        try {
+            User user = userService.getById(id);
+            if (user == null) {
+                return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        userService.delete(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 

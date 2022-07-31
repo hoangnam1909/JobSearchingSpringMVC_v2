@@ -5,6 +5,7 @@
  */
 package com.nhn.controllers;
 
+import com.nhn.pojo.Candidate;
 import com.nhn.pojo.Employer;
 import com.nhn.pojo.User;
 import com.nhn.service.CandidateService;
@@ -87,7 +88,16 @@ public class AccountController {
     @GetMapping("/admin/account/view")
     public String viewAccount(Model model,
                               @RequestParam(name = "id", defaultValue = "0") int id) {
-        User user = this.userService.getById(id);
+        User user = null;
+        int userIdMap = 0;
+        if (model.asMap().get("userId") != null)
+            userIdMap = (int) model.asMap().get("userId");
+
+        if (userIdMap == 0)
+            user = this.userService.getById(id);
+        else
+            user = this.userService.getById(userIdMap);
+
         if (user != null) {
             model.addAttribute("user", user);
         } else
@@ -117,6 +127,8 @@ public class AccountController {
                                      final RedirectAttributes redirectAttrs) {
         String errMsg = null;
         String sucMsg = null;
+//        int candidateId = 0;
+//        int employerId = 0;
 
         if (user.getId() == 0) {
             userValidator.validate(user, result);
@@ -126,9 +138,18 @@ public class AccountController {
 
         int rawId = user.getId();
 
+        if (user.getCandidateId() != 0){
+            Candidate candidate = candidateService.getById(user.getCandidateId());
+            user.setCandidate(candidate);
+        }
+        if (user.getEmployerId() != 0) {
+            Employer employer = employerService.getById(user.getEmployerId());
+            user.setEmployer(employer);
+        }
+
         boolean addOrUpdateCheck = this.userService.addOrUpdate(user);
         if (addOrUpdateCheck) {
-            if (rawId == 0) {
+            if (rawId == 0) { // them moi tai khoan
                 if (user.getUserType().equals(User.USER)) {
                     redirectAttrs.addFlashAttribute("userId",
                             userService.getByUsername(user.getUsername()).getId());
@@ -138,9 +159,22 @@ public class AccountController {
                     employer.setId(0);
                     employer.setName("n/a");
                     employerService.addOrUpdate(employer);
+
+                    user.setEmployer(employerService.getByName("n/a"));
+                    userService.addOrUpdate(user);
                     sucMsg = String.format("Thêm thông tin nhà tuyển dụng '%s' thành công", user.getUsername());
                 }
-            } else {
+            } else { // chinh sua thong tin
+//                if (user.getCandidateId() != 0){
+//                    Candidate candidate = candidateService.getById(user.getCandidateId());
+//                    user.setCandidate(candidate);
+//                }
+//                if (user.getEmployerId() != 0){
+//                    Employer employer = employerService.getById(user.getEmployerId());
+//                    user.setEmployer(employer);
+//                }
+//                userService.addOrUpdate(user);
+
                 sucMsg = String.format("Sửa thông tin user '%s' thành công", user.getUsername());
             }
 
@@ -149,6 +183,7 @@ public class AccountController {
         } else {
             errMsg = "Thêm thông tin tài khoản không thành công";
         }
+
         model.addAttribute("errMsg", errMsg);
         return "admin-add-account";
     }

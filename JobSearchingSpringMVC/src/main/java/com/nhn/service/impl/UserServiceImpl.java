@@ -103,6 +103,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean delete(int id) {
+        User user = getById(id);
+        return this.userRepository.delete(user);
+    }
+
+    @Override
     public long count() {
         return this.userRepository.count();
     }

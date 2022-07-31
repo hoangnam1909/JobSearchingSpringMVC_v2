@@ -33,6 +33,7 @@
                             </span>
                         </a>
                     </div>
+                    <div id="alert-area"></div>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
@@ -52,7 +53,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-2">
+        <div class="col-3">
             <h2 class="text-center dark-color mt-4 mb-1">Bộ lọc</h2>
             <section class="d-flex justify-content-center">
                 <form class="mt-3" action="javascript:void(0)" style="width: 80%">

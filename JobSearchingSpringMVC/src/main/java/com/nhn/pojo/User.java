@@ -93,6 +93,12 @@ public class User {
     private int year;
     @Transient
     @JsonIgnore
+    private int candidateId;
+    @Transient
+    @JsonIgnore
+    private int employerId;
+    @Transient
+    @JsonIgnore
     private String confirmPassword;
     @Transient
     @JsonIgnore
@@ -100,6 +106,22 @@ public class User {
 
     {
         userType = USER;
+    }
+
+    public int getCandidateId() {
+        return candidateId;
+    }
+
+    public void setCandidateId(int candidateId) {
+        this.candidateId = candidateId;
+    }
+
+    public int getEmployerId() {
+        return employerId;
+    }
+
+    public void setEmployerId(int employerId) {
+        this.employerId = employerId;
     }
 
     public int getId() {
@@ -234,16 +256,16 @@ public class User {
         return candidate;
     }
 
-    public void setCandidate(Candidate candidateByCandidateId) {
-        this.candidate = candidateByCandidateId;
+    public void setCandidate(Candidate candidate) {
+        this.candidate = candidate;
     }
 
     public Employer getEmployer() {
         return employer;
     }
 
-    public void setEmployer(Employer employerByEmployerId) {
-        this.employer = employerByEmployerId;
+    public void setEmployer(Employer employer) {
+        this.employer = employer;
     }
 
     public int getDay() {

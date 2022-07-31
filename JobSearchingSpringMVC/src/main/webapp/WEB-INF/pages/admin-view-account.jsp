@@ -36,7 +36,9 @@
                         </c:if>
 
                         <div class="d-flex justify-content-center mb-2">
-                            <input type="button" class="btn btn-primary mx-1" value="Theo dõi"/>
+                            <a href="<c:url value="/admin/account/add-or-update" />?id=${user.id}">
+                                <input type="button" class="btn btn-primary mx-1" value="Sửa thông tin"/>
+                            </a>
                             <c:if test="${user.candidate != null and user.candidate.cv != null}">
                                 <form action="${user.candidate.cv}" target="_blank">
                                     <input type="submit" class="btn btn-outline-primary mx-1" value="Xem CV"/>
