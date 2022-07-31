@@ -162,6 +162,7 @@ public class AccountController {
                 } else if (user.getUserType().equals(User.NTD)) {
                     Employer employer = new Employer();
                     employer.setId(0);
+                    employer.setName("n/a");
 
                     employerService.addOrUpdate(employer);
                     user.setEmployer(employer);
