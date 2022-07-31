@@ -155,7 +155,7 @@ public class ApiController {
         List<User> users = userService.getUsersMultiCondition(params, Integer.parseInt(params.getOrDefault("page", "1")));
 
         if (users.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
         return new ResponseEntity<>(users, HttpStatus.OK);

@@ -151,17 +151,22 @@ public class AccountController {
         if (addOrUpdateCheck) {
             if (rawId == 0) { // them moi tai khoan
                 if (user.getUserType().equals(User.USER)) {
-                    redirectAttrs.addFlashAttribute("userId",
-                            userService.getByUsername(user.getUsername()).getId());
-                    return "redirect:/admin/account/candidate-info/add";
+                    Candidate candidate = new Candidate();
+                    candidate.setId(0);
+
+                    candidateService.addOrUpdate(candidate);
+                    user.setCandidate(candidate);
+                    userService.addOrUpdate(user);
+
+                    sucMsg = String.format("Thêm thông tin ứng viên '%s' thành công", user.getUsername());
                 } else if (user.getUserType().equals(User.NTD)) {
                     Employer employer = new Employer();
                     employer.setId(0);
-                    employer.setName("n/a");
-                    employerService.addOrUpdate(employer);
 
-                    user.setEmployer(employerService.getByName("n/a"));
+                    employerService.addOrUpdate(employer);
+                    user.setEmployer(employer);
                     userService.addOrUpdate(user);
+
                     sucMsg = String.format("Thêm thông tin nhà tuyển dụng '%s' thành công", user.getUsername());
                 }
             } else { // chinh sua thong tin

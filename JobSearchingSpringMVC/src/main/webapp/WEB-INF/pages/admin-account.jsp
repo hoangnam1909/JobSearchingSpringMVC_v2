@@ -97,7 +97,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary" onclick="loadUserAccount()">Tra cứu</button>
-                    <input type="button" class="btn btn-primary" onclick="removeFilter()" value="Loại bỏ bộ lọc"/>
+                    <input type="button" class="btn btn-primary" onclick="loadUserAccountWithNoFilter(1)" value="Loại bỏ bộ lọc"/>
                 </form>
             </section>
         </div>

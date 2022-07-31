@@ -11,9 +11,15 @@
             <div class="col-lg-4">
                 <div class="card mb-4">
                     <div class="card-body text-center">
-                        <img src="${user.avatar}"
-                             alt="avatar" class="rounded-circle"
-                             width="150" height="150">
+                        <div class="rounded-circle m-auto" id="avatar"
+                             style="background-image: url('${user.avatar}');
+                                     width: 150px; height: 150px;
+                                     background-position: center;
+                                     background-size: contain;
+                                     background-repeat: no-repeat;
+                                     border: 1px solid gray">
+                        </div>
+
                         <h5 class="my-3">${user.username}</h5>
 
                         <c:if test="${user.candidate != null}">
