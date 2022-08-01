@@ -3,10 +3,12 @@ package com.nhn.service.impl;
 import com.nhn.pojo.JobPost;
 import com.nhn.repository.JobPostRepository;
 import com.nhn.service.JobPostService;
+import com.nhn.utils.utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +25,14 @@ public class JobPostServiceImpl implements JobPostService {
 
     @Override
     public Boolean addOrUpdate(JobPost post) {
+        String sDate = String.format("%02d/%02d/%04d", post.getDay(), post.getMonth(), post.getYear());
+
+        try {
+            post.setExpiredDate(utils.stringToDate(sDate, "dd/MM/yyyy"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         return this.jobPostRepository.addOrUpdate(post);
     }
 

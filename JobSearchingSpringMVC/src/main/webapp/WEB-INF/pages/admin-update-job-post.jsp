@@ -5,8 +5,10 @@
 
 <c:url value="/admin/job-post/add-or-update" var="action"/>
 
-<div class="container">
-    <div class="row flex-lg-nowrap">
+<div class="container py-4">
+    <h1 class="text-center dark-color mb-3">CẬP NHẬT TIN TUYỂN DỤNG</h1>
+
+    <div class="row flex-lg-nowrap my-4">
         <%--        <div class="col-12 col-lg-auto mb-3" style="width: 200px;">--%>
         <%--            <div class="card p-3">--%>
         <%--                <div class="e-navlist e-navlist--active-bg">--%>
@@ -59,18 +61,33 @@
                                         </c:if>
                                     </div>
                                     <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
-                                        <div class="text-center text-sm-left mb-2 mb-sm-0">
+                                        <div class="text-center text-sm-left mb-2 mb-sm-0 w-75">
                                             <h4 id="employer-name-preview"
                                                 class="pt-sm-2 pb-1 mb-0 text-wrap">
                                                 <c:if test="${jobPost.id != 0}">
                                                     ${jobPost.postedByEmployerUser.employer.name}
                                                 </c:if>
                                             </h4>
+                                            <p id="employer-contact-preview" class="mb-0">
+                                                <c:if test="${jobPost.id != 0}">
+                                                    ${jobPost.postedByEmployerUser.employer.contact}
+                                                </c:if>
+                                            </p>
                                             <p id="employer-website-preview" class="mb-0">
-                                            <c:if test="${jobPost.id != 0}">
+                                                <c:if test="${jobPost.id != 0}">
                                                     ${jobPost.postedByEmployerUser.employer.website}
                                                 </c:if>
                                             </p>
+                                        </div>
+                                        <div class="d-flex justify-content-start flex-column align-items-end">
+                                            <a href="<c:url value="/admin/job-post/update" />?id=${jobPost.id}">
+                                                <input type="button" class="btn btn-primary mt-1"
+                                                       value="Tải lại"/>
+                                            </a>
+                                            <a href="<c:url value="/admin/job-post/view" />?id=${jobPost.id}">
+                                                <input type="button" class="btn btn-primary mt-1"
+                                                       value="Quay về trang thông tin"/>
+                                            </a>
                                         </div>
                                         <%--                                        <div class="text-center text-sm-right">--%>
                                         <%--                                            <span class="badge badge-secondary">--%>
@@ -83,10 +100,6 @@
                                         <%--                                            </span>--%>
                                         <%--                                            <div class="text-muted"><small>Joined 09 Dec 2017</small></div>--%>
                                         <%--                                            <c:if test="${user.userType == 'ROLE_NTD'}">--%>
-                                        <%--                                                <a href="<c:url value="/admin/account/employer/add-or-update" />?userId=${user.employer.id}">--%>
-                                        <%--                                                    <input type="button" class="btn btn-primary mt-3 w-100"--%>
-                                        <%--                                                           value="Thay đổi thông tin nhà tuyển dụng"/>--%>
-                                        <%--                                                </a>--%>
                                         <%--                                            </c:if>--%>
                                         <%--                                        </div>--%>
                                     </div>
@@ -186,11 +199,30 @@
                                                         <div class="col">
                                                             <div class="form-group">
                                                                 <label>Ngày hết hạn</label>
-                                                                <fmt:formatDate pattern="yyyy-MM-dd" value="${jobPost.createdDate}" var="expiredDateStrFormat"/>
+                                                                <div class="d-flex flex-row align-items-center">
+                                                                    <fmt:formatDate pattern="dd"
+                                                                                    value="${jobPost.expiredDate}"
+                                                                                    var="dobDay"/>
+                                                                    <form:input path="day" value="${dobDay}"
+                                                                                class="form-control" id="dobDay"
+                                                                                placeholder="Ngày" type="number"/>
 
-                                                                <form:input type="date" path="expiredDate"
-                                                                            value="${expiredDateStrFormat}"
-                                                                            class="form-control"/>
+                                                                    <span class="mx-2">/</span>
+                                                                    <fmt:formatDate pattern="MM"
+                                                                                    value="${jobPost.expiredDate}"
+                                                                                    var="dobMonth"/>
+                                                                    <form:input path="month" value="${dobMonth}"
+                                                                                class="form-control" id="dobMonth"
+                                                                                placeholder="Tháng" type="number"/>
+
+                                                                    <span class="mx-2">/</span>
+                                                                    <fmt:formatDate pattern="yyyy"
+                                                                                    value="${jobPost.expiredDate}"
+                                                                                    var="dobYear"/>
+                                                                    <form:input path="year" value="${dobYear}"
+                                                                                class="form-control" id="dobYear"
+                                                                                placeholder="Năm" type="number"/>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -232,29 +264,31 @@
                                                 </div>
                                             </div>
 
-                                            <%--                      <div class="row">--%>
-                                            <%--                        <div class="col">--%>
-                                            <%--                          <div class="row">--%>
-                                            <%--                            <div class="col">--%>
-                                            <%--                              <div class="form-group">--%>
-                                            <%--                                <label>Loại công việc</label>--%>
-                                            <%--                                <form:select path="jobTypeId" class="custom-select">--%>
-                                            <%--                                  <c:forEach items="${jobTypes}" var="jobType">--%>
-                                            <%--                                    <c:if test="${jobType.id == jobPost.jobType.id}">--%>
-                                            <%--                                      <option value="${jobType.id}"--%>
-                                            <%--                                              selected>${jobType.name}</option>--%>
-                                            <%--                                    </c:if>--%>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <label>Loại công việc</label>
+                                                                <form:select path="jobTypeId"
+                                                                             class="custom-select">
+                                                                    <c:forEach items="${jobTypes}"
+                                                                               var="jobType">
+                                                                        <c:if test="${jobType.id == jobPost.jobType.id}">
+                                                                            <option value="${jobType.id}"
+                                                                                    selected>${jobType.name}</option>
+                                                                        </c:if>
 
-                                            <%--                                    <c:if test="${jobType.id != jobPost.jobType.id}">--%>
-                                            <%--                                      <option value="${jobType.id}">${jobType.name}</option>--%>
-                                            <%--                                    </c:if>--%>
-                                            <%--                                  </c:forEach>--%>
-                                            <%--                                </form:select>--%>
-                                            <%--                              </div>--%>
-                                            <%--                            </div>--%>
-                                            <%--                          </div>--%>
-                                            <%--                        </div>--%>
-                                            <%--                      </div>--%>
+                                                                        <c:if test="${jobType.id != jobPost.jobType.id}">
+                                                                            <option value="${jobType.id}">${jobType.name}</option>
+                                                                        </c:if>
+                                                                    </c:forEach>
+                                                                </form:select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                             <div class="row justify-content-center mt-3">
                                                 <c:if test="${jobPost.id == 0}">

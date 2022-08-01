@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Collection;
 
 @Entity
+@Table(name = "user")
 public class User {
 
     public static final String ADMIN = "ROLE_ADMIN";

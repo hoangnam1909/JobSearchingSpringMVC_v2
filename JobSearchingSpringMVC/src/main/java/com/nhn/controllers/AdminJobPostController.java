@@ -25,7 +25,7 @@ import java.util.Map;
 
 @Controller
 @ControllerAdvice
-public class JobPostController {
+public class AdminJobPostController {
 
     @Autowired
     UserService userService;
@@ -152,10 +152,8 @@ public class JobPostController {
 
         jobPost.setPostedByEmployerUser(userService.getById(jobPost.getPostedByEmployerUserId()));
         jobPost.setJobType(jobTypeService.getById(jobPost.getJobTypeId()));
-        jobPost.setCreatedDate(new Date());
-
-        if (!jobPost.getExpiredDateStr().equals(""))
-            jobPost.setExpiredDate(new SimpleDateFormat("yyyy-MM-dd").parse(jobPost.getExpiredDateStr()));
+        if (jobPost.getCreatedDate() == null)
+            jobPost.setCreatedDate(new Date());
 
         boolean jobPostAddedCheck = this.jobPostService.addOrUpdate(jobPost);
         if (jobPostAddedCheck) {

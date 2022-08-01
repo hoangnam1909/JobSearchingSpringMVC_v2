@@ -57,7 +57,6 @@ function loadUserAccount(pageInput) {
 
     let pageButton = document.getElementsByClassName('page-item')
     for (let i = 0; i < pageButton.length; i++) {
-        console.log(pageButton[i].innerText)
         if (pageButton[i].innerText == page)
             pageButton[i].classList.add('active')
     }
@@ -70,6 +69,18 @@ function loadUserAccount(pageInput) {
         }
     }).then(function (res) {
         console.info(res)
+
+        if (res.status === 204) {
+            let alertArea = document.getElementById('alert-area')
+            alertArea.innerHTML = ""
+            alertArea.innerHTML = `
+                <div class="alert alert-success text-center" role="alert">
+                    Không có kết quả
+                </div>
+            `
+            document.getElementById('tbody-data').innerHTML = ""
+        }
+
         return res.json();
     }).then(function (data) {
         console.info(data);
@@ -136,9 +147,10 @@ function loadUserAccount(pageInput) {
 function loadUserAccountWithNoFilter(pageInput) {
     let page = pageInput;
 
+    document.getElementById('alert-area').innerHTML = ""
+
     let pageButton = document.getElementsByClassName('page-item')
     for (let i = 0; i < pageButton.length; i++) {
-        console.log(pageButton[i].innerText)
         if (pageButton[i].innerText == page)
             pageButton[i].classList.add('active')
     }

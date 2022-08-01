@@ -68,8 +68,18 @@ public class JobPost {
     private int jobTypeId;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "job_type_id", referencedColumnName = "id")
+    @JoinColumn(name = "job_type_id", referencedColumnName = "id", nullable = false)
     private JobType jobType;
+
+    @Transient
+    @JsonIgnore
+    private int day;
+    @Transient
+    @JsonIgnore
+    private int month;
+    @Transient
+    @JsonIgnore
+    private int year;
 
     public int getId() {
         return id;
@@ -181,5 +191,29 @@ public class JobPost {
 
     public void setExpiredDateStr(String expiredDateStr) {
         this.expiredDateStr = expiredDateStr;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 }

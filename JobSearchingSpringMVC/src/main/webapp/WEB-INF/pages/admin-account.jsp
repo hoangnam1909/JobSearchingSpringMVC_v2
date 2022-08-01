@@ -12,7 +12,6 @@
                     <h4 class="m-0 font-weight-bold text-primary" style="align-self: center">
                         Danh sách người dùng
                     </h4>
-
                     <nav aria-label="...">
                         <ul class="pagination justify-content-center my-2">
                             <c:forEach begin="1" end="${Math.ceil(counter/userService.maxItemsInPage)}" var="page">

@@ -6,7 +6,7 @@
 <section class="py-4">
     <h1 class="text-center dark-color mb-3">TIN TUYỂN DỤNG</h1>
 
-    <div class="container py-3">
+    <div class="container py-4">
         <div class="row">
             <div class="col-lg-4">
                 <div class="card mb-4">
@@ -21,7 +21,7 @@
                                      border: 1px solid lightgray">
                         </div>
 
-                        <a href="#">
+                        <a href="<c:url value="/admin/account/view"/>?id=${jobPost.postedByEmployerUser.id}">
                             <h5 class="my-3">
                                 ${jobPost.postedByEmployerUser.employer.name}
                             </h5>
@@ -33,7 +33,7 @@
                         </a>
 
                         <div class="d-flex justify-content-center mb-2">
-                            <a href="<c:url value="/admin/job-post/add-or-update" />?id=${jobPost.id}">
+                            <a href="<c:url value="/admin/job-post/update" />?id=${jobPost.id}">
                                 <input type="button" class="btn btn-primary mx-1" value="Sửa thông tin"/>
                             </a>
                         </div>
@@ -146,6 +146,18 @@
                             <div class="col-sm-9">
                                 <p class="text-muted mb-0">
                                     <fmt:formatDate pattern="dd/MM/yyyy" value="${jobPost.expiredDate}"/>
+                                </p>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Loại công việc</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">
+                                    ${jobPost.jobType.name}
                                 </p>
                             </div>
                         </div>

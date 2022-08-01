@@ -46,7 +46,7 @@
                                 <th>Loại việc làm</th>
                             </tr>
                             </thead>
-                            <tbody id="tbody-data">
+                            <tbody id="tbody-data-job-post">
                             </tbody>
                         </table>
                     </div>
@@ -96,8 +96,8 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-primary" onclick="loadUserAccount()">Tra cứu</button>
-                    <input type="button" class="btn btn-primary" onclick="loadUserAccountWithNoFilter(1)"
+                    <button type="submit" class="btn btn-primary" onclick="loadJobPost(1)">Tra cứu</button>
+                    <input type="button" class="btn btn-primary" onclick="loadJobPost(1)"
                            value="Loại bỏ bộ lọc"/>
                 </form>
             </section>
@@ -156,9 +156,9 @@
 <%--    </section>--%>
 <%--</div>--%>
 
-<script src="<c:url value="/resources/vendor/datatables/jquery.dataTables.min.js" /> "></script>
-<script src="<c:url value="/resources/vendor/datatables/dataTables.bootstrap4.min.js" /> "></script>
-<script src="<c:url value="/resources/js/datatables-demo.js"/>"></script>
+<%--<script src="<c:url value="/resources/vendor/datatables/jquery.dataTables.min.js" /> "></script>--%>
+<%--<script src="<c:url value="/resources/vendor/datatables/dataTables.bootstrap4.min.js" /> "></script>--%>
+<%--<script src="<c:url value="/resources/js/datatables-demo.js"/>"></script>--%>
 <script src="<c:url value="/resources/js/admin-job-post.js"/>"></script>
 
 <script>

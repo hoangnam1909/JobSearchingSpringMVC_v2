@@ -1,6 +1,5 @@
 moment.locale('vi');
 
-
 $(document).ready(function () {
     $("#password").val("");
     $("#confirmPassword").val("");

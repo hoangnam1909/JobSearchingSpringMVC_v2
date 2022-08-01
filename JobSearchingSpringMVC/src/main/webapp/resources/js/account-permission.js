@@ -49,7 +49,6 @@ function loadEmployers(pageInput) {
 
     let pageButton = document.getElementsByClassName('page-item')
     for (let i = 0; i < pageButton.length; i++) {
-        console.log(pageButton[i].innerText)
         if (pageButton[i].innerText == page)
             pageButton[i].classList.add('active')
     }
@@ -84,7 +83,6 @@ function loadEmployers(pageInput) {
         let urlAccept
 
         area.innerHTML = ""
-        console.log(maxItems)
 
         for (let i = 0; i < data.length; i++) {
             urlAccept = window.location.origin.concat('/JobSearchingSpringMVC/admin/account/view?id='.concat(data[i].id))

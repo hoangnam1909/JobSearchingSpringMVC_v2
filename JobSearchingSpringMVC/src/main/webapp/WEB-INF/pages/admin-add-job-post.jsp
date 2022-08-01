@@ -1,11 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:url value="/admin/job-post/add-or-update" var="action"/>
 
-<div class="container">
-    <div class="row flex-lg-nowrap">
+<div class="container py-4">
+    <h1 class="text-center dark-color mb-3">ĐĂNG TIN TUYỂN DỤNG</h1>
+
+    <div class="row flex-lg-nowrap my-4">
         <%--        <div class="col-12 col-lg-auto mb-3" style="width: 200px;">--%>
         <%--            <div class="card p-3">--%>
         <%--                <div class="e-navlist e-navlist--active-bg">--%>
@@ -185,8 +188,30 @@
                                                         <div class="col">
                                                             <div class="form-group">
                                                                 <label>Ngày hết hạn</label>
-                                                                <form:input type="date" path="expiredDateStr"
-                                                                            class="form-control"/>
+                                                                <div class="d-flex flex-row align-items-center">
+                                                                    <fmt:formatDate pattern="dd"
+                                                                                    value="${jobPost.expiredDate}"
+                                                                                    var="dobDay"/>
+                                                                    <form:input path="day" value="${dobDay}"
+                                                                                class="form-control" id="dobDay"
+                                                                                placeholder="Ngày" type="number"/>
+
+                                                                    <span class="mx-2">/</span>
+                                                                    <fmt:formatDate pattern="MM"
+                                                                                    value="${jobPost.expiredDate}"
+                                                                                    var="dobMonth"/>
+                                                                    <form:input path="month" value="${dobMonth}"
+                                                                                class="form-control" id="dobMonth"
+                                                                                placeholder="Tháng" type="number"/>
+
+                                                                    <span class="mx-2">/</span>
+                                                                    <fmt:formatDate pattern="yyyy"
+                                                                                    value="${jobPost.expiredDate}"
+                                                                                    var="dobYear"/>
+                                                                    <form:input path="year" value="${dobYear}"
+                                                                                class="form-control" id="dobYear"
+                                                                                placeholder="Năm" type="number"/>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
