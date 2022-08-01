@@ -73,6 +73,10 @@
     <script src="<c:url value="/resources/vendor/bootstrap/js/bootstrap.bundle.min.js" />"></script>
     <script src="<c:url value="/resources/vendor/jquery-easing/jquery.easing.min.js" />"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment-with-locales.min.js"
+            integrity="sha512-vFABRuf5oGUaztndx4KoAEUVQnOvAIFs59y4tO0DILGWhQiFnFHiR+ZJfxLDyJlXgeut9Z07Svuvm+1Jv89w5g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script src="<c:url value="/resources/js/sb-admin-2.min.js" />"></script>
     <script src="<c:url value="/resources/vendor/chart.js/Chart.min.js" />"></script>
 

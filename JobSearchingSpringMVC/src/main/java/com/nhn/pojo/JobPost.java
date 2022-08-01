@@ -41,6 +41,10 @@ public class JobPost {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
+    @Transient
+    @JsonIgnore
+    private String expiredDateStr;
+
     @Basic
     @Column(name = "expired_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -50,10 +54,18 @@ public class JobPost {
     @OneToMany(mappedBy = "jobPost", fetch = FetchType.LAZY)
     private Collection<ApplyJob> applyJobs;
 
+    @Transient
+    @JsonIgnore
+    private int postedByEmployerUserId;
+
     @Fetch(FetchMode.JOIN)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "posted_by_employer_user", referencedColumnName = "id", nullable = false)
     private User postedByEmployerUser;
+
+    @Transient
+    @JsonIgnore
+    private int jobTypeId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "job_type_id", referencedColumnName = "id")
@@ -147,4 +159,27 @@ public class JobPost {
         this.jobType = jobTypeByJobTypeId;
     }
 
+    public int getPostedByEmployerUserId() {
+        return postedByEmployerUserId;
+    }
+
+    public void setPostedByEmployerUserId(int postedByEmployerUserId) {
+        this.postedByEmployerUserId = postedByEmployerUserId;
+    }
+
+    public int getJobTypeId() {
+        return jobTypeId;
+    }
+
+    public void setJobTypeId(int jobTypeId) {
+        this.jobTypeId = jobTypeId;
+    }
+
+    public String getExpiredDateStr() {
+        return expiredDateStr;
+    }
+
+    public void setExpiredDateStr(String expiredDateStr) {
+        this.expiredDateStr = expiredDateStr;
+    }
 }

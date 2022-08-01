@@ -13,11 +13,12 @@
                     <div class="card-body text-center">
                         <div class="rounded-circle m-auto" id="avatar"
                              style="background-image: url('${user.avatar}');
-                                     width: 150px; height: 150px;
+                                     width: 140px; height: 140px;
                                      background-position: center;
                                      background-size: contain;
                                      background-repeat: no-repeat;
-                                     border: 1px solid gray">
+                                     border-radius: .35rem;
+                                     border: 1px solid lightgray">
                         </div>
 
                         <h5 class="my-3">${user.username}</h5>

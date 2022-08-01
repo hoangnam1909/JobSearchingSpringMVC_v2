@@ -151,7 +151,7 @@ public class ApiController {
     @RequestMapping(value = "/api/load-users", method = RequestMethod.POST, produces = {
             MediaType.APPLICATION_JSON_VALUE
     })
-    public ResponseEntity<List<User>> listUsers(@RequestBody (required = false) Map<String, String> params) {
+    public ResponseEntity<List<User>> loadUsers(@RequestBody (required = false) Map<String, String> params) {
         List<User> users = userService.getUsersMultiCondition(params, Integer.parseInt(params.getOrDefault("page", "1")));
 
         if (users.isEmpty()) {
@@ -159,6 +159,20 @@ public class ApiController {
         }
 
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/api/account/active/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> activeUser(@PathVariable("id") int id) {
+        try {
+            userService.activate(id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+        }
+
+//        user.setActive(1);
+//        userService.addOrUpdate(user);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @PostMapping(value = "/api/send-email", produces = {

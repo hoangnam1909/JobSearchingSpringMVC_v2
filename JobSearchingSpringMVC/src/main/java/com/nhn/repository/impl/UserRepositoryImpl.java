@@ -47,7 +47,7 @@ public class UserRepositoryImpl implements UserRepository {
     public boolean addOrUpdate(User user) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         try {
-            if (user.getId() > 0)
+            if (user.getId() != 0)
                 session.update(user);
             else
                 session.save(user);
@@ -207,6 +207,12 @@ public class UserRepositoryImpl implements UserRepository {
                 predicates.add(p11);
             }
 
+            if (params.containsKey("id")) {
+                int id = Integer.parseInt(params.get("id"));
+                Predicate p12 = builder.equal(root.get("id").as(Integer.class), id);
+                predicates.add(p12);
+            }
+
             q = q.where(predicates.toArray(new Predicate[]{}));
         }
 
@@ -270,6 +276,30 @@ public class UserRepositoryImpl implements UserRepository {
             System.err.println(ex.getMessage());
         }
         return false;
+    }
+
+    @Override
+    public boolean activate(int id) {
+        User user = getById(id);
+        if (user == null)
+            return false;
+        else {
+            user.setActive(1);
+            addOrUpdate(user);
+            return true;
+        }
+    }
+
+    @Override
+    public boolean deactivate(int id) {
+        User user = getById(id);
+        if (user == null)
+            return false;
+        else {
+            user.setActive(0);
+            addOrUpdate(user);
+            return true;
+        }
     }
 
     @Override

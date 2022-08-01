@@ -1,6 +1,5 @@
 package com.nhn.controllers;
 
-import com.nhn.pojo.Employer;
 import com.nhn.pojo.JobPost;
 import com.nhn.pojo.JobType;
 import com.nhn.pojo.User;
@@ -8,11 +7,9 @@ import com.nhn.service.EmployerService;
 import com.nhn.service.JobPostService;
 import com.nhn.service.JobTypeService;
 import com.nhn.service.UserService;
-import com.nhn.utils.utils;
 import com.nhn.validator.JobPostValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -114,7 +111,7 @@ public class JobPostController {
             return "redirect:/admin/job-post";
         }
         model.addAttribute("errMsg", model.asMap().get("errMsg"));
-        return "view-job-post";
+        return "admin-view-job-post";
     }
 
     @GetMapping("/admin/job-post/add-or-update")
@@ -131,47 +128,47 @@ public class JobPostController {
 
         loadAllList(model);
         model.addAttribute("employerService", employerService);
-        return "add-job-post";
+        return "admin-add-job-post";
     }
 
-//    @PostMapping(value = "/admin/job-post/add-or-update")
-//    public String addOrUpdateJobPost(Model model,
-//                                     @ModelAttribute(value = "jobPost") @Valid JobPost jobPost,
-//                                     BindingResult result,
-//                                     final RedirectAttributes redirectAttrs) throws ParseException {
-//        String errMsg = null;
-//        String sucMsg = null;
-//
-//        loadAllList(model);
-//
-//        jobPostValidator.validate(jobPost, result);
-//        if (result.hasErrors())
-//            return "add-job-post";
-//
-//        jobPost.setPostedByCandidateUser(userService.getById(jobPost.getPostedByUserId()));
-//        jobPost.setJobType(jobTypeService.getById(jobPost.getJobTypeId()));
-//        jobPost.setCreatedDate(new Date());
-//
-//        if (!jobPost.getExpiredDateStr().equals(""))
-//            jobPost.setExpiredDate(new SimpleDateFormat("yyyy-MM-dd").parse(jobPost.getExpiredDateStr()));
-//
-//        boolean jobPostAddedCheck = this.jobPostService.addOrUpdate(jobPost);
-//        if (jobPostAddedCheck) {
-//            if (jobPost.getId() == 0)
-//                sucMsg = String.format("Thêm thành công bài viết '%s'", jobPost.getTitle());
-//            else
-//                sucMsg = String.format("Sửa thành công bài viết '%s'", jobPost.getTitle());
-//        } else {
-//            if (jobPost.getId() == 0)
-//                errMsg = String.format("Thêm bài viết '%s' thất bại", jobPost.getTitle());
-//            else
-//                errMsg = String.format("Sửa bài viết '%s' thất bại", jobPost.getTitle());
-//        }
-//
-//        redirectAttrs.addFlashAttribute("errMsg", errMsg);
-//        redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
-//        return "redirect:/admin/job-post";
-//    }
+    @PostMapping(value = "/admin/job-post/add-or-update")
+    public String addOrUpdateJobPost(Model model,
+                                     @ModelAttribute(value = "jobPost") @Valid JobPost jobPost,
+                                     BindingResult result,
+                                     final RedirectAttributes redirectAttrs) throws ParseException {
+        String errMsg = null;
+        String sucMsg = null;
+
+        loadAllList(model);
+
+        jobPostValidator.validate(jobPost, result);
+        if (result.hasErrors())
+            return "admin-add-job-post";
+
+        jobPost.setPostedByEmployerUser(userService.getById(jobPost.getPostedByEmployerUserId()));
+        jobPost.setJobType(jobTypeService.getById(jobPost.getJobTypeId()));
+        jobPost.setCreatedDate(new Date());
+
+        if (!jobPost.getExpiredDateStr().equals(""))
+            jobPost.setExpiredDate(new SimpleDateFormat("yyyy-MM-dd").parse(jobPost.getExpiredDateStr()));
+
+        boolean jobPostAddedCheck = this.jobPostService.addOrUpdate(jobPost);
+        if (jobPostAddedCheck) {
+            if (jobPost.getId() == 0)
+                sucMsg = String.format("Thêm thành công bài viết '%s'", jobPost.getTitle());
+            else
+                sucMsg = String.format("Sửa thành công bài viết '%s'", jobPost.getTitle());
+        } else {
+            if (jobPost.getId() == 0)
+                errMsg = String.format("Thêm bài viết '%s' thất bại", jobPost.getTitle());
+            else
+                errMsg = String.format("Sửa bài viết '%s' thất bại", jobPost.getTitle());
+        }
+
+        redirectAttrs.addFlashAttribute("errMsg", errMsg);
+        redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
+        return "redirect:/admin/job-post";
+    }
 
     @GetMapping(path = "/admin/job-post/delete")
     public String deleteJobPostById(Model model,

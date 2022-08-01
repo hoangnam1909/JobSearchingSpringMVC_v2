@@ -109,6 +109,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean activate(int id) {
+        return this.userRepository.activate(id);
+    }
+
+    @Override
+    public boolean deactivate(int id) {
+        return this.userRepository.deactivate(id);
+    }
+
+    @Override
     public long count() {
         return this.userRepository.count();
     }

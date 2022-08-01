@@ -25,6 +25,10 @@ public interface UserRepository {
 
     boolean delete(User user);
 
+    boolean activate(int id);
+
+    boolean deactivate(int id);
+
     long count();
 
     int getMaxItemsInPage();

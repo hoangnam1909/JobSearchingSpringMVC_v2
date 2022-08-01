@@ -28,6 +28,10 @@ public interface UserService extends UserDetailsService {
 
     boolean delete(int id);
 
+    boolean activate(int id);
+
+    boolean deactivate(int id);
+
     long count();
 
     int getMaxItemsInPage();

@@ -15,8 +15,8 @@ public class JobType {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "jobType")
-    private Collection<JobPost> jobPosts;
+//    @OneToMany(mappedBy = "jobType")
+//    private Collection<JobPost> jobPosts;
 
     public int getId() {
         return id;
@@ -54,11 +54,11 @@ public class JobType {
         return result;
     }
 
-    public Collection<JobPost> getJobPosts() {
-        return jobPosts;
-    }
-
-    public void setJobPosts(Collection<JobPost> jobPostsById) {
-        this.jobPosts = jobPostsById;
-    }
+//    public Collection<JobPost> getJobPosts() {
+//        return jobPosts;
+//    }
+//
+//    public void setJobPosts(Collection<JobPost> jobPostsById) {
+//        this.jobPosts = jobPostsById;
+//    }
 }

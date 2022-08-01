@@ -1,7 +1,6 @@
 package com.nhn.controllers;
 
 import com.nhn.pojo.Candidate;
-import com.nhn.pojo.Employer;
 import com.nhn.service.CandidateService;
 import com.nhn.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.persistence.NoResultException;
-
 @Controller
-public class AdminCandidate {
+public class AdminCandidateController {
 
     @Autowired
     private UserService userService;

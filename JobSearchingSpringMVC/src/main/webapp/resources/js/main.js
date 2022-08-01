@@ -38,11 +38,25 @@ function showPreview(event) {
     }
 }
 
+function showPreviewDiv(event) {
+    if (event.target.files.length > 0) {
+        let src = URL.createObjectURL(event.target.files[0]);
+        let preview = document.getElementById("img-preview");
+        // console.log(src)
+        // console.log(preview.style.backgroundImage)
+        // console.log(`url(${src}`)
+        preview.style.backgroundImage = `url(${src})`;
+        preview.style.display = "block";
+    }
+}
+
+function userTypePreview(userType) {
+    document.getElementById('user-type-badge').innerText = userType.options[userType.selectedIndex].text
+}
 
 function fullnamePreview(fullname) {
     document.getElementById('fullname-preview').innerText = fullname.value
 }
-
 
 function usernamePreview(username) {
     document.getElementById('username-preview').innerText = username.value

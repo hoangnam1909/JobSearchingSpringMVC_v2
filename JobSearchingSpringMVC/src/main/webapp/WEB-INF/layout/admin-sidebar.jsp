@@ -34,6 +34,16 @@
             <span>Tài khoản</span></a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" href="<c:url value="/admin/account-permission" />">
+            <i class="fa-solid fa-user-check"></i>
+            <span>Duyệt nhà tuyển dụng</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="<c:url value="/admin/job-post" />">
+            <i class="fa-solid fa-newspaper"></i>
+            <span>Bài đăng tuyển dụng</span></a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="tables.html">
             <i class="fas fa-fw fa-table"></i>
             <span>Tables</span></a>
