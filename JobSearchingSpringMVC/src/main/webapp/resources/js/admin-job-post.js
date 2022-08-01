@@ -2,25 +2,35 @@ function titlePreview(title) {
     document.getElementById('title-preview').innerText = title.value
 }
 
-function employerAvatarPreview(employer) {
+
+function employerPreview(employer) {
     let userId = employer.options[employer.selectedIndex].value
 
-    fetch("/JobSearchingSpringMVC/api/load-users", {
-        method: 'post',
-        body: JSON.stringify({
-            "id": userId
-        }),
-        headers: {
-            "Content-Type": "application/json"
-        }
-    }).then(function (res) {
-        console.info(res)
-        return res.json();
-    }).then(function (data) {
-        console.info(data[0].avatar);
-        document.getElementById('img-employer-preview').style.backgroundImage = `url(${data[0].avatar})`;
-    })
+    if (parseInt(userId) === 0) {
+        document.getElementById('img-employer-preview').style.backgroundImage = "url('/JobSearchingSpringMVC/resources/images/none.png')";
+        document.getElementById('employer-name-preview').innerText = ""
+        document.getElementById('employer-website-preview').innerText = ""
+    } else {
+        fetch("/JobSearchingSpringMVC/api/load-users", {
+            method: 'post',
+            body: JSON.stringify({
+                "id": userId
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (res) {
+            console.info(res)
+            return res.json();
+        }).then(function (data) {
+            console.info(data[0].avatar);
+            document.getElementById('img-employer-preview').style.backgroundImage = `url(${data[0].avatar})`;
+            document.getElementById('employer-name-preview').innerText = data[0].employer.name
+            document.getElementById('employer-website-preview').innerText = data[0].employer.website
+        })
+    }
 }
+
 
 function search() {
     const search = {}
@@ -39,6 +49,7 @@ function search() {
 
     return search
 }
+
 
 function deleteJobPost(jobPostId) {
     let urlFetch = "/JobSearchingSpringMVC/api/job-post/delete/".concat(jobPostId)
@@ -106,7 +117,7 @@ function loadJobPost(pageInput) {
         console.log(maxItems)
         for (let i = 0; i < data.length; i++) {
             urlView = window.location.origin.concat('/JobSearchingSpringMVC/admin/job-post/view?id='.concat(data[i].id))
-            urlEdit = window.location.origin.concat('/JobSearchingSpringMVC/admin/account/add-or-update?id='.concat(data[i].id))
+            urlEdit = window.location.origin.concat('/JobSearchingSpringMVC/admin/job-post/update?id='.concat(data[i].id))
             // urlDeleteUser = window.location.origin.concat('/JobSearchingSpringMVC/admin/account/delete?id='.concat(data[i].id))
 
             area.innerHTML +=
@@ -223,3 +234,4 @@ function loadUserAccountWithNoFilter(pageInput) {
         }
     })
 }
+

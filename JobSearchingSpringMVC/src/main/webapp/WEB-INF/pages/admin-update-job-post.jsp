@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:url value="/admin/job-post/add-or-update" var="action"/>
 
@@ -66,7 +67,7 @@
                                                 </c:if>
                                             </h4>
                                             <p id="employer-website-preview" class="mb-0">
-                                                <c:if test="${jobPost.id != 0}">
+                                            <c:if test="${jobPost.id != 0}">
                                                     ${jobPost.postedByEmployerUser.employer.website}
                                                 </c:if>
                                             </p>
@@ -185,7 +186,10 @@
                                                         <div class="col">
                                                             <div class="form-group">
                                                                 <label>Ngày hết hạn</label>
-                                                                <form:input type="date" path="expiredDateStr"
+                                                                <fmt:formatDate pattern="yyyy-MM-dd" value="${jobPost.createdDate}" var="expiredDateStrFormat"/>
+
+                                                                <form:input type="date" path="expiredDate"
+                                                                            value="${expiredDateStrFormat}"
                                                                             class="form-control"/>
                                                             </div>
                                                         </div>
@@ -203,14 +207,13 @@
                                                                              class="custom-select"
                                                                              id="select-employer"
                                                                              onchange="employerPreview(this)">
-                                                                    <option value="0" selected>
-                                                                        Chọn nhà tuyển dụng
-                                                                    </option>
                                                                     <c:forEach items="${users}" var="user">
+
                                                                         <c:if test="${user.employer != null}">
+
                                                                             <c:if test="${user.id == jobPost.postedByEmployerUser.id}">
                                                                                 <option value="${user.id}" selected>
-                                                                                        ${user.username}
+                                                                                        ${user.employer.name}
                                                                                 </option>
                                                                             </c:if>
 
@@ -219,6 +222,7 @@
                                                                                         ${user.employer.name}
                                                                                 </option>
                                                                             </c:if>
+
                                                                         </c:if>
                                                                     </c:forEach>
                                                                 </form:select>
@@ -228,29 +232,29 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <div class="form-group">
-                                                                <label>Loại công việc</label>
-                                                                <form:select path="jobTypeId" class="custom-select">
-                                                                    <c:forEach items="${jobTypes}" var="jobType">
-                                                                        <c:if test="${jobType.id == jobPost.jobType.id}">
-                                                                            <option value="${jobType.id}"
-                                                                                    selected>${jobType.name}</option>
-                                                                        </c:if>
+                                            <%--                      <div class="row">--%>
+                                            <%--                        <div class="col">--%>
+                                            <%--                          <div class="row">--%>
+                                            <%--                            <div class="col">--%>
+                                            <%--                              <div class="form-group">--%>
+                                            <%--                                <label>Loại công việc</label>--%>
+                                            <%--                                <form:select path="jobTypeId" class="custom-select">--%>
+                                            <%--                                  <c:forEach items="${jobTypes}" var="jobType">--%>
+                                            <%--                                    <c:if test="${jobType.id == jobPost.jobType.id}">--%>
+                                            <%--                                      <option value="${jobType.id}"--%>
+                                            <%--                                              selected>${jobType.name}</option>--%>
+                                            <%--                                    </c:if>--%>
 
-                                                                        <c:if test="${jobType.id != jobPost.jobType.id}">
-                                                                            <option value="${jobType.id}">${jobType.name}</option>
-                                                                        </c:if>
-                                                                    </c:forEach>
-                                                                </form:select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <%--                                    <c:if test="${jobType.id != jobPost.jobType.id}">--%>
+                                            <%--                                      <option value="${jobType.id}">${jobType.name}</option>--%>
+                                            <%--                                    </c:if>--%>
+                                            <%--                                  </c:forEach>--%>
+                                            <%--                                </form:select>--%>
+                                            <%--                              </div>--%>
+                                            <%--                            </div>--%>
+                                            <%--                          </div>--%>
+                                            <%--                        </div>--%>
+                                            <%--                      </div>--%>
 
                                             <div class="row justify-content-center mt-3">
                                                 <c:if test="${jobPost.id == 0}">

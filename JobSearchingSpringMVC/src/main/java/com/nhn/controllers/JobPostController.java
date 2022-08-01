@@ -114,21 +114,26 @@ public class JobPostController {
         return "admin-view-job-post";
     }
 
-    @GetMapping("/admin/job-post/add-or-update")
-    public String addOrUpdateJobPostView(Model model,
-                                         @RequestParam(name = "id", defaultValue = "0") int id) {
+    @GetMapping("/admin/job-post/add")
+    public String addJobPostView(Model model) {
 
-        if (id > 0)
-            model.addAttribute("jobPost", this.jobPostService.getById(id));
-        else {
-            JobPost jobPost = new JobPost();
-            jobPost.setId(0);
-            model.addAttribute("jobPost", jobPost);
-        }
+        JobPost jobPost = new JobPost();
+        jobPost.setId(0);
+        model.addAttribute("jobPost", jobPost);
 
         loadAllList(model);
         model.addAttribute("employerService", employerService);
         return "admin-add-job-post";
+    }
+
+    @GetMapping("/admin/job-post/update")
+    public String updateJobPostView(Model model,
+                                    @RequestParam(name = "id", defaultValue = "0") int id) {
+
+        model.addAttribute("jobPost", this.jobPostService.getById(id));
+        loadAllList(model);
+        model.addAttribute("employerService", employerService);
+        return "admin-update-job-post";
     }
 
     @PostMapping(value = "/admin/job-post/add-or-update")

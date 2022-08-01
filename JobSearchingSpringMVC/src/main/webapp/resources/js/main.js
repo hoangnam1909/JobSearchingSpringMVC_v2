@@ -62,11 +62,9 @@ function usernamePreview(username) {
     document.getElementById('username-preview').innerText = username.value
 }
 
-
 function removeFilter() {
     window.location.href = window.location.href.split('?')[0]
 }
-
 
 function updateQueryStringParameter(key, value) {
     let uri = window.location.href

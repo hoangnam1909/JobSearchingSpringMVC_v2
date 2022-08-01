@@ -58,8 +58,8 @@ public class JobPost {
     @JsonIgnore
     private int postedByEmployerUserId;
 
-    @Fetch(FetchMode.JOIN)
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @Fetch(FetchMode.JOIN)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "posted_by_employer_user", referencedColumnName = "id", nullable = false)
     private User postedByEmployerUser;
 

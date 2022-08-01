@@ -158,6 +158,11 @@ and open the template in the editor.
         <put-attribute name="content" value="/WEB-INF/pages/admin-add-job-post.jsp"/>
     </definition>
 
+    <definition name="admin-update-job-post" extends="adminLayout">
+        <put-attribute name="title" value="Cập nhật tin tuyển dụng"/>
+        <put-attribute name="content" value="/WEB-INF/pages/admin-update-job-post.jsp"/>
+    </definition>
+
     <!--    <definition name="view-job-post" extends="baseLayout">-->
     <!--        <put-attribute name="title" value="Xem thông tin tin tuyển dụng" />-->
     <!--        <put-attribute name="content" value="/WEB-INF/pages/admin-view-job-post.jsp" />-->

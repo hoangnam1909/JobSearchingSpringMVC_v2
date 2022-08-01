@@ -26,7 +26,7 @@
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
-                        <a href="<c:url value="/admin/job-post/add-or-update" />" style="text-decoration: none">
+                        <a href="<c:url value="/admin/job-post/add" />" style="text-decoration: none">
                             <i class="fa-solid fa-plus"></i>
                             <span>
                                 Thêm tin tuyển dụng
