@@ -6,7 +6,7 @@
 <c:url value="/admin/job-post/add-or-update" var="action"/>
 
 <div class="container py-4">
-    <h1 class="text-center dark-color mb-3">CẬP NHẬT TIN TUYỂN DỤNG</h1>
+    <h1 class="text-center dark-color mb-3">ĐĂNG TIN TUYỂN DỤNG</h1>
 
     <div class="row flex-lg-nowrap my-4">
         <%--        <div class="col-12 col-lg-auto mb-3" style="width: 200px;">--%>
@@ -61,33 +61,10 @@
                                         </c:if>
                                     </div>
                                     <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
-                                        <div class="text-center text-sm-left mb-2 mb-sm-0 w-75">
-                                            <h4 id="employer-name-preview"
-                                                class="pt-sm-2 pb-1 mb-0 text-wrap">
-                                                <c:if test="${jobPost.id != 0}">
-                                                    ${jobPost.postedByEmployerUser.employer.name}
-                                                </c:if>
-                                            </h4>
-                                            <p id="employer-contact-preview" class="mb-0">
-                                                <c:if test="${jobPost.id != 0}">
-                                                    ${jobPost.postedByEmployerUser.employer.contact}
-                                                </c:if>
-                                            </p>
-                                            <p id="employer-website-preview" class="mb-0">
-                                                <c:if test="${jobPost.id != 0}">
-                                                    ${jobPost.postedByEmployerUser.employer.website}
-                                                </c:if>
-                                            </p>
-                                        </div>
-                                        <div class="d-flex justify-content-start flex-column align-items-end">
-                                            <a href="<c:url value="/admin/job-post/update" />?id=${jobPost.id}">
-                                                <input type="button" class="btn btn-primary mt-1"
-                                                       value="Tải lại"/>
-                                            </a>
-                                            <a href="<c:url value="/admin/job-post/view" />?id=${jobPost.id}">
-                                                <input type="button" class="btn btn-primary mt-1"
-                                                       value="Quay về trang thông tin"/>
-                                            </a>
+                                        <div class="text-center text-sm-left mb-2 mb-sm-0">
+                                            <h4 id="employer-name-preview" class="pt-sm-2 pb-1 mb-0 text-wrap"></h4>
+                                            <p id="employer-website-preview" class="mb-0"></p>
+                                            <p id="employer-contact-preview" class="mb-0"></p>
                                         </div>
                                         <%--                                        <div class="text-center text-sm-right">--%>
                                         <%--                                            <span class="badge badge-secondary">--%>
@@ -100,6 +77,10 @@
                                         <%--                                            </span>--%>
                                         <%--                                            <div class="text-muted"><small>Joined 09 Dec 2017</small></div>--%>
                                         <%--                                            <c:if test="${user.userType == 'ROLE_NTD'}">--%>
+                                        <%--                                                <a href="<c:url value="/admin/account/employer/add-or-update" />?userId=${user.employer.id}">--%>
+                                        <%--                                                    <input type="button" class="btn btn-primary mt-3 w-100"--%>
+                                        <%--                                                           value="Thay đổi thông tin nhà tuyển dụng"/>--%>
+                                        <%--                                                </a>--%>
                                         <%--                                            </c:if>--%>
                                         <%--                                        </div>--%>
                                     </div>
@@ -121,6 +102,7 @@
                                 </ul>
                                 <div class="tab-content pt-3">
                                     <div class="tab-pane active">
+                                        <%--@elvariable id="jobPost" type=""--%>
                                         <form:form action="${action}" method="post"
                                                    modelAttribute="jobPost">
                                             <form:errors path="*" element="div" cssClass="alert alert-danger mt-3"/>
@@ -239,13 +221,14 @@
                                                                              class="custom-select"
                                                                              id="select-employer"
                                                                              onchange="employerPreview(this)">
+                                                                    <option value="0" selected>
+                                                                        Chọn nhà tuyển dụng
+                                                                    </option>
                                                                     <c:forEach items="${users}" var="user">
-
                                                                         <c:if test="${user.employer != null}">
-
                                                                             <c:if test="${user.id == jobPost.postedByEmployerUser.id}">
                                                                                 <option value="${user.id}" selected>
-                                                                                        ${user.employer.name}
+                                                                                        ${user.username}
                                                                                 </option>
                                                                             </c:if>
 
@@ -254,7 +237,6 @@
                                                                                         ${user.employer.name}
                                                                                 </option>
                                                                             </c:if>
-
                                                                         </c:if>
                                                                     </c:forEach>
                                                                 </form:select>
@@ -270,10 +252,8 @@
                                                         <div class="col">
                                                             <div class="form-group">
                                                                 <label>Loại công việc</label>
-                                                                <form:select path="jobTypeId"
-                                                                             class="custom-select">
-                                                                    <c:forEach items="${jobTypes}"
-                                                                               var="jobType">
+                                                                <form:select path="jobTypeId" class="custom-select">
+                                                                    <c:forEach items="${jobTypes}" var="jobType">
                                                                         <c:if test="${jobType.id == jobPost.jobType.id}">
                                                                             <option value="${jobType.id}"
                                                                                     selected>${jobType.name}</option>

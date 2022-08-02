@@ -60,14 +60,14 @@ function deleteJobPost(jobPostId) {
     }).then(function (res) {
         console.info(res)
 
-        document.getElementById("jobPost".concat(jobPostId)).innerHTML = ""
+        loadJobPost(1)
 
         if (res.status === 202) {
             let alertArea = document.getElementById('alert-area')
             alertArea.innerHTML = ""
             alertArea.innerHTML = `
                 <div class="alert alert-success text-center" role="alert">
-                    Xoá thành công
+                    Xoá thành công tin tuyển dụng
                 </div>
             `
         }
@@ -83,7 +83,6 @@ function loadJobPost(pageInput) {
 
     const query = search()
 
-    removeActivePagination()
     let page = pageInput;
     if (page === undefined) {
         page = urlParams.get('page') || '1'
@@ -92,6 +91,7 @@ function loadJobPost(pageInput) {
     query.page = page
     query.maxItems = maxItems
 
+    removeActivePagination()
     let pageButton = document.getElementsByClassName('page-item')
     for (let i = 0; i < pageButton.length; i++) {
         if (pageButton[i].innerText == page)
@@ -118,10 +118,11 @@ function loadJobPost(pageInput) {
         for (let i = 0; i < data.length; i++) {
             urlView = window.location.origin.concat('/JobSearchingSpringMVC/admin/job-post/view?id='.concat(data[i].id))
             urlEdit = window.location.origin.concat('/JobSearchingSpringMVC/admin/job-post/update?id='.concat(data[i].id))
-            // urlDeleteUser = window.location.origin.concat('/JobSearchingSpringMVC/admin/account/delete?id='.concat(data[i].id))
+            urlDelete = window.location.origin.concat('/JobSearchingSpringMVC/admin/job-post/delete?id='.concat(data[i].id))
+
             area.innerHTML +=
                 `
-                    <tr>
+                    <tr id="jobPost${data[i].id}">
                         <td style="text-align: center">
                             <a style="margin-right: 10px" href="${urlView}"
                                title="Xem chi tiết">
@@ -131,8 +132,8 @@ function loadJobPost(pageInput) {
                                title="Sửa">
                                 <i class="fa-solid fa-pen"></i>
                             </a>
-                            <a style="margin-right: 10px" href="#"
-                               class="confirmation" title="Xoá">
+                            <a onclick="deleteJobPost(${data[i].id})"
+                               title="Xoá" style="cursor: pointer; color: #4e73df">
                                 <i class="fa-solid fa-trash"></i>
                             </a>
                         </td>

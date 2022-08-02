@@ -15,6 +15,8 @@ public interface JobPostService {
 
     boolean delete(JobPost post);
 
+    boolean delete(int id);
+
     long count();
 
     int getMaxItemsInPage();

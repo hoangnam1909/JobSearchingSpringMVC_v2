@@ -101,66 +101,58 @@ and open the template in the editor.
 
     <definition name="admin" extends="adminLayout">
         <put-attribute name="title" value="Trang quản trị"/>
-        <put-attribute name="content" value="/WEB-INF/pages/admin.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/pages/admin/admin.jsp"/>
     </definition>
 
     <definition name="admin-account" extends="adminLayout">
         <put-attribute name="title" value="Quản lý tài khoản"/>
-        <put-attribute name="content" value="/WEB-INF/pages/admin-account.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/pages/admin/account/admin-account.jsp"/>
     </definition>
 
     <definition name="admin-view-account" extends="adminLayout">
         <put-attribute name="title" value="Thông tin tài khoản"/>
-        <put-attribute name="content" value="/WEB-INF/pages/admin-view-account.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/pages/admin/account/admin-view-account.jsp"/>
     </definition>
 
     <definition name="admin-add-account" extends="adminLayout">
         <put-attribute name="title" value="Thêm tài khoản"/>
-        <put-attribute name="content" value="/WEB-INF/pages/admin-add-account.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/pages/admin/account/admin-add-account.jsp"/>
     </definition>
 
     <definition name="admin-add-employer" extends="adminLayout">
         <put-attribute name="title" value="Thêm thông tin nhà tuyển dụng"/>
-        <put-attribute name="content" value="/WEB-INF/pages/admin-add-employer.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/pages/admin/account/admin-add-employer.jsp"/>
     </definition>
 
     <definition name="admin-account-permission" extends="adminLayout">
         <put-attribute name="title" value="Xác nhận nhà tuyển dụng"/>
-        <put-attribute name="content" value="/WEB-INF/pages/admin-account-permission.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/pages/admin/account/admin-account-permission.jsp"/>
     </definition>
 
-    <!--    <definition name="view-candidate" extends="baseLayout">-->
-    <!--        <put-attribute name="title" value="Xem thông tin ứng viên" />-->
-    <!--        <put-attribute name="content" value="/WEB-INF/pages/view-candidate.jsp" />-->
-    <!--    </definition>-->
-    <!--    <definition name="view-employer" extends="baseLayout">-->
-    <!--        <put-attribute name="title" value="Xem thông tin nhà tuyển dụng" />-->
-    <!--        <put-attribute name="content" value="/WEB-INF/pages/view-employer.jsp" />-->
-    <!--    </definition>-->
     <definition name="admin-add-candidate" extends="adminLayout">
         <put-attribute name="title" value="Thêm thông tin ứng viên"/>
-        <put-attribute name="content" value="/WEB-INF/pages/admin-add-candidate.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/pages/admin/account/admin-add-candidate.jsp"/>
     </definition>
 
     <!--    TIN TUYEN DUNG-->
     <definition name="admin-job-post" extends="adminLayout">
         <put-attribute name="title" value="Quản lý bài viết"/>
-        <put-attribute name="content" value="/WEB-INF/pages/admin-job-post.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/pages/admin/job-post/admin-job-post.jsp"/>
     </definition>
 
     <definition name="admin-view-job-post" extends="adminLayout">
         <put-attribute name="title" value="Thông tin tin tuyển dụng"/>
-        <put-attribute name="content" value="/WEB-INF/pages/admin-view-job-post.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/pages/admin/job-post/admin-view-job-post.jsp"/>
     </definition>
 
     <definition name="admin-add-job-post" extends="adminLayout">
         <put-attribute name="title" value="Thêm tin tuyển dụng"/>
-        <put-attribute name="content" value="/WEB-INF/pages/admin-add-job-post.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/pages/admin/job-post/admin-add-job-post.jsp"/>
     </definition>
 
     <definition name="admin-update-job-post" extends="adminLayout">
         <put-attribute name="title" value="Cập nhật tin tuyển dụng"/>
-        <put-attribute name="content" value="/WEB-INF/pages/admin-update-job-post.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/pages/admin/job-post/admin-update-job-post.jsp"/>
     </definition>
 
     <!--    <definition name="view-job-post" extends="baseLayout">-->

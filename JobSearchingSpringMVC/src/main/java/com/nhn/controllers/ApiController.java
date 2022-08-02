@@ -134,6 +134,21 @@ public class ApiController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
+    @RequestMapping(value = "/api/job-post/delete/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deleteJobPost(@PathVariable("id") int id) {
+        try {
+            JobPost jobPost = jobPostService.getById(id);
+            if (jobPost == null) {
+                return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        jobPostService.delete(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
     @RequestMapping(value = "/api/load-jobs", method = RequestMethod.POST, produces = {
             MediaType.APPLICATION_JSON_VALUE
     })
@@ -159,6 +174,13 @@ public class ApiController {
         }
 
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/api/number-of-users", method = RequestMethod.GET, produces = {
+            MediaType.APPLICATION_JSON_VALUE
+    })
+    public ResponseEntity<Long> numberOfUser() {
+        return new ResponseEntity<>(userService.count(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/api/account/active/{id}", method = RequestMethod.PUT)

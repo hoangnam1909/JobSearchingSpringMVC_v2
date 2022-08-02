@@ -3,6 +3,7 @@
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 
 <section class="py-4">
+    <button onclick="testnumber()">clickmee</button>
     <h1 class="text-center dark-color mb-3">QUẢN LÝ NGƯỜI DÙNG</h1>
 
     <div class="row">
@@ -13,13 +14,13 @@
                         Danh sách người dùng
                     </h4>
                     <nav aria-label="...">
-                        <ul class="pagination justify-content-center my-2">
-                            <c:forEach begin="1" end="${Math.ceil(counter/userService.maxItemsInPage)}" var="page">
-                                <li class="page-item">
-                                    <a class="page-link" style="cursor: pointer"
-                                       onclick="loadUserAccount(${page})">${page}</a>
-                                </li>
-                            </c:forEach>
+                        <ul class="pagination justify-content-center my-2" id="pagination-area">
+<%--                            <c:forEach begin="1" end="${Math.ceil(counter/userService.maxItemsInPage)}" var="page">--%>
+<%--                                <li class="page-item">--%>
+<%--                                    <a class="page-link" style="cursor: pointer"--%>
+<%--                                       onclick="loadUserAccount(${page})">${page}</a>--%>
+<%--                                </li>--%>
+<%--                            </c:forEach>--%>
                         </ul>
                     </nav>
                 </div>
@@ -96,7 +97,8 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary" onclick="loadUserAccount()">Tra cứu</button>
-                    <input type="button" class="btn btn-primary" onclick="loadUserAccountWithNoFilter(1)" value="Loại bỏ bộ lọc"/>
+                    <input type="button" class="btn btn-primary" onclick="loadUserAccountWithNoFilter()"
+                           value="Loại bỏ bộ lọc"/>
                 </form>
             </section>
         </div>
@@ -109,11 +111,11 @@
 <script src="<c:url value="/resources/js/admin-account.js"/>"></script>
 
 <script>
-    let maxItems = ${userService.maxItemsInPage}
+    let maxItems = ${userService.maxItemsInPage};
 
-        window.onload = (event) => {
-            loadUserAccount(1)
-        };
+    window.onload = (event) => {
+        loadUserAccount(1);
+    };
 
     $(document).ready(function () {
         $("form").submit(function () {

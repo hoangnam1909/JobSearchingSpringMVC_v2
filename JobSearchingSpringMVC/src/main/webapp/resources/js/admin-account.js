@@ -16,6 +16,13 @@ function search() {
     return search
 }
 
+function removeSearch() {
+    search.username = document.getElementById('username').value = ""
+    search.phone = document.getElementById('phone').value = ""
+    search.email = document.getElementById('email').value = ""
+    search.userType = document.getElementById('userType').value = ""
+}
+
 function deleteAccount(accountId) {
     let urlFetch = "/JobSearchingSpringMVC/api/account/delete/".concat(accountId)
     fetch(urlFetch, {
@@ -39,27 +46,35 @@ function deleteAccount(accountId) {
     })
 }
 
+function loadUserAccountPagination(dataLength) {
+    let paginationArea = document.getElementById('pagination-area')
+    paginationArea.innerHTML = ""
+
+    for (let i = 1; i <= Math.ceil(dataLength/maxItems) + 1; i++) {
+        paginationArea.innerHTML +=
+            `
+                <li class="page-item">
+                    <a class="page-link" style="cursor: pointer"
+                       onclick="loadUserAccount(${i})">${i}</a>
+                </li>
+            `
+    }
+}
+
 function loadUserAccount(pageInput) {
-    const queryString = window.location.search;
-    console.log(queryString);
-    const urlParams = new URLSearchParams(queryString);
+    // const queryString = window.location.search;
+    // console.log(queryString);
+    // const urlParams = new URLSearchParams(queryString);
 
     const query = search()
 
-    removeActivePagination()
     let page = pageInput;
     if (page === undefined) {
-        page = urlParams.get('page') || '1'
+        page = 1
     }
 
     query.page = page
     query.maxItems = maxItems
-
-    let pageButton = document.getElementsByClassName('page-item')
-    for (let i = 0; i < pageButton.length; i++) {
-        if (pageButton[i].innerText == page)
-            pageButton[i].classList.add('active')
-    }
 
     fetch("/JobSearchingSpringMVC/api/load-users", {
         method: 'post',
@@ -74,16 +89,18 @@ function loadUserAccount(pageInput) {
             let alertArea = document.getElementById('alert-area')
             alertArea.innerHTML = ""
             alertArea.innerHTML = `
-                <div class="alert alert-success text-center" role="alert">
+                <div class="alert alert-danger text-center" role="alert">
                     Không có kết quả
                 </div>
             `
             document.getElementById('tbody-data').innerHTML = ""
+            document.getElementById('pagination-area').innerHTML = ""
         }
 
         return res.json();
     }).then(function (data) {
         console.info(data);
+        loadUserAccountPagination(data.length)
 
         let area = document.getElementById('tbody-data')
         let urlViewUser
@@ -141,14 +158,24 @@ function loadUserAccount(pageInput) {
 
             area.innerHTML += innerHTML
         }
+    }).then(function () {
+        removeActivePagination()
+        let pageButton = document.getElementsByClassName('page-item')
+        for (let i = 0; i < pageButton.length; i++) {
+            if (pageButton[i].innerText == page)
+                pageButton[i].classList.add('active')
+        }
     })
 }
 
-function loadUserAccountWithNoFilter(pageInput) {
-    let page = pageInput;
+function loadUserAccountWithNoFilter() {
+    let page = 1;
+
+    removeSearch()
 
     document.getElementById('alert-area').innerHTML = ""
 
+    removeActivePagination()
     let pageButton = document.getElementsByClassName('page-item')
     for (let i = 0; i < pageButton.length; i++) {
         if (pageButton[i].innerText == page)
@@ -166,6 +193,7 @@ function loadUserAccountWithNoFilter(pageInput) {
         return res.json();
     }).then(function (data) {
         console.info(data);
+        loadUserAccountPagination(data.length)
 
         let area = document.getElementById('tbody-data')
         let urlViewUser
@@ -222,6 +250,13 @@ function loadUserAccountWithNoFilter(pageInput) {
             innerHTML += `</tr>`
 
             area.innerHTML += innerHTML
+        }
+    }).then(function () {
+        removeActivePagination()
+        let pageButton = document.getElementsByClassName('page-item')
+        for (let i = 0; i < pageButton.length; i++) {
+            if (pageButton[i].innerText == page)
+                pageButton[i].classList.add('active')
         }
     })
 }

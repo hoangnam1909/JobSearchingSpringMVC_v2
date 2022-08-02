@@ -69,6 +69,10 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
 
         resolver.setViewClass(JstlView.class);
         resolver.setPrefix("/WEB-INF/pages/");
+        resolver.setPrefix("/WEB-INF/pages/admin");
+        resolver.setPrefix("/WEB-INF/pages/admin/account");
+        resolver.setPrefix("/WEB-INF/pages/admin/job-post");
+
         resolver.setSuffix(".jsp");
 
         return resolver;

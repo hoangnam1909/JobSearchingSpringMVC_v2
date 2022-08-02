@@ -47,6 +47,12 @@ public class JobPostServiceImpl implements JobPostService {
     }
 
     @Override
+    public boolean delete(int id) {
+        JobPost jobPost = getById(id);
+        return this.jobPostRepository.delete(jobPost);
+    }
+
+    @Override
     public long count() {
         return this.jobPostRepository.count();
     }
