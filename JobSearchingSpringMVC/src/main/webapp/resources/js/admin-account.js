@@ -46,35 +46,72 @@ function deleteAccount(accountId) {
     })
 }
 
-function loadUserAccountPagination(dataLength) {
+async function loadUserAccountPagination(activePageNumber) {
+    let endOfNumberPage = parseInt(await numberOfPages());
     let paginationArea = document.getElementById('pagination-area')
     paginationArea.innerHTML = ""
 
-    for (let i = 1; i <= Math.ceil(dataLength/maxItems) + 1; i++) {
-        paginationArea.innerHTML +=
-            `
+    for (let i = 1; i <= Math.ceil(endOfNumberPage / maxItems); i++) {
+        if (i === 1) {
+            paginationArea.innerHTML +=
+                `
                 <li class="page-item">
                     <a class="page-link" style="cursor: pointer"
                        onclick="loadUserAccount(${i})">${i}</a>
                 </li>
             `
+        } else {
+            paginationArea.innerHTML +=
+                `
+                <li class="page-item">
+                    <a class="page-link" style="cursor: pointer"
+                       onclick="loadUserAccount(${i})">${i}</a>
+                </li>
+            `
+        }
+    }
+
+    activePagination(activePageNumber);
+}
+
+async function numberOfPages() {
+    let result = await countLoadUserAccountResult();
+    return JSON.stringify(result.length)
+}
+
+async function countLoadUserAccountResult() {
+    const query = search()
+
+    query.page = 0
+    query.maxItems = maxItems
+
+    let url = '/JobSearchingSpringMVC/api/load-users';
+    try {
+        let res = await fetch(url, {
+            method: 'post',
+            body: JSON.stringify(query),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        return await res.json();
+    } catch (error) {
+        console.log(error);
     }
 }
 
 function loadUserAccount(pageInput) {
-    // const queryString = window.location.search;
-    // console.log(queryString);
-    // const urlParams = new URLSearchParams(queryString);
-
     const query = search()
 
     let page = pageInput;
-    if (page === undefined) {
+    if (page == undefined) {
         page = 1
     }
 
     query.page = page
     query.maxItems = maxItems
+
+    loadUserAccountPagination(page)
 
     fetch("/JobSearchingSpringMVC/api/load-users", {
         method: 'post',
@@ -85,7 +122,10 @@ function loadUserAccount(pageInput) {
     }).then(function (res) {
         console.info(res)
 
-        if (res.status === 204) {
+        if (res.status === 200) {
+            let alertArea = document.getElementById('alert-area')
+            alertArea.innerHTML = ""
+        } else if (res.status === 204) {
             let alertArea = document.getElementById('alert-area')
             alertArea.innerHTML = ""
             alertArea.innerHTML = `
@@ -100,7 +140,6 @@ function loadUserAccount(pageInput) {
         return res.json();
     }).then(function (data) {
         console.info(data);
-        loadUserAccountPagination(data.length)
 
         let area = document.getElementById('tbody-data')
         let urlViewUser
@@ -108,7 +147,7 @@ function loadUserAccount(pageInput) {
         let urlDeleteUser
         let innerHTML
         area.innerHTML = ""
-        console.log(maxItems)
+
         for (let i = 0; i < data.length; i++) {
             urlViewUser = window.location.origin.concat('/JobSearchingSpringMVC/admin/account/view?id='.concat(data[i].id))
             urlUpdateUser = window.location.origin.concat('/JobSearchingSpringMVC/admin/account/add-or-update?id='.concat(data[i].id))
@@ -159,7 +198,7 @@ function loadUserAccount(pageInput) {
             area.innerHTML += innerHTML
         }
     }).then(function () {
-        removeActivePagination()
+        // removeActivePagination()
         let pageButton = document.getElementsByClassName('page-item')
         for (let i = 0; i < pageButton.length; i++) {
             if (pageButton[i].innerText == page)
@@ -170,17 +209,10 @@ function loadUserAccount(pageInput) {
 
 function loadUserAccountWithNoFilter() {
     let page = 1;
-
     removeSearch()
+    loadUserAccountPagination(1)
 
     document.getElementById('alert-area').innerHTML = ""
-
-    removeActivePagination()
-    let pageButton = document.getElementsByClassName('page-item')
-    for (let i = 0; i < pageButton.length; i++) {
-        if (pageButton[i].innerText == page)
-            pageButton[i].classList.add('active')
-    }
 
     fetch("/JobSearchingSpringMVC/api/load-users", {
         method: 'post',
@@ -193,7 +225,6 @@ function loadUserAccountWithNoFilter() {
         return res.json();
     }).then(function (data) {
         console.info(data);
-        loadUserAccountPagination(data.length)
 
         let area = document.getElementById('tbody-data')
         let urlViewUser
@@ -201,12 +232,11 @@ function loadUserAccountWithNoFilter() {
         let urlDeleteUser
         let innerHTML
         area.innerHTML = ""
-        console.log(maxItems)
+
         for (let i = 0; i < data.length; i++) {
             urlViewUser = window.location.origin.concat('/JobSearchingSpringMVC/admin/account/view?id='.concat(data[i].id))
             urlUpdateUser = window.location.origin.concat('/JobSearchingSpringMVC/admin/account/add-or-update?id='.concat(data[i].id))
             urlDeleteUser = window.location.origin.concat('/JobSearchingSpringMVC/admin/account/delete?id='.concat(data[i].id))
-
             innerHTML = ""
 
             innerHTML += `<tr id="user${data[i].id}">`
@@ -250,13 +280,6 @@ function loadUserAccountWithNoFilter() {
             innerHTML += `</tr>`
 
             area.innerHTML += innerHTML
-        }
-    }).then(function () {
-        removeActivePagination()
-        let pageButton = document.getElementsByClassName('page-item')
-        for (let i = 0; i < pageButton.length; i++) {
-            if (pageButton[i].innerText == page)
-                pageButton[i].classList.add('active')
         }
     })
 }

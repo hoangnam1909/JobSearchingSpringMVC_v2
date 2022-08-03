@@ -36,15 +36,33 @@
                                 <div class="row">
                                     <div class="col-12 col-sm-auto mb-3">
                                         <c:if test="${user.avatar != null}">
-                                            <img class="d-flex justify-content-center align-items-center rounded"
-                                                 src="${user.avatar}"
-                                                 id="img-preview" alt="avatar" width="140" height="140">
+                                            <div class="m-auto" id="img-preview"
+                                                 style="background-image: url('${user.avatar}');
+                                                         width: 140px; height: 140px;
+                                                         background-position: center;
+                                                         background-size: contain;
+                                                         background-repeat: no-repeat;
+                                                         border-radius: .35rem">
+                                            </div>
+                                            <%--                                            <img class="d-flex justify-content-center align-items-center rounded"--%>
+                                            <%--                                                 src="${user.avatar}"--%>
+                                            <%--                                                 id="img-preview" alt="avatar" width="140" height="140">--%>
                                         </c:if>
 
                                         <c:if test="${user.avatar == null}">
-                                            <img class="d-flex justify-content-center align-items-center rounded"
-                                                 src="<c:url value="/resources/images/none.png" />"
-                                                 id="img-preview" alt="avatar" width="140" height="140">
+                                            <div class="m-auto" id="img-preview"
+                                                 style="background-image: url('<c:url
+                                                         value='/resources/images/none.png'/>');
+                                                         width: 140px; height: 140px;
+                                                         background-position: center;
+                                                         background-size: contain;
+                                                         background-repeat: no-repeat;
+                                                         border-radius: .35rem;
+                                                         border: 1px solid lightgray">
+                                            </div>
+                                            <%--                                            <img class="d-flex justify-content-center align-items-center rounded"--%>
+                                            <%--                                                 src="<c:url value="/resources/images/none.png" />"--%>
+                                            <%--                                                 id="img-preview" alt="avatar" width="140" height="140">--%>
                                         </c:if>
                                     </div>
                                     <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
@@ -98,7 +116,7 @@
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="form-group">
-                                                                <label>Họ và tên</label>
+                                                                <label>Tên công ty</label>
                                                                 <form:input path="name" class="form-control"
                                                                             required="required" autofocus="autofocus"/>
                                                             </div>
@@ -113,7 +131,8 @@
                                                         <div class="col">
                                                             <div class="form-group">
                                                                 <label>Mô tả</label>
-                                                                <form:textarea path="description" class="form-control" cssStyle="height: 100px;"/>
+                                                                <form:textarea path="description" class="form-control"
+                                                                               cssStyle="height: 100px;"/>
                                                             </div>
                                                         </div>
                                                     </div>

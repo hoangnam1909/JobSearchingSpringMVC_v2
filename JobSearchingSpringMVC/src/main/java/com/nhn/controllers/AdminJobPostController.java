@@ -96,6 +96,9 @@ public class AdminJobPostController {
         model.addAttribute("errMsg", model.asMap().get("errMsg"));
         model.addAttribute("sucMsg", model.asMap().get("sucMsg"));
 
+        List<JobType> jobTypes = jobTypeService.getJobTypes("", 0);
+        model.addAttribute("jobTypes", jobTypes);
+
         return "admin-job-post";
     }
 

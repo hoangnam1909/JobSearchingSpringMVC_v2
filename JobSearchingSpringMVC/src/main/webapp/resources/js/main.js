@@ -61,6 +61,10 @@ function usernamePreview(username) {
     document.getElementById('username-preview').innerText = username.value
 }
 
+function titlePreview(title) {
+    document.getElementById('title-preview').innerText = title.value
+}
+
 function removeFilter() {
     window.location.href = window.location.href.split('?')[0]
 }
@@ -161,6 +165,14 @@ function deleteApplyJob(applyJobId) {
     })
 }
 
+function activePagination(pageNumber) {
+    removeActivePagination()
+    let pageButton = document.getElementsByClassName('page-item')
+    for (let i = 0; i < pageButton.length; i++) {
+        if (parseInt(pageButton[i].innerText) === parseInt(pageNumber))
+            pageButton[i].classList.add('active')
+    }
+}
 
 function removeActivePagination() {
     let pageButton = document.getElementsByClassName('page-item')

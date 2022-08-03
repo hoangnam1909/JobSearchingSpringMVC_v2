@@ -99,8 +99,8 @@ public class JobPostRepositoryImpl implements JobPostRepository {
                 }
             }
 
-            if (params.containsKey("postedByUserId")) {
-                Predicate p5 = builder.equal(root.join("postedByUser").get("id").as(String.class), params.get("postedByUserId"));
+            if (params.containsKey("postedByEmployerUserId")) {
+                Predicate p5 = builder.equal(root.join("postedByEmployerUser").get("id").as(String.class), params.get("postedByUserId"));
                 predicates.add(p5);
             }
 
@@ -118,6 +118,11 @@ public class JobPostRepositoryImpl implements JobPostRepository {
                 Predicate p8 = builder.like(root.get("location").as(String.class),
                         String.format("%%%s%%", params.get("location")));
                 predicates.add(p8);
+            }
+
+            if (params.containsKey("jobTypeId")) {
+                Predicate p9 = builder.equal(root.join("jobType").get("id").as(String.class), params.get("jobTypeId"));
+                predicates.add(p9);
             }
 
             q = q.where(predicates.toArray(new Predicate[]{}));

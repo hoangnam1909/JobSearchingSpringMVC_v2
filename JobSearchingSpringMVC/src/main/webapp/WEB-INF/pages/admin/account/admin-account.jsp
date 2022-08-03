@@ -3,7 +3,7 @@
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 
 <section class="py-4">
-    <button onclick="testnumber()">clickmee</button>
+<%--    <button onclick="numberOfPages()">clickmee</button>--%>
     <h1 class="text-center dark-color mb-3">QUẢN LÝ NGƯỜI DÙNG</h1>
 
     <div class="row">
@@ -105,25 +105,15 @@
     </div>
 </section>
 
-<script src="<c:url value="/resources/vendor/datatables/jquery.dataTables.min.js" /> "></script>
-<script src="<c:url value="/resources/vendor/datatables/dataTables.bootstrap4.min.js" /> "></script>
-<script src="<c:url value="/resources/js/datatables-demo.js"/>"></script>
+<%--<script src="<c:url value="/resources/vendor/datatables/jquery.dataTables.min.js" /> "></script>--%>
+<%--<script src="<c:url value="/resources/vendor/datatables/dataTables.bootstrap4.min.js" /> "></script>--%>
+<%--<script src="<c:url value="/resources/js/datatables-demo.js"/>"></script>--%>
 <script src="<c:url value="/resources/js/admin-account.js"/>"></script>
 
 <script>
     let maxItems = ${userService.maxItemsInPage};
 
     window.onload = (event) => {
-        loadUserAccount(1);
+        loadUserAccount();
     };
-
-    $(document).ready(function () {
-        $("form").submit(function () {
-            $("input, select").each(function (index, obj) {
-                if ($(obj).val() === "" || $(obj).val() === "-1") {
-                    $(obj).remove();
-                }
-            });
-        });
-    });
 </script>

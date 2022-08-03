@@ -152,7 +152,7 @@ public class ApiController {
     @RequestMapping(value = "/api/load-jobs", method = RequestMethod.POST, produces = {
             MediaType.APPLICATION_JSON_VALUE
     })
-    public ResponseEntity<List<JobPost>> listAllUsers(@RequestBody (required = false) Map<String, String> params) {
+    public ResponseEntity<List<JobPost>> loadJobs(@RequestBody (required = false) Map<String, String> params) {
         List<JobPost> jobPosts = jobPostService.getPosts(params, Integer.parseInt(params.getOrDefault("page", "1")),
                 Integer.parseInt(params.getOrDefault("maxItems", "0")));
 

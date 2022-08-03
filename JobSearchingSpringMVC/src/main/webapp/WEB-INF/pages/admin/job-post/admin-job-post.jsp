@@ -14,13 +14,13 @@
                     </h4>
 
                     <nav aria-label="...">
-                        <ul class="pagination justify-content-center my-2">
-                            <c:forEach begin="1" end="${Math.ceil(counter/jobPostService.maxItemsInPage)}" var="page">
-                                <li class="page-item">
-                                    <a class="page-link" style="cursor: pointer"
-                                       onclick="loadJobPost(${page})">${page}</a>
-                                </li>
-                            </c:forEach>
+                        <ul class="pagination justify-content-center my-2" id="pagination-area">
+                            <%--                            <c:forEach begin="1" end="${Math.ceil(counter/jobPostService.maxItemsInPage)}" var="page">--%>
+                            <%--                                <li class="page-item">--%>
+                            <%--                                    <a class="page-link" style="cursor: pointer"--%>
+                            <%--                                       onclick="loadJobPost(${page})">${page}</a>--%>
+                            <%--                                </li>--%>
+                            <%--                            </c:forEach>--%>
                         </ul>
                     </nav>
                 </div>
@@ -58,46 +58,29 @@
             <section class="d-flex justify-content-center">
                 <form class="mt-3" action="javascript:void(0)" style="width: 80%">
                     <div class="form-group">
-                        <label for="username">Tên đăng nhập</label>
-                        <input class="form-control" name="username" id="username" value="${usernameSearch}">
+                        <label for="title">Tên việc làm</label>
+                        <input class="form-control" name="title" id="title">
                     </div>
                     <div class="form-group">
-                        <label for="phone">Số điện thoại</label>
-                        <input class="form-control" name="phone" id="phone" value="${phoneSearch}">
+                        <label for="employerName">Nhà tuyển dụng</label>
+                        <input class="form-control" name="employerName" id="employerName">
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input class="form-control" name="email" id="email" value="${emailSearch}">
-                    </div>
-                    <div class="form-group">
-                        <label for="userType">Loại tài khoản</label>
-                        <select class="form-control" name="userType" id="userType">
+                        <label for="jobType">Loại tài khoản</label>
+                        <select class="form-control" name="userType" id="jobType"
+                                onfocus='this.size=10;' onblur='this.size=1;' onchange='this.size=1; this.blur();'>
                             <option value="" selected>Không chọn</option>
-                            <c:if test="${userTypeSearch.equals('ROLE_ADMIN')}">
-                                <option value="ROLE_ADMIN" selected>Admin</option>
-                            </c:if>
-                            <c:if test="${!userTypeSearch.equals('ROLE_ADMIN')}">
-                                <option value="ROLE_ADMIN">Admin</option>
-                            </c:if>
 
-                            <c:if test="${userTypeSearch.equals('ROLE_NTD')}">
-                                <option value="ROLE_NTD" selected>Nhà tuyển dụng</option>
-                            </c:if>
-                            <c:if test="${!userTypeSearch.equals('ROLE_NTD')}">
-                                <option value="ROLE_NTD">Nhà tuyển dụng</option>
-                            </c:if>
-
-                            <c:if test="${userTypeSearch.equals('ROLE_UV')}">
-                                <option value="ROLE_UV" selected>Ứng viên</option>
-                            </c:if>
-                            <c:if test="${!userTypeSearch.equals('ROLE_UV')}">
-                                <option value="ROLE_UV">Ứng viên</option>
-                            </c:if>
+                            <c:forEach items="${jobTypes}" var="jobType">
+                                <option onclick="loadJobPost()" value="${jobType.id}">${jobType.name}</option>
+                            </c:forEach>
+<%--                            <option value="ROLE_NTD">Nhà tuyển dụng</option>--%>
+<%--                            <option value="ROLE_UV">Ứng viên</option>--%>
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-primary" onclick="loadJobPost(1)">Tra cứu</button>
-                    <input type="button" class="btn btn-primary" onclick="loadJobPost(1)"
+                    <button type="submit" class="btn btn-primary" onclick="loadJobPost()">Tra cứu</button>
+                    <input type="button" class="btn btn-primary" onclick="loadJobPostWithNoFilter()"
                            value="Loại bỏ bộ lọc"/>
                 </form>
             </section>
