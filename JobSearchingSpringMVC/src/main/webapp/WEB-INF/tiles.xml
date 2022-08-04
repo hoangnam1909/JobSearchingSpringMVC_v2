@@ -155,9 +155,19 @@ and open the template in the editor.
         <put-attribute name="content" value="/WEB-INF/pages/admin/job-post/admin-update-job-post.jsp"/>
     </definition>
 
-    <!--    <definition name="view-job-post" extends="baseLayout">-->
-    <!--        <put-attribute name="title" value="Xem thông tin tin tuyển dụng" />-->
-    <!--        <put-attribute name="content" value="/WEB-INF/pages/admin-view-job-post.jsp" />-->
+        <definition name="admin-job-type" extends="adminLayout">
+            <put-attribute name="title" value="Quản lý loại việc làm" />
+            <put-attribute name="content" value="/WEB-INF/pages/admin/job-type/admin-job-type.jsp" />
+        </definition>
+
+    <!--    <definition name="add-job-type" extends="baseLayout">-->
+    <!--        <put-attribute name="title" value="Thêm thông tin loại việc làm" />-->
+    <!--        <put-attribute name="content" value="/WEB-INF/pages/add-job-type.jsp" />-->
+    <!--    </definition>-->
+
+    <!--    <definition name="view-job-type" extends="baseLayout">-->
+    <!--        <put-attribute name="title" value="Xem thông tin loại việc làm" />-->
+    <!--        <put-attribute name="content" value="/WEB-INF/pages/view-job-type.jsp" />-->
     <!--    </definition>-->
 
     <!--    <definition name="admin-employer" extends="baseLayout">-->
@@ -171,19 +181,6 @@ and open the template in the editor.
     <!--    <definition name="view-employer" extends="baseLayout">-->
     <!--        <put-attribute name="title" value="Thông tin công ty" />-->
     <!--        <put-attribute name="content" value="/WEB-INF/pages/view-employer.jsp" />-->
-    <!--    </definition>-->
-
-    <!--    <definition name="admin-job-type" extends="baseLayout">-->
-    <!--        <put-attribute name="title" value="Quản lý các loại việc làm" />-->
-    <!--        <put-attribute name="content" value="/WEB-INF/pages/admin-job-type.jsp" />-->
-    <!--    </definition>-->
-    <!--    <definition name="add-job-type" extends="baseLayout">-->
-    <!--        <put-attribute name="title" value="Thêm thông tin loại việc làm" />-->
-    <!--        <put-attribute name="content" value="/WEB-INF/pages/add-job-type.jsp" />-->
-    <!--    </definition>-->
-    <!--    <definition name="view-job-type" extends="baseLayout">-->
-    <!--        <put-attribute name="title" value="Xem thông tin loại việc làm" />-->
-    <!--        <put-attribute name="content" value="/WEB-INF/pages/view-job-type.jsp" />-->
     <!--    </definition>-->
 
     <!--    <definition name="stats-user" extends="baseLayout">-->

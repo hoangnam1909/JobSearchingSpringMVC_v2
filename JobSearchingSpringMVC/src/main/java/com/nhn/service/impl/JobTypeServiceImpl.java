@@ -31,12 +31,18 @@ public class JobTypeServiceImpl implements JobTypeService {
     }
 
     @Override
-    public List<JobType> getJobTypes(String name, int page) {
-        return this.jobTypeRepository.getJobTypes(name, page);
+    public List<JobType> getJobTypes(String name, int page, int maxItems) {
+        return this.jobTypeRepository.getJobTypes(name, page, maxItems);
     }
 
     @Override
     public boolean delete(JobType jobType) {
+        return this.jobTypeRepository.delete(jobType);
+    }
+
+    @Override
+    public boolean delete(int id) {
+        JobType jobType = getById(id);
         return this.jobTypeRepository.delete(jobType);
     }
 

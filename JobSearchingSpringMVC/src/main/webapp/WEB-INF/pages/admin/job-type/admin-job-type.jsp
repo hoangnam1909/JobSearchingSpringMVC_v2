@@ -10,7 +10,7 @@
             <div class="card shadow my-4">
                 <div class="card-header py-3 d-flex justify-content-between">
                     <h4 class="m-0 font-weight-bold text-primary" style="align-self: center">
-                        Danh sách tin tuyển dụng
+                        Danh sách các loại việc làm
                     </h4>
 
                     <nav aria-label="...">
@@ -26,7 +26,7 @@
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
-                        <a href="<c:url value="/admin/job-post/add" />" style="text-decoration: none">
+                        <a href="<c:url value="/admin/job-type/add-or-update" />" style="text-decoration: none">
                             <i class="fa-solid fa-plus"></i>
                             <span>
                                 Thêm tin tuyển dụng
@@ -40,13 +40,10 @@
                             <tr>
                                 <th class="text-center" style="width: 12%">Hành động</th>
                                 <th class="text-center" style="width: 5%">STT</th>
-                                <th>Tiêu đề</th>
-                                <th>Ngày đăng</th>
-                                <th>Nhà tuyển dụng</th>
-                                <th>Loại việc làm</th>
+                                <th>Tên loại việc làm</th>
                             </tr>
                             </thead>
-                            <tbody id="tbody-data-job-post">
+                            <tbody id="tbody-data-job-type">
                             </tbody>
                         </table>
                     </div>
@@ -58,27 +55,12 @@
             <section class="d-flex justify-content-center">
                 <form class="mt-3" action="javascript:void(0)" style="width: 80%">
                     <div class="form-group">
-                        <label for="title">Tên việc làm</label>
-                        <input class="form-control" name="title" id="title">
-                    </div>
-                    <div class="form-group">
-                        <label for="employerName">Nhà tuyển dụng</label>
-                        <input class="form-control" name="employerName" id="employerName">
-                    </div>
-                    <div class="form-group">
-                        <label for="jobType">Loại tài khoản</label>
-                        <select class="form-control" name="userType" id="jobType"
-                                onfocus='this.size=10;' onblur='this.size=1;' onchange='this.size=1; this.blur();'>
-                            <option value="" selected>Không chọn</option>
-
-                            <c:forEach items="${jobTypes}" var="jobType">
-                                <option value="${jobType.id}">${jobType.name}</option>
-                            </c:forEach>
-                        </select>
+                        <label for="name">Tên loại việc làm</label>
+                        <input class="form-control" name="name" id="name">
                     </div>
 
-                    <button type="submit" class="btn btn-primary" onclick="loadJobPost()">Tra cứu</button>
-                    <input type="button" class="btn btn-primary" onclick="loadJobPostWithNoFilter()"
+                    <button type="submit" class="btn btn-primary" onclick="loadJobType()">Tra cứu</button>
+                    <input type="button" class="btn btn-primary" onclick=""
                            value="Loại bỏ bộ lọc"/>
                 </form>
             </section>
@@ -86,12 +68,12 @@
     </div>
 </section>
 
-<script src="<c:url value="/resources/js/admin-job-post.js"/>"></script>
+<script src="<c:url value="/resources/js/admin-job-type.js"/>"></script>
 
 <script>
-    let maxItems = ${jobPostService.maxItemsInPage};
+    let maxItems = ${jobTypeService.maxItemsInPage};
 
     window.onload = (event) => {
-        loadJobPost(1)
+        loadJobType(1)
     };
 </script>

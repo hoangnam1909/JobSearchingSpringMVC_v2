@@ -26,6 +26,9 @@ public class ApiController {
     private JobPostService jobPostService;
 
     @Autowired
+    private JobTypeService jobTypeService;
+
+    @Autowired
     private JavaMailSender mailSender;
 
     @Autowired
@@ -134,6 +137,7 @@ public class ApiController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
+    //    JOB POST API
     @RequestMapping(value = "/api/job-post/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteJobPost(@PathVariable("id") int id) {
         try {
@@ -152,7 +156,7 @@ public class ApiController {
     @RequestMapping(value = "/api/load-jobs", method = RequestMethod.POST, produces = {
             MediaType.APPLICATION_JSON_VALUE
     })
-    public ResponseEntity<List<JobPost>> loadJobs(@RequestBody (required = false) Map<String, String> params) {
+    public ResponseEntity<List<JobPost>> loadJobs(@RequestBody(required = false) Map<String, String> params) {
         List<JobPost> jobPosts = jobPostService.getPosts(params, Integer.parseInt(params.getOrDefault("page", "1")),
                 Integer.parseInt(params.getOrDefault("maxItems", "0")));
 
@@ -162,11 +166,46 @@ public class ApiController {
 
         return new ResponseEntity<>(jobPosts, HttpStatus.OK);
     }
+    //    END OF JOB POST API
+
+
+    //    JOB TYPE API
+    @RequestMapping(value = "/api/job-type/delete/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deleteJobType(@PathVariable("id") int id) {
+        try {
+            JobType jobType = jobTypeService.getById(id);
+            if (jobType == null) {
+                return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        jobTypeService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/api/load-job-type", method = RequestMethod.POST, produces = {
+            MediaType.APPLICATION_JSON_VALUE
+    })
+    public ResponseEntity<List<JobType>> loadJobType(@RequestBody(required = false) Map<String, String> params) {
+        List<JobType> jobTypes = jobTypeService.getJobTypes(params.getOrDefault("name", ""),
+                Integer.parseInt(params.getOrDefault("page", "1")),
+                Integer.parseInt(params.getOrDefault("maxItems", "0")));
+
+        if (jobTypes.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+        }
+
+        return new ResponseEntity<>(jobTypes, HttpStatus.OK);
+    }
+    //    END OF JOB TYPE API
+
 
     @RequestMapping(value = "/api/load-users", method = RequestMethod.POST, produces = {
             MediaType.APPLICATION_JSON_VALUE
     })
-    public ResponseEntity<List<User>> loadUsers(@RequestBody (required = false) Map<String, String> params) {
+    public ResponseEntity<List<User>> loadUsers(@RequestBody(required = false) Map<String, String> params) {
         List<User> users = userService.getUsersMultiCondition(params, Integer.parseInt(params.getOrDefault("page", "1")));
 
         if (users.isEmpty()) {

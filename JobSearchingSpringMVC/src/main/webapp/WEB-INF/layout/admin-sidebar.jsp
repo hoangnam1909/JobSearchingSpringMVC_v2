@@ -44,6 +44,11 @@
             <span>Bài đăng tuyển dụng</span></a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" href="<c:url value="/admin/job-type" />">
+            <i class="fa-solid fa-bars"></i>
+            <span>Loại việc làm</span></a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="tables.html">
             <i class="fas fa-fw fa-table"></i>
             <span>Tables</span></a>

@@ -45,7 +45,7 @@ public class AdminJobPostController {
     private void loadAllList(Model model) {
         List<User> users = userService.getByRole(User.NTD, 0, 1);
         model.addAttribute("users", users);
-        List<JobType> jobTypes = jobTypeService.getJobTypes("", 0);
+        List<JobType> jobTypes = jobTypeService.getJobTypes("", 0, jobTypeService.getMaxItemsInPage());
         model.addAttribute("jobTypes", jobTypes);
     }
 
@@ -96,7 +96,7 @@ public class AdminJobPostController {
         model.addAttribute("errMsg", model.asMap().get("errMsg"));
         model.addAttribute("sucMsg", model.asMap().get("sucMsg"));
 
-        List<JobType> jobTypes = jobTypeService.getJobTypes("", 0);
+        List<JobType> jobTypes = jobTypeService.getJobTypes("", 0, jobTypeService.getMaxItemsInPage());
         model.addAttribute("jobTypes", jobTypes);
 
         return "admin-job-post";

@@ -12,7 +12,7 @@ public interface JobTypeRepository {
 
     JobType getByName(String name);
 
-    List<JobType> getJobTypes(String name, int page);
+    List<JobType> getJobTypes(String name, int page, int maxItems);
 
     boolean delete(JobType jobType);
 

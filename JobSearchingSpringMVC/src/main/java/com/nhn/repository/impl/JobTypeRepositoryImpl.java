@@ -68,7 +68,7 @@ public class JobTypeRepositoryImpl implements JobTypeRepository {
     }
 
     @Override
-    public List<JobType> getJobTypes(String name, int page) {
+    public List<JobType> getJobTypes(String name, int page, int maxItems) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<JobType> query = builder.createQuery(JobType.class);
@@ -82,11 +82,25 @@ public class JobTypeRepositoryImpl implements JobTypeRepository {
 
         Query q = session.createQuery(query);
 
+//        if (page != 0) {
+//            int max = maxItemsInPage;
+//            q.setMaxResults(max);
+//            q.setFirstResult((page - 1) * max);
+//        }
+
         if (page != 0) {
-            int max = maxItemsInPage;
-            q.setMaxResults(max);
-            q.setFirstResult((page - 1) * max);
+            int index;
+            if (maxItems == 0) {
+                index = (page - 1) * maxItemsInPage;
+                q.setFirstResult(index);
+                q.setMaxResults(maxItemsInPage);
+            } else {
+                index = (page - 1) * maxItems;
+                q.setFirstResult(index);
+                q.setMaxResults(maxItems);
+            }
         }
+
         return q.getResultList();
     }
 

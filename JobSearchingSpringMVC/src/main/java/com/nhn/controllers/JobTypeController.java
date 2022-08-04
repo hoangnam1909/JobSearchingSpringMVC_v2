@@ -30,7 +30,7 @@ public class JobTypeController {
                                @RequestParam(required = false) Map<String, String> params) {
         int page = Integer.parseInt(params.getOrDefault("page", "1"));
 
-        List<JobType> jobTypes = this.jobTypeService.getJobTypes("", page);
+        List<JobType> jobTypes = this.jobTypeService.getJobTypes("", page, jobTypeService.getMaxItemsInPage());
         model.addAttribute("jobTypes", jobTypes);
 
         model.addAttribute("currentPage", page);

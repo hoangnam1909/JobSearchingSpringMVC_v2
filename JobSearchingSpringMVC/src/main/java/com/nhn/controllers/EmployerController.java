@@ -37,7 +37,7 @@ public class EmployerController {
     private ApplyJobService applyJobService;
 
     private void loadAllList(Model model) {
-        List<JobType> jobTypes = jobTypeService.getJobTypes("", 0);
+        List<JobType> jobTypes = jobTypeService.getJobTypes("", 0, jobTypeService.getMaxItemsInPage());
         model.addAttribute("jobTypes", jobTypes);
     }
 

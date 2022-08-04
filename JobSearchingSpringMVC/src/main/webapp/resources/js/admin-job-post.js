@@ -237,13 +237,11 @@ function loadJobPostWithNoFilter() {
         let area = document.getElementById('tbody-data-job-post')
         let urlView
         let urlEdit
-        let urlDelete
         area.innerHTML = ""
 
         for (let i = 0; i < data.length; i++) {
             urlView = window.location.origin.concat('/JobSearchingSpringMVC/admin/job-post/view?id='.concat(data[i].id))
             urlEdit = window.location.origin.concat('/JobSearchingSpringMVC/admin/job-post/update?id='.concat(data[i].id))
-            urlDelete = window.location.origin.concat('/JobSearchingSpringMVC/admin/job-post/delete?id='.concat(data[i].id))
 
             area.innerHTML +=
                 `

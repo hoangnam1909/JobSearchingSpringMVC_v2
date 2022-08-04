@@ -36,13 +36,14 @@
                                 <div class="row">
                                     <div class="col-12 col-sm-auto mb-3">
                                         <c:if test="${user.avatar != null}">
-                                            <div class="m-auto" id="img-preview"
+                                            <div class="rounded-circle m-auto" id="img-preview"
                                                  style="background-image: url('${user.avatar}');
                                                          width: 140px; height: 140px;
                                                          background-position: center;
                                                          background-size: contain;
                                                          background-repeat: no-repeat;
-                                                         border-radius: .35rem">
+                                                         border-radius: .35rem;
+                                                         border: 1px solid lightgray">
                                             </div>
                                             <%--                                            <img class="d-flex justify-content-center align-items-center rounded"--%>
                                             <%--                                                 src="${user.avatar}"--%>
@@ -50,7 +51,7 @@
                                         </c:if>
 
                                         <c:if test="${user.avatar == null}">
-                                            <div class="m-auto" id="img-preview"
+                                            <div class="rounded-circle m-auto" id="img-preview"
                                                  style="background-image: url('<c:url
                                                          value='/resources/images/none.png'/>');
                                                          width: 140px; height: 140px;

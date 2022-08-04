@@ -33,18 +33,19 @@
                                             <%--                                                 src="${user.avatar}"--%>
                                             <%--                                                 id="img-preview" alt="avatar" width="140" height="140">--%>
 
-                                            <div class="m-auto" id="img-preview"
+                                            <div class="rounded-circle m-auto" id="img-preview"
                                                  style="background-image: url('${user.avatar}');
                                                          width: 140px; height: 140px;
                                                          background-position: center;
                                                          background-size: contain;
                                                          background-repeat: no-repeat;
-                                                         border-radius: .35rem">
+                                                         border-radius: .35rem;
+                                                         border: 1px solid lightgray">
                                             </div>
                                         </c:if>
 
                                         <c:if test="${user.avatar == null}">
-                                            <div class="m-auto" id="img-preview"
+                                            <div class="rounded-circle m-auto" id="img-preview"
                                                  style="background-image: url('<c:url
                                                          value='/resources/images/none.png'/>');
                                                          width: 140px; height: 140px;
@@ -78,14 +79,14 @@
                                                     Quản trị viên
                                                 </c:if>
                                             </span>
-                                            <div class="text-muted"><small>Joined 09 Dec 2017</small></div>
+                                            <div class="text-muted"><small>Joined 09 Dec 2017 ${user.userType}</small></div>
                                             <c:if test="${user.userType == 'ROLE_NTD'}">
                                                 <a href="<c:url value="/admin/account/employer/add-or-update" />?userId=${user.id}">
                                                     <input type="button" class="btn btn-primary mt-3 w-100"
                                                            value="Thay đổi thông tin nhà tuyển dụng"/>
                                                 </a>
                                             </c:if>
-                                            <c:if test="${user.userType == 'ROLE_UV'} ">
+                                            <c:if test="${user.userType == 'ROLE_UV'}">
                                                 <a href="<c:url value="/admin/account/candidate/add-or-update" />?userId=${user.id}">
                                                     <input type="button" class="btn btn-primary mt-3 w-100"
                                                            value="Thay đổi thông tin ứng viên"/>

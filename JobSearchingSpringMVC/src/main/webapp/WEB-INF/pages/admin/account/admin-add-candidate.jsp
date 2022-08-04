@@ -82,6 +82,7 @@
                                 </ul>
                                 <div class="tab-content pt-3">
                                     <div class="tab-pane active">
+                                        <%--@elvariable id="candidate" type=""--%>
                                         <form:form action="${action}" method="post" enctype="multipart/form-data"
                                                    modelAttribute="candidate">
                                             <form:errors path="*" element="div" cssClass="alert alert-danger mt-3"/>
