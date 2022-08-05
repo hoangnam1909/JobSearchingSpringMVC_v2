@@ -1,54 +1,3 @@
-function search() {
-    const search = {}
-
-    if (document.getElementById('title').value.trim().length !== 0)
-        search.title = document.getElementById('title').value;
-
-    if (document.getElementById('employerName').value.trim().length !== 0)
-        search.employerName = document.getElementById('employerName').value;
-
-    if (document.getElementById('jobType').value.trim().length !== 0)
-        search.jobTypeId = document.getElementById('jobType').value;
-
-    return search
-}
-
-function removeSearch() {
-    search.username = document.getElementById('title').value = ""
-    search.phone = document.getElementById('employerName').value = ""
-    search.email = document.getElementById('jobType').value = ""
-}
-
-function employerPreview(employer) {
-    let userId = employer.options[employer.selectedIndex].value
-
-    if (parseInt(userId) === 0) {
-        document.getElementById('img-employer-preview').style.backgroundImage = "url('/JobSearchingSpringMVC/resources/images/none.png')";
-        document.getElementById('employer-name-preview').innerText = ""
-        document.getElementById('employer-contact-preview').innerText = ""
-        document.getElementById('employer-website-preview').innerText = ""
-    } else {
-        fetch("/JobSearchingSpringMVC/api/load-users", {
-            method: 'post',
-            body: JSON.stringify({
-                "id": userId
-            }),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(function (res) {
-            console.info(res)
-            return res.json();
-        }).then(function (data) {
-            console.info(data[0].avatar);
-            document.getElementById('img-employer-preview').style.backgroundImage = `url(${data[0].avatar})`;
-            document.getElementById('employer-name-preview').innerText = data[0].employer.name
-            document.getElementById('employer-contact-preview').innerText = data[0].employer.contact
-            document.getElementById('employer-website-preview').innerText = data[0].employer.website
-        })
-    }
-}
-
 function deleteJobPost(jobPostId) {
     let urlFetch = "/JobSearchingSpringMVC/api/job-post/delete/".concat(jobPostId)
     fetch(urlFetch, {
@@ -110,8 +59,7 @@ async function countLoadJobPostResult() {
 
     query.page = 0
     query.maxItems = maxItems
-
-    console.log('query json = ' + JSON.stringify(query))
+    query.jobTypeId = jobTypeId
 
     let url = '/JobSearchingSpringMVC/api/load-jobs';
     try {
@@ -138,6 +86,7 @@ function loadJobPost(pageInput) {
 
     query.page = page
     query.maxItems = maxItems
+    query.jobTypeId = jobTypeId
 
     loadJobPostPagination(page)
 
@@ -216,67 +165,3 @@ function loadJobPost(pageInput) {
         }
     })
 }
-
-function loadJobPostWithNoFilter() {
-    let page = 1;
-    removeSearch()
-    loadJobPostPagination(1)
-
-    document.getElementById('alert-area').innerHTML = ""
-
-    fetch("/JobSearchingSpringMVC/api/load-jobs", {
-        method: 'post',
-        body: JSON.stringify({}),
-        headers: {
-            "Content-Type": "application/json"
-        }
-    }).then(function (res) {
-        console.info(res)
-        return res.json();
-    }).then(function (data) {
-        console.info(data);
-
-        let area = document.getElementById('tbody-data-job-post')
-        let urlView
-        let urlEdit
-        area.innerHTML = ""
-
-        for (let i = 0; i < data.length; i++) {
-            urlView = window.location.origin.concat('/JobSearchingSpringMVC/admin/job-post/view?id='.concat(data[i].id))
-            urlEdit = window.location.origin.concat('/JobSearchingSpringMVC/admin/job-post/update?id='.concat(data[i].id))
-
-            area.innerHTML +=
-                `
-                    <tr id="jobPost${data[i].id}">
-                        <td style="text-align: center">
-                            <a style="margin-right: 10px" href="${urlView}"
-                               title="Xem chi tiết">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
-                            <a style="margin-right: 10px" href="${urlEdit}"
-                               title="Sửa">
-                                <i class="fa-solid fa-pen"></i>
-                            </a>
-                            <a onclick="deleteJobPost(${data[i].id})"
-                               title="Xoá" style="cursor: pointer; color: #4e73df">
-                                <i class="fa-solid fa-trash"></i>
-                            </a>
-                        </td>
-                        <td class="text-center">
-                            ${(page - 1) * maxItems + i + 1}
-                        </td>
-                        <td> ${data[i].title} </td>
-                        <td>
-                            <c:if test="${data[i].createdDate != null}">
-                                ${moment(data[i].createdDate).format('L')}
-                            </c:if>
-                        </td>
-                        <td> ${data[i].postedByEmployerUser.employer.name} </td>
-                        
-                        <td> ${data[i].jobType.name} </td>
-                    </tr>
-                `
-        }
-    })
-}
-

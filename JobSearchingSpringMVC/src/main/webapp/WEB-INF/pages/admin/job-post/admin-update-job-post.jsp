@@ -203,24 +203,25 @@
                                                                 <div class="d-flex flex-row align-items-center">
                                                                     <fmt:formatDate pattern="dd"
                                                                                     value="${jobPost.expiredDate}"
-                                                                                    var="dobDay"/>
-                                                                    <form:input path="day" value="${dobDay}"
+                                                                                    var="dayNumber"/>
+                                                                    <form:input path="day" value="${dayNumber}"
                                                                                 class="form-control" id="dobDay"
                                                                                 placeholder="Ngày" type="number"/>
 
                                                                     <span class="mx-2">/</span>
                                                                     <fmt:formatDate pattern="MM"
                                                                                     value="${jobPost.expiredDate}"
-                                                                                    var="dobMonth"/>
-                                                                    <form:input path="month" value="${dobMonth}"
+                                                                                    var="monthNumber"/>
+                                                                    <form:input path="month" value="${monthNumber}"
                                                                                 class="form-control" id="dobMonth"
                                                                                 placeholder="Tháng" type="number"/>
 
                                                                     <span class="mx-2">/</span>
                                                                     <fmt:formatDate pattern="yyyy"
                                                                                     value="${jobPost.expiredDate}"
-                                                                                    var="dobYear"/>
-                                                                    <form:input path="year" value="${dobYear}"
+                                                                                    var="yearNumber"/>
+                                                                        <%--                                                                    <h1>${yearNumber == null}</h1>--%>
+                                                                    <form:input path="year" value="${yearNumber}"
                                                                                 class="form-control" id="dobYear"
                                                                                 placeholder="Năm" type="number"/>
                                                                 </div>

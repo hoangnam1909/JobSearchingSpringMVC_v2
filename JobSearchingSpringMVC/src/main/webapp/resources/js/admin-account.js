@@ -30,14 +30,14 @@ function deleteAccount(accountId) {
     }).then(function (res) {
         console.info(res)
 
-        document.getElementById("user".concat(accountId)).innerHTML = ""
-
         if (res.status === 202) {
+            document.getElementById("user".concat(accountId)).innerHTML = ""
+
             let alertArea = document.getElementById('alert-area')
             alertArea.innerHTML = ""
             alertArea.innerHTML = `
                 <div class="alert alert-success text-center" role="alert">
-                    Xoá thành công
+                    Xoá thành công tài khoản
                 </div>
             `
         }
@@ -130,7 +130,9 @@ function loadUserAccount(pageInput) {
             alertArea.innerHTML = ""
             alertArea.innerHTML = `
                 <div class="alert alert-danger text-center" role="alert">
-                    Không có kết quả
+                    <h5 class="text-center dark-color mb-0">
+                        Không có kết quả
+                    </h5>
                 </div>
             `
             document.getElementById('tbody-data').innerHTML = ""
@@ -178,11 +180,10 @@ function loadUserAccount(pageInput) {
             if (data[i].userType === 'ROLE_NTD' && data[i].active === 0)
                 innerHTML +=
                     `
-                    <c:if test="${data[i].userType === 'ROLE_NTD' && data[i].active === 0}">
-                        <td style="color: red">[NOT ACTIVED] ${data[i].username}</td>
-                    </c:if>
-                        
-                `
+                        <c:if test="${data[i].userType === 'ROLE_NTD' && data[i].active === 0}">
+                            <td style="color: red">[NOT ACTIVED] ${data[i].username}</td>
+                        </c:if>
+                    `
 
             if (!(data[i].userType === 'ROLE_NTD' && data[i].active === 0))
                 innerHTML += ` <td>${data[i].username}</td> `

@@ -151,12 +151,23 @@ public class AdminJobPostController {
 
         jobPostValidator.validate(jobPost, result);
         if (result.hasErrors())
+            if (jobPost.getId() == 0)
+                return "admin-add-job-post";
+            else {
+                return "redirect:/admin/job-post/update?id=" + jobPost.getId();
+            }
+
+        if (result.hasErrors())
             return "admin-add-job-post";
 
         jobPost.setPostedByEmployerUser(userService.getById(jobPost.getPostedByEmployerUserId()));
         jobPost.setJobType(jobTypeService.getById(jobPost.getJobTypeId()));
-        if (jobPost.getCreatedDate() == null)
+        if (jobPost.getId() == 0)
             jobPost.setCreatedDate(new Date());
+        else {
+            JobPost jobPostOrigin = jobPostService.getById(jobPost.getId());
+            jobPost.setCreatedDate(jobPostOrigin.getCreatedDate());
+        }
 
         boolean jobPostAddedCheck = this.jobPostService.addOrUpdate(jobPost);
         if (jobPostAddedCheck) {

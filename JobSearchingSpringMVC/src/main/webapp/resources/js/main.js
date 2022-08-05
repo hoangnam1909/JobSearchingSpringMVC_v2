@@ -4,14 +4,14 @@ $(document).ready(function () {
     $("#password").val("");
     $("#confirmPassword").val("");
 
-    if ($("#dobDay").val() === "0")
-        $("#dobDay").val("");
-
-    if ($("#dobMonth").val() === "0")
-        $("#dobMonth").val("");
-
-    if ($("#dobYear").val() === "0")
-        $("#dobYear").val("");
+    // if ($("#dobDay").val() === "0")
+    //     $("#dobDay").val("");
+    //
+    // if ($("#dobMonth").val() === "0")
+    //     $("#dobMonth").val("");
+    //
+    // if ($("#dobYear").val() === "0")
+    //     $("#dobYear").val("");
 });
 
 
@@ -182,3 +182,10 @@ function removeActivePagination() {
     }
 }
 
+function currentPage() {
+    let pageButton = document.getElementsByClassName('page-item')
+    for (let i = 0; i < pageButton.length; i++) {
+        if (pageButton[i].classList.contains('active'))
+            return i + 1;
+    }
+}

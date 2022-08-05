@@ -34,8 +34,7 @@ function loadEmployers(pageInput) {
     console.log(queryString);
     const urlParams = new URLSearchParams(queryString);
 
-    const query = search()
-
+c
     removeActivePagination()
     let page = pageInput;
     if (page === undefined) {

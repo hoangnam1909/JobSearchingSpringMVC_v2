@@ -1,12 +1,10 @@
 package com.nhn.controllers;
 
 import com.nhn.pojo.JobType;
-import com.nhn.pojo.User;
 import com.nhn.service.JobTypeService;
 import com.nhn.validator.JobTypeValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class JobTypeController {
+public class AdminJobTypeController {
 
     @Autowired
     private JobTypeService jobTypeService;
@@ -42,8 +40,8 @@ public class JobTypeController {
         return "admin-job-type";
     }
 
-    @GetMapping("/admin/job-type/view")
-    public String viewJobType(Model model,
+    @GetMapping("/admin/job-type/view-detail")
+    public String viewJobTypeDetail(Model model,
                               @RequestParam(name = "id", defaultValue = "0") int id) {
         if (id > 0)
             model.addAttribute("jobType", this.jobTypeService.getById(id));
@@ -51,7 +49,8 @@ public class JobTypeController {
             return "redirect:/admin/job-type";
 
         model.addAttribute("errMsg", model.asMap().get("errMsg"));
-        return "view-job-type";
+        model.addAttribute("jobTypeService", jobTypeService);
+        return "admin-job-type-view-detail";
     }
 
     @GetMapping("/admin/job-type/add-or-update")
@@ -68,7 +67,7 @@ public class JobTypeController {
         }
 
         model.addAttribute("errMsg", model.asMap().get("errMsg"));
-        return "add-job-type";
+        return "admin-add-job-type";
     }
 
     @PostMapping("/admin/job-type/add-or-update")

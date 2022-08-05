@@ -76,7 +76,8 @@ public class JobTypeRepositoryImpl implements JobTypeRepository {
         query = query.select(root);
 
         if (!name.isEmpty()) {
-            Predicate p = builder.equal(root.get("name").as(String.class), name.trim());
+            Predicate p = builder.like(root.get("name").as(String.class),
+                    String.format("%%%s%%", name));
             query = query.where(p);
         }
 

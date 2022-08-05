@@ -141,11 +141,35 @@
 
                         <div class="row">
                             <div class="col-sm-3">
+                                <p class="mb-0">Ngày chỉnh sửa</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">
+                                    <c:if test="${jobPost.modifiedDate != null}">
+                                        <fmt:formatDate pattern="dd/MM/yyyy" value="${jobPost.modifiedDate}"/>
+                                    </c:if>
+
+                                    <c:if test="${jobPost.modifiedDate == null}">
+                                        Chưa chỉnh sửa
+                                    </c:if>
+                                </p>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-sm-3">
                                 <p class="mb-0">Ngày hết hạn</p>
                             </div>
                             <div class="col-sm-9">
                                 <p class="text-muted mb-0">
-                                    <fmt:formatDate pattern="dd/MM/yyyy" value="${jobPost.expiredDate}"/>
+                                    <c:if test="${jobPost.expiredDate != null}">
+                                        <fmt:formatDate pattern="dd/MM/yyyy" value="${jobPost.expiredDate}"/>
+                                    </c:if>
+
+                                    <c:if test="${jobPost.expiredDate == null}">
+                                        Không hết hạn
+                                    </c:if>
                                 </p>
                             </div>
                         </div>

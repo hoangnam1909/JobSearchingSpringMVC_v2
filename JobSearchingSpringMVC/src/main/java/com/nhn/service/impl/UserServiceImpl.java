@@ -69,6 +69,8 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
 
+        if (user.getId() == 0)
+            user.setJoinedDate(new Date());
         return this.userRepository.addOrUpdate(user);
     }
 

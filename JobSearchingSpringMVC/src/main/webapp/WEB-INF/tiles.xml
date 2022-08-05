@@ -155,19 +155,24 @@ and open the template in the editor.
         <put-attribute name="content" value="/WEB-INF/pages/admin/job-post/admin-update-job-post.jsp"/>
     </definition>
 
-        <definition name="admin-job-type" extends="adminLayout">
-            <put-attribute name="title" value="Quản lý loại việc làm" />
-            <put-attribute name="content" value="/WEB-INF/pages/admin/job-type/admin-job-type.jsp" />
-        </definition>
+    <definition name="admin-job-type" extends="adminLayout">
+        <put-attribute name="title" value="Quản lý loại việc làm"/>
+        <put-attribute name="content" value="/WEB-INF/pages/admin/job-type/admin-job-type.jsp"/>
+    </definition>
 
-    <!--    <definition name="add-job-type" extends="baseLayout">-->
-    <!--        <put-attribute name="title" value="Thêm thông tin loại việc làm" />-->
-    <!--        <put-attribute name="content" value="/WEB-INF/pages/add-job-type.jsp" />-->
-    <!--    </definition>-->
+    <definition name="admin-job-type-view-detail" extends="adminLayout">
+        <put-attribute name="title" value="Xem loại việc làm"/>
+        <put-attribute name="content" value="/WEB-INF/pages/admin/job-type/admin-job-type-view-detail.jsp"/>
+    </definition>
+
+    <definition name="admin-add-job-type" extends="adminLayout">
+        <put-attribute name="title" value="Thêm loại việc làm"/>
+        <put-attribute name="content" value="/WEB-INF/pages/admin/job-type/admin-add-job-type.jsp"/>
+    </definition>
 
     <!--    <definition name="view-job-type" extends="baseLayout">-->
     <!--        <put-attribute name="title" value="Xem thông tin loại việc làm" />-->
-    <!--        <put-attribute name="content" value="/WEB-INF/pages/view-job-type.jsp" />-->
+    <!--        <put-attribute name="content" value="/WEB-INF/pages/admin-job-type-view-detail.jsp" />-->
     <!--    </definition>-->
 
     <!--    <definition name="admin-employer" extends="baseLayout">-->

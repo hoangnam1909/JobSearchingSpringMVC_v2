@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -25,14 +26,17 @@ public class JobPostServiceImpl implements JobPostService {
 
     @Override
     public Boolean addOrUpdate(JobPost post) {
-        String sDate = String.format("%02d/%02d/%04d", post.getDay(), post.getMonth(), post.getYear());
+        if (!(post.getDay() == 0 || post.getMonth() == 0 || post.getYear() == 0)) {
+            String sDate = String.format("%02d/%02d/%04d", post.getDay(), post.getMonth(), post.getYear());
 
-        try {
-            post.setExpiredDate(utils.stringToDate(sDate, "dd/MM/yyyy"));
-        } catch (ParseException e) {
-            e.printStackTrace();
+            try {
+                post.setExpiredDate(utils.stringToDate(sDate, "dd/MM/yyyy"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
+        post.setModifiedDate(new Date());
         return this.jobPostRepository.addOrUpdate(post);
     }
 

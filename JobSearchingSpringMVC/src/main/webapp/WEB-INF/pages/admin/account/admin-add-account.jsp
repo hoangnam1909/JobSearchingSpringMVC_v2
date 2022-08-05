@@ -68,7 +68,8 @@
                                             <p id="username-preview" class="mb-0">${user.username}</p>
                                         </div>
                                         <div class="text-center text-sm-right">
-                                            <span class="badge badge-secondary" id="user-type-badge">
+                                            <div class="badge badge-secondary" id="user-type-badge"
+                                            style="font-size: 90%">
                                                 <c:if test="${user.userType == 'ROLE_UV'}">
                                                     Ứng viên
                                                 </c:if>
@@ -78,17 +79,24 @@
                                                 <c:if test="${user.userType == 'ROLE_ADMIN'}">
                                                     Quản trị viên
                                                 </c:if>
-                                            </span>
-                                            <div class="text-muted"><small>Joined 09 Dec 2017 ${user.userType}</small></div>
+                                            </div>
+                                            <c:if test="${user.joinedDate != null}">
+                                                <div class="text-muted">
+                                                        Ngày tạo tài khoản:
+                                                        <fmt:formatDate pattern="dd/MM/yyyy"
+                                                                        value="${user.joinedDate}"/>
+                                                </div>
+                                            </c:if>
+
                                             <c:if test="${user.userType == 'ROLE_NTD'}">
                                                 <a href="<c:url value="/admin/account/employer/add-or-update" />?userId=${user.id}">
-                                                    <input type="button" class="btn btn-primary mt-3 w-100"
+                                                    <input type="button" class="btn btn-primary mt-5"
                                                            value="Thay đổi thông tin nhà tuyển dụng"/>
                                                 </a>
                                             </c:if>
                                             <c:if test="${user.userType == 'ROLE_UV'}">
                                                 <a href="<c:url value="/admin/account/candidate/add-or-update" />?userId=${user.id}">
-                                                    <input type="button" class="btn btn-primary mt-3 w-100"
+                                                    <input type="button" class="btn btn-primary mt-5"
                                                            value="Thay đổi thông tin ứng viên"/>
                                                 </a>
                                             </c:if>

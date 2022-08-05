@@ -50,6 +50,11 @@ public class JobPost {
     @Temporal(TemporalType.TIMESTAMP)
     private Date expiredDate;
 
+    @Basic
+    @Column(name = "modified_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date modifiedDate;
+
     @JsonIgnore
     @OneToMany(mappedBy = "jobPost", fetch = FetchType.LAZY)
     private Collection<ApplyJob> applyJobs;
@@ -143,6 +148,14 @@ public class JobPost {
 
     public void setExpiredDate(Date expiredDate) {
         this.expiredDate = expiredDate;
+    }
+
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
     }
 
     public Collection<ApplyJob> getApplyJobs() {

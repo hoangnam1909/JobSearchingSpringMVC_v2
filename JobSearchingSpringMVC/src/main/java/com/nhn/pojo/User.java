@@ -71,6 +71,11 @@ public class User {
     @JoinColumn(name = "employer_id", referencedColumnName = "id")
     private Employer employer;
 
+    @Basic
+    @Column(name = "joined_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date joinedDate;
+
 //    @OneToMany(mappedBy = "candidateUser", fetch = FetchType.LAZY)
 //    private Collection<ApplyJob> applyJobs;
 //
@@ -309,4 +314,11 @@ public class User {
         this.file = file;
     }
 
+    public Date getJoinedDate() {
+        return joinedDate;
+    }
+
+    public void setJoinedDate(Date joinedDate) {
+        this.joinedDate = joinedDate;
+    }
 }
