@@ -37,13 +37,50 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public boolean addOrUpdate(User user) {
-        String pass = user.getPassword();
+        String pass = user.getPassword().trim();
         user.setPassword(this.passwordEncoder.encode(pass));
 
-        String fullname = user.getFullName();
-        user.setFullName(utils.stringNormalization(fullname));
+        if (user.getFullName() != null) {
+            String fullname = user.getFullName();
+            user.setFullName(utils.stringNormalization(fullname));
+        }
+
+        String avatar = user.getAvatar();
+
+        if (!user.getFile().isEmpty()) {
+            Map r = null;
+            try {
+                r = this.cloudinary.uploader().upload(user.getFile().getBytes(),
+                        ObjectUtils.asMap("resource_type", "auto"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (r != null)
+                user.setAvatar((String) r.get("secure_url"));
+            else
+                user.setAvatar(avatar);
+        }
+
+        String sDate = String.format("%02d/%02d/%04d", user.getDay(), user.getMonth(), user.getYear());
+        try {
+            user.setDob(utils.stringToDate(sDate, "dd/MM/yyyy"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (user.getId() == 0)
+            user.setJoinedDate(new Date());
+        return this.userRepository.addOrUpdate(user);
+    }
+
+    @Override
+    public boolean addOrUpdateNoPassword(User user) {
+        if (user.getFullName() != null) {
+            String fullname = user.getFullName();
+            user.setFullName(utils.stringNormalization(fullname));
+        }
 
         String avatar = user.getAvatar();
 

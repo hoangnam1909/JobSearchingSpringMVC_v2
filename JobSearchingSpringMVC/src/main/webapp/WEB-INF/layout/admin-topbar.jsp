@@ -197,9 +197,9 @@
                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                     Cài đặt
                 </a>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="<c:url value="/me/profile/change-password"/>">
                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Lịch sử hoạt động
+                    Đổi mật khẩu
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="<c:url value="/logout" />">

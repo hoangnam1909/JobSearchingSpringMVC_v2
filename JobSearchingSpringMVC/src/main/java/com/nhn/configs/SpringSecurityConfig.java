@@ -11,6 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -43,7 +44,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-        return new  BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -81,6 +82,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         return mailSender;
     }
 
+    @Bean
+    public DefaultAuthenticationEventPublisher defaultAuthenticationEventPublisher(){
+        return new DefaultAuthenticationEventPublisher();
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)
@@ -94,8 +100,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("username")
                 .passwordParameter("password");
 
-        http.formLogin().successHandler(this.loginHandler)
-                .failureUrl("/login?error");
+        http.formLogin().successHandler(this.loginHandler);
+//                .failureUrl("/login?error");
 
         http.logout().logoutSuccessHandler(this.logoutHandler);
 

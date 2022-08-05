@@ -18,7 +18,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 
 /**
  * @author Lightning
@@ -59,51 +63,64 @@ public class LoginController {
         return "register";
     }
 
-//    @PostMapping("/register")
-//    public String register(Model model,
-//                           @ModelAttribute(value = "user") @Valid User user,
-//                           BindingResult result,
-//                           final RedirectAttributes redirectAttrs) {
-//        String errMsg = null;
-//        String sucMsg = null;
-//
-//        userValidator.validate(user, result);
-//        if (result.hasErrors())
-//            return "register";
-//
-//        int rawId = user.getId();
-//
-//        if (user.getUserType().equals("ROLE_NTD"))
-//            user.setActive(0);
-//        else
-//            user.setActive(1);
-//
-//        boolean addOrUpdateCheck = this.userService.addOrUpdate(user);
-//        if (addOrUpdateCheck) {
-//            if (user.getUserType().equals(User.USER)) {
-//                redirectAttrs.addFlashAttribute("userId",
-//                        userService.getByUsername(user.getUsername()).getId());
-//                return "redirect:/register/candidate-info/add";
-//            } else if (user.getUserType().equals(User.NTD)) {
-//                Employer employer = new Employer();
-//                employer.setId(0);
-//                employer.setName("n/a");
-//                employer.setUser(userService.getById(user.getId()));
-//                employerService.addOrUpdate(employer);
-//            }
-//
-//            sucMsg = String.format("Đăng ký thành công tài khoản '%s' với vai trò %s",
-//                    user.getUsername(),
-//                    user.getUserType().equals("ROLE_UV") ? "Ứng viên" : "Nhà tuyển dụng");
-//        } else {
-//            errMsg = String.format("Thêm thông tin user '%s' không thành công", user.getUsername());
-//            redirectAttrs.addFlashAttribute("errMsg", errMsg);
-//            return "register";
-//        }
-//
-//        redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
-//        return "redirect:/";
-//    }
+    @PostMapping("/register")
+    public String register(Model model,
+                           @ModelAttribute(value = "user") @Valid User user,
+                           BindingResult result,
+                           final RedirectAttributes redirectAttrs) {
+        String errMsg = null;
+        String sucMsg = null;
+
+        userValidator.validate(user, result);
+        if (result.hasErrors())
+            return "register";
+
+        if (user.getUserType().equals("ROLE_NTD"))
+            user.setActive(0);
+        else
+            user.setActive(1);
+
+        boolean addOrUpdateCheck = this.userService.addOrUpdate(user);
+        if (addOrUpdateCheck) {
+            if (user.getUserType().equals(User.USER)) {
+                Candidate candidate = new Candidate();
+                candidate.setId(0);
+
+                candidateService.addOrUpdate(candidate);
+                user.setCandidate(candidate);
+                userService.addOrUpdateNoPassword(user);
+            } else if (user.getUserType().equals(User.NTD)) {
+                Employer employer = new Employer();
+                employer.setId(0);
+                employer.setName("n/a");
+
+                employerService.addOrUpdate(employer);
+                user.setEmployer(employer);
+                userService.addOrUpdateNoPassword(user);
+            }
+
+            sucMsg = String.format("Đăng ký thành công tài khoản '%s' với vai trò %s",
+                    user.getUsername(),
+                    user.getUserType().equals("ROLE_UV") ? "Ứng viên" : "Nhà tuyển dụng");
+        } else {
+            errMsg = String.format("Thêm thông tin user '%s' không thành công", user.getUsername());
+            redirectAttrs.addFlashAttribute("errMsg", errMsg);
+            return "register";
+        }
+
+        redirectAttrs.addFlashAttribute("sucMsg", sucMsg);
+        return "redirect:/login";
+    }
+
+    @RequestMapping("/me/profile/change-password")
+    public String changPassword(Model model){
+        return "change-password";
+    }
+
+    @RequestMapping("/forgot-password")
+    public String forgotPassword(Model model){
+        return "forgot-password";
+    }
 
     @GetMapping("/register/candidate-info/add")
     public String addRegisterCandidateView(Model model) {

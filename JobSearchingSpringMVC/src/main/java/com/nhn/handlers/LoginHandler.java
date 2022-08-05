@@ -33,7 +33,7 @@ public class LoginHandler implements AuthenticationSuccessHandler {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = this.userDetailsService.getByUsername(authentication.getName());
         request.getSession().setAttribute("currentUser", user);
-
+        System.out.println("LOGIN SUCCESSFUL");
         String redirectUrl = request.getContextPath();
         switch (user.getUserType()) {
             case User.ADMIN:

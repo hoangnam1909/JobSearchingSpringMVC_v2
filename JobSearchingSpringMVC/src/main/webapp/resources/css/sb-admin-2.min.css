@@ -11014,19 +11014,25 @@ a:focus {
 }
 
 .bg-login-image {
-    background: url(https://source.unsplash.com/K4mSJ7kc0As/600x800);
+    background: url(https://images.unsplash.com/photo-1530036846422-afb4b7af2fd4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80);
     background-position: center;
     background-size: cover
 }
 
 .bg-register-image {
-    background: url(https://source.unsplash.com/Mv9hjnEUHR4/600x800);
+    background: url(https://images.unsplash.com/photo-1524475922556-171e86798684?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=676&q=80);
     background-position: center;
     background-size: cover
 }
 
-.bg-password-image {
+.bg-forgot-password-image {
     background: url(https://source.unsplash.com/oWTW-jNGl9I/600x800);
+    background-position: center;
+    background-size: cover
+}
+
+.bg-change-password-image {
+    background: url(https://images.unsplash.com/photo-1507831273071-5db7707d651b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=685&q=80);
     background-position: center;
     background-size: cover
 }
@@ -11036,13 +11042,13 @@ form.user .custom-checkbox.small label {
 }
 
 form.user .form-control-user {
-    font-size: .8rem;
+    font-size: 16px;
     border-radius: 10rem;
     padding: 1.5rem 1rem
 }
 
 form.user .btn-user {
-    font-size: .8rem;
+    font-size: 15px;
     border-radius: 10rem;
     padding: .75rem 1rem
 }

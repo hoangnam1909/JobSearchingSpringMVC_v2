@@ -2,14 +2,17 @@ package com.nhn.controllers;
 
 import com.nhn.pojo.*;
 import com.nhn.service.*;
+import org.cloudinary.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +39,9 @@ public class ApiController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @PostMapping(value = "/api/add-comment", produces = {
             MediaType.APPLICATION_JSON_VALUE
@@ -122,20 +128,6 @@ public class ApiController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/api/account/delete/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> deleteAccount(@PathVariable("id") int id) {
-        try {
-            User user = userService.getById(id);
-            if (user == null) {
-                return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        userService.delete(id);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
-    }
 
     //    JOB POST API
     @RequestMapping(value = "/api/job-post/delete/{id}", method = RequestMethod.DELETE)
@@ -166,8 +158,6 @@ public class ApiController {
 
         return new ResponseEntity<>(jobPosts, HttpStatus.OK);
     }
-    //    END OF JOB POST API
-
 
     //    JOB TYPE API
     @RequestMapping(value = "/api/job-type/delete/{id}", method = RequestMethod.DELETE)
@@ -199,9 +189,8 @@ public class ApiController {
 
         return new ResponseEntity<>(jobTypes, HttpStatus.OK);
     }
-    //    END OF JOB TYPE API
 
-
+    // USER
     @RequestMapping(value = "/api/load-users", method = RequestMethod.POST, produces = {
             MediaType.APPLICATION_JSON_VALUE
     })
@@ -213,6 +202,21 @@ public class ApiController {
         }
 
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/api/account/delete/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deleteAccount(@PathVariable("id") int id) {
+        try {
+            User user = userService.getById(id);
+            if (user == null) {
+                return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        userService.delete(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/api/number-of-users", method = RequestMethod.GET, produces = {
@@ -230,12 +234,30 @@ public class ApiController {
             ex.printStackTrace();
             return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
         }
-
-//        user.setActive(1);
-//        userService.addOrUpdate(user);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
+    @RequestMapping(value = "/api/check-password", method = RequestMethod.POST, produces = {
+            MediaType.APPLICATION_JSON_VALUE
+    })
+    public ResponseEntity<Map<String, String>> checkPassword(@RequestBody(required = false) Map<String, String> params) {
+        HashMap<String, String> map = new HashMap<>();
+        boolean check;
+
+        User user = userService.getById(Integer.parseInt(params.getOrDefault("id", "0")));
+        String rawPassword = params.get("rawPassword");
+
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        check = passwordEncoder.matches(rawPassword, user.getPassword());
+        map.put("status", Boolean.toString(check));
+
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+    // SEND EMAIL
     @PostMapping(value = "/api/send-email", produces = {
             MediaType.APPLICATION_JSON_VALUE
     })

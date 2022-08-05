@@ -9,25 +9,33 @@ and open the template in the editor.
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
+    <!--    LAYOUT     -->
     <definition name="baseLayout" template="/WEB-INF/layout/base.jsp">
         <put-attribute name="title" value=""/>
         <put-attribute name="header" value="/WEB-INF/layout/header.jsp"/>
         <put-attribute name="footer" value="/WEB-INF/layout/footer.jsp"/>
         <put-attribute name="content" value=""/>
     </definition>
+
+    <definition name="adminLayout" template="/WEB-INF/layout/admin-base.jsp">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="sidebar" value="/WEB-INF/layout/admin-sidebar.jsp"/>
+        <put-attribute name="topbar" value="/WEB-INF/layout/admin-topbar.jsp"/>
+        <put-attribute name="footer" value="/WEB-INF/layout/admin-footer.jsp"/>
+        <put-attribute name="content" value=""/>
+    </definition>
+
+    <definition name="blankLayout" template="/WEB-INF/layout/blank-base.jsp">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="content" value=""/>
+    </definition>
+
+    <!--    DEFINE PAGE     -->
     <definition name="index" extends="baseLayout">
         <put-attribute name="title" value="Trang chủ"/>
         <put-attribute name="content" value="/WEB-INF/pages/index.jsp"/>
     </definition>
 
-    <definition name="login" extends="baseLayout">
-        <put-attribute name="title" value="Đăng nhập"/>
-        <put-attribute name="content" value="/WEB-INF/pages/login.jsp"/>
-    </definition>
-    <definition name="register" extends="baseLayout">
-        <put-attribute name="title" value="Đăng ký"/>
-        <put-attribute name="content" value="/WEB-INF/pages/register.jsp"/>
-    </definition>
     <definition name="me-view" extends="baseLayout">
         <put-attribute name="title" value="Thông tin tài khoản"/>
         <put-attribute name="content" value="/WEB-INF/pages/me-view.jsp"/>
@@ -90,15 +98,28 @@ and open the template in the editor.
         <put-attribute name="content" value="/WEB-INF/pages/candidate-view-post.jsp"/>
     </definition>
 
-    <!--    ADMIN-->
-    <definition name="adminLayout" template="/WEB-INF/layout/admin-base.jsp">
-        <put-attribute name="title" value=""/>
-        <put-attribute name="sidebar" value="/WEB-INF/layout/admin-sidebar.jsp"/>
-        <put-attribute name="topbar" value="/WEB-INF/layout/admin-topbar.jsp"/>
-        <put-attribute name="footer" value="/WEB-INF/layout/admin-footer.jsp"/>
-        <put-attribute name="content" value=""/>
+    <!--    LOGIN   -->
+    <definition name="login" extends="blankLayout">
+        <put-attribute name="title" value="Đăng nhập"/>
+        <put-attribute name="content" value="/WEB-INF/pages/login.jsp"/>
     </definition>
 
+    <definition name="register" extends="blankLayout">
+        <put-attribute name="title" value="Đăng ký"/>
+        <put-attribute name="content" value="/WEB-INF/pages/register.jsp"/>
+    </definition>
+
+    <definition name="change-password" extends="blankLayout">
+        <put-attribute name="title" value="Đổi mật khẩu"/>
+        <put-attribute name="content" value="/WEB-INF/pages/change-password.jsp"/>
+    </definition>
+
+    <definition name="forgot-password" extends="blankLayout">
+        <put-attribute name="title" value="Quên mật khẩu"/>
+        <put-attribute name="content" value="/WEB-INF/pages/forgot-password.jsp"/>
+    </definition>
+
+    <!--    ADMIN   -->
     <definition name="admin" extends="adminLayout">
         <put-attribute name="title" value="Trang quản trị"/>
         <put-attribute name="content" value="/WEB-INF/pages/admin/admin.jsp"/>

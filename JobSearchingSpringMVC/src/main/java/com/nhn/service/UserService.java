@@ -12,6 +12,8 @@ public interface UserService extends UserDetailsService {
 
     boolean addOrUpdate(User user);
 
+    boolean addOrUpdateNoPassword(User user);
+
     User getByUsername(String username);
 
     List<User> getByRole(String role, int page, int active);
