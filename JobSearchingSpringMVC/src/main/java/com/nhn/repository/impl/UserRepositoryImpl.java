@@ -31,6 +31,9 @@ public class UserRepositoryImpl implements UserRepository {
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     private final int maxItemsInPage = 10;
 
     public int getMaxItemsInPage() {
@@ -297,6 +300,19 @@ public class UserRepositoryImpl implements UserRepository {
             return false;
         else {
             user.setActive(0);
+            addOrUpdate(user);
+            return true;
+        }
+    }
+
+    @Override
+    public boolean changePassword(int id, String rawPassword) {
+        User user = getById(id);
+        if (user == null)
+            return false;
+        else {
+            String password = passwordEncoder.encode(rawPassword);
+            user.setPassword(password);
             addOrUpdate(user);
             return true;
         }

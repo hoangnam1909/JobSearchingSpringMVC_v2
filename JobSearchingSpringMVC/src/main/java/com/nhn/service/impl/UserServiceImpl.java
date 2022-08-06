@@ -153,6 +153,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean changePassword(int id, String rawPassword) {
+        return this.userRepository.changePassword(id, rawPassword);
+    }
+
+    @Override
     public boolean deactivate(int id) {
         return this.userRepository.deactivate(id);
     }

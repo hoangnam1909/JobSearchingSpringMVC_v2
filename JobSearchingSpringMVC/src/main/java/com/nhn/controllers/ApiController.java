@@ -257,6 +257,27 @@ public class ApiController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/api/change-password", method = RequestMethod.POST, produces = {
+            MediaType.APPLICATION_JSON_VALUE
+    })
+    public ResponseEntity<Map<String, String>> changePassword(@RequestBody(required = false) Map<String, String> params) {
+        HashMap<String, String> map = new HashMap<>();
+        boolean check = false;
+
+        int id = Integer.parseInt(params.getOrDefault("id", "0"));
+        String rawPassword = params.get("newPassword");
+
+        try {
+            check = userService.changePassword(id, rawPassword);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        map.put("status", Boolean.toString(check));
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
     // SEND EMAIL
     @PostMapping(value = "/api/send-email", produces = {
             MediaType.APPLICATION_JSON_VALUE

@@ -20,7 +20,7 @@
                                         </p>
                                     </div>
 
-                                    <form class="user">
+                                    <form class="user" action="javascript:void(0)">
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
                                                    id="raw-password"
@@ -29,7 +29,7 @@
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                   id="password"
+                                                   id="new-password"
                                                    oninput="checkPassword(${currentUser.id})"
                                                    placeholder="Mật khẩu mới">
                                         </div>
@@ -46,10 +46,39 @@
                                             </div>
                                         </div>
                                         <hr>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                        <button type="submit" onclick="changePassword(${currentUser.id})"
+                                                class="btn btn-primary btn-user btn-block">
                                             Đổi mật khẩu
                                         </button>
                                     </form>
+                                    <hr>
+                                    <div class="text-center" style="font-size: 18px">
+                                        <c:choose>
+                                            <c:when test="${currentUser.userType == 'ROLE_ADMIN'}">
+                                                <a class="small" href="<c:url value="/admin"/>">
+                                                    Trở lại trang chủ
+                                                </a>
+                                            </c:when>
+
+                                            <c:when test="${currentUser.userType == 'ROLE_NTD'}">
+                                                <a class="small" href="<c:url value="/employer"/>">
+                                                    Trở lại trang chủ
+                                                </a>
+                                            </c:when>
+
+                                            <c:when test="${currentUser.userType == 'ROLE_UV'}">
+                                                <a class="small" href="<c:url value="/candidate"/>">
+                                                    Trở lại trang chủ
+                                                </a>
+                                            </c:when>
+
+                                            <c:otherwise>
+                                                <a class="small" href="<c:url value="/"/>">
+                                                    Trở lại trang chủ
+                                                </a>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
                                 </div>
                             </div>
                         </div>

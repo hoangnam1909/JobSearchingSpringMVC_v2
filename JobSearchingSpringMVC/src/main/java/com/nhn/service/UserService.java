@@ -32,6 +32,8 @@ public interface UserService extends UserDetailsService {
 
     boolean activate(int id);
 
+    boolean changePassword(int id, String rawPassword);
+
     boolean deactivate(int id);
 
     long count();

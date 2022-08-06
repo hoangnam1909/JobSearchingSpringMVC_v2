@@ -29,6 +29,8 @@ public interface UserRepository {
 
     boolean deactivate(int id);
 
+    boolean changePassword(int id, String rawPassword);
+
     long count();
 
     int getMaxItemsInPage();
