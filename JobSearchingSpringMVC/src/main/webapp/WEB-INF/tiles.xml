@@ -217,8 +217,13 @@ and open the template in the editor.
     <!--        <put-attribute name="title" value="Thống kê bài biết theo ngày đăng" />-->
     <!--        <put-attribute name="content" value="/WEB-INF/pages/stats-job-post-date.jsp" />-->
     <!--    </definition>-->
-    <!--    <definition name="stats-job-post-by-job-type" extends="baseLayout">-->
-    <!--        <put-attribute name="title" value="Thống kê bài biết theo loại việc làm" />-->
-    <!--        <put-attribute name="content" value="/WEB-INF/pages/stats-job-post-by-job-type.jsp" />-->
-    <!--    </definition>-->
+    <definition name="stats-job-post-by-job-type" extends="adminLayout">
+        <put-attribute name="title" value="Thống kê bài biết theo loại việc làm"/>
+        <put-attribute name="content" value="/WEB-INF/pages/stats-job-post-by-job-type.jsp"/>
+    </definition>
+
+    <definition name="stats-job-post" extends="adminLayout">
+        <put-attribute name="title" value="Thống kê bài biết"/>
+        <put-attribute name="content" value="/WEB-INF/pages/admin/stats/stats-job-post.jsp"/>
+    </definition>
 </tiles-definitions>

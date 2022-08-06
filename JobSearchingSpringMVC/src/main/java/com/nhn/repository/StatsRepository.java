@@ -10,4 +10,5 @@ public interface StatsRepository {
 
     List<Object[]> jobPostStatsByJobType();
 
+
 }

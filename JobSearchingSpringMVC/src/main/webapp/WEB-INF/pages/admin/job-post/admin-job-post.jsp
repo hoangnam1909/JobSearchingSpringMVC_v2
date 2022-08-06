@@ -86,7 +86,7 @@
     </div>
 </section>
 
-<script src="<c:url value="/resources/js/admin-job-post.js"/>"></script>
+<script src="<c:url value="/resources/js/admin/admin-job-post.js"/>"></script>
 
 <script>
     let maxItems = ${jobPostService.maxItemsInPage};

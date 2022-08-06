@@ -12,6 +12,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +40,9 @@ public class ApiController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private StatsService statsService;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -301,6 +305,59 @@ public class ApiController {
         }
 
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    // STATS
+    @RequestMapping(value = "/api/stat-job-post-by-job-type", method = RequestMethod.GET, produces = {
+            MediaType.APPLICATION_JSON_VALUE
+    })
+    public ResponseEntity<List<HashMap<String, String>>> statsJobPostByJobType() {
+        List<Object[]> result;
+        List<HashMap<String, String>> mapList = new ArrayList<>();
+
+        try {
+            result = this.statsService.jobPostStatsByJobType();
+
+            for (Object[] objects : result) {
+                HashMap<String, String> map = new HashMap<>();
+
+                map.put("label", String.valueOf(objects[1]));
+                map.put("value", String.valueOf(objects[2]));
+                mapList.add(map);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(mapList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/api/stat-employer-activated", method = RequestMethod.GET, produces = {
+            MediaType.APPLICATION_JSON_VALUE
+    })
+    public ResponseEntity<Map<String, String>> statsEmployerActivated() {
+        Map<String, String> mapResult = new HashMap<>();
+
+        Map<String, String> paramActivated = new HashMap<>();
+        paramActivated.put("userType", "ROLE_NTD");
+        paramActivated.put("active", "1");
+
+        Map<String, String> paramUnactivated = new HashMap<>();
+        paramUnactivated.put("userType", "ROLE_NTD");
+        paramUnactivated.put("active", "0");
+
+        try {
+            List<User> employersActivated = userService.getUsersMultiCondition(paramActivated, 0);
+            List<User> employersUnactivated = userService.getUsersMultiCondition(paramUnactivated, 0);
+            mapResult.put("activated", String.valueOf(employersActivated.size()));
+            mapResult.put("unActivated", String.valueOf(employersUnactivated.size()));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(mapResult, HttpStatus.OK);
     }
 
 }

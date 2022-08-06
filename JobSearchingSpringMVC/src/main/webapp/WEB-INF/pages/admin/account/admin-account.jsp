@@ -108,7 +108,7 @@
 <%--<script src="<c:url value="/resources/vendor/datatables/jquery.dataTables.min.js" /> "></script>--%>
 <%--<script src="<c:url value="/resources/vendor/datatables/dataTables.bootstrap4.min.js" /> "></script>--%>
 <%--<script src="<c:url value="/resources/js/datatables-demo.js"/>"></script>--%>
-<script src="<c:url value="/resources/js/admin-account.js"/>"></script>
+<script src="<c:url value="/resources/js/admin/admin-account.js"/>"></script>
 
 <script>
     let maxItems = ${userService.maxItemsInPage};

@@ -1,10 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%--<div class="container">--%>
-<%--<h1 class="text-center dark-color">CHÀO MỪNG ĐẾN VỚI TRANG ADMIN NHÁ</h1>--%>
-<%--</div>--%>
-
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
@@ -333,7 +329,7 @@
     </div>
 </div>
 
-<script src="<c:url value="/resources/js/admin-dashboard.js"/>"></script>
+<script src="<c:url value="/resources/js/admin/admin-dashboard.js"/>"></script>
 
 <script>
     window.onload = (event) => {

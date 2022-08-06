@@ -56,7 +56,7 @@
     </div>
 </div>
 
-<script src="<c:url value="/resources/js/account-permission.js"/>"></script>
+<script src="<c:url value="/resources/js/admin/account-permission.js"/>"></script>
 
 <script>
     let maxItems = ${userService.maxItemsInPage};

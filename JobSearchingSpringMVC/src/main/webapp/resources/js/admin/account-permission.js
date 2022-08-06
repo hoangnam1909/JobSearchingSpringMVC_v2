@@ -34,13 +34,13 @@ function loadEmployers(pageInput) {
     console.log(queryString);
     const urlParams = new URLSearchParams(queryString);
 
-c
     removeActivePagination()
     let page = pageInput;
     if (page === undefined) {
         page = urlParams.get('page') || '1'
     }
 
+    const query = {}
     query.page = page
     query.maxItems = maxItems
     query.userType = 'ROLE_NTD'

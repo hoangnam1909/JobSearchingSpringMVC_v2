@@ -41,7 +41,7 @@
     <li class="nav-item">
         <a class="nav-link" href="<c:url value="/admin/job-post" />">
             <i class="fa-solid fa-newspaper"></i>
-            <span>Bài đăng tuyển dụng</span></a>
+            <span>Tin tuyển dụng</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="<c:url value="/admin/job-type" />">
@@ -54,9 +54,27 @@
             <span>Tables</span></a>
     </li>
 
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">
+        Thống kê
+    </div>
+
+    <!-- Nav Item - Tables -->
+    <li class="nav-item">
+        <a class="nav-link" href="<c:url value="/admin/stats/job-post" />">
+            <div class="row">
+                <div class="col-1">
+                    <i class="fa-solid fa-user-check"></i>
+                </div>
+                <div class="col">
+                    <span>Thống kê tin tuyển dụng</span>
+                </div>
+            </div>
+        </a>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider">
-
     <!-- Heading -->
     <div class="sidebar-heading">
         Interface
@@ -142,12 +160,12 @@
     </div>
 
     <!-- Sidebar Message -->
-<%--    <div class="sidebar-card d-none d-lg-flex">--%>
-<%--        <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">--%>
-<%--        <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!--%>
-<%--        </p>--%>
-<%--        <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>--%>
-<%--    </div>--%>
+    <%--    <div class="sidebar-card d-none d-lg-flex">--%>
+    <%--        <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">--%>
+    <%--        <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!--%>
+    <%--        </p>--%>
+    <%--        <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>--%>
+    <%--    </div>--%>
 
 </ul>
 <!-- End of Sidebar -->
